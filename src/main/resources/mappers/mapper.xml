@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycom.ussum.repository.Repository">
-    <select id="selectAll" resultType="com.mycom.ussum.vo.MemberVO">
+    <select id="selectAllMember" resultType="com.mycom.ussum.vo.MemberVO">
         <![CDATA[
             SELECT *
             FROM "member_table"

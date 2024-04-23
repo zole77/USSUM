@@ -18,7 +18,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi api() {
-        String[] paths = {"/api/**"};
+        String[] paths = {"/api/**", "/member"};
         String[] packages = {"com.mycom.ussum"};
         return GroupedOpenApi.builder().group("springdoc-api").pathsToMatch(paths).packagesToScan(packages).build();
     }
