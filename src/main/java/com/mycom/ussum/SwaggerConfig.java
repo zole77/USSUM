@@ -12,7 +12,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI().info(new Info()
-                .title("springdoc-api")
+                .title("USSUM-api")
                 .version("1.0").description("springdoc-openai swagger-ui 화면입니다."));
     }
 

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface MemberService {
     List<MemberVO> getAllMember();
+    MemberVO getOneMember(MemberVO memberVO);
 }

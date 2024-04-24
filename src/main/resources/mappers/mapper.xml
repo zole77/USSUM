@@ -8,4 +8,12 @@
             FROM "member_table"
         ]]>
     </select>
+
+    <select id="selectOneMember" resultType="com.mycom.ussum.vo.MemberVO" parameterType="com.mycom.ussum.vo.MemberVO">
+        <![CDATA[
+            SELECT *
+            FROM "member_table"
+            WHERE MEM_ID = #{mem_id}
+        ]]>
+    </select>
 </mapper>

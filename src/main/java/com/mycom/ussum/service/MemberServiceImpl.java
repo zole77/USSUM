@@ -17,4 +17,9 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberVO> getAllMember() {
         return repository.selectAllMember();
     }
+
+    @Override
+    public MemberVO getOneMember(MemberVO memberVO) {
+        return repository.selectOneMember(memberVO);
+    }
 }

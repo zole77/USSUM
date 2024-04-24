@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface Repository {
     List<MemberVO> selectAllMember();
+    MemberVO selectOneMember(MemberVO memberVO);
 }
