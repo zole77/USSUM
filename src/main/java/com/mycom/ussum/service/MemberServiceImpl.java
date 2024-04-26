@@ -19,7 +19,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberVO getOneMember(MemberVO memberVO) {
-        return repository.selectOneMember(memberVO);
+    public MemberVO getOneMember(String mem_id) {
+        return repository.selectOneMember(mem_id);
     }
 }

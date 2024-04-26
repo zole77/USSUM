@@ -1,5 +1,6 @@
 package com.mycom.ussum.repository;
 
+import com.mycom.ussum.vo.BoardVO;
 import com.mycom.ussum.vo.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,5 +9,9 @@ import java.util.List;
 @Mapper
 public interface Repository {
     List<MemberVO> selectAllMember();
-    MemberVO selectOneMember(MemberVO memberVO);
+    MemberVO selectOneMember(String mem_id);
+    boolean savePost(BoardVO boardVO);
+    int getAllPostNumber();
+    BoardVO getPost(String post_no);
+    List<BoardVO> getPagePosts(int page);
 }
