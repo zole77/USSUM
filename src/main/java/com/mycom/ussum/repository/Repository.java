@@ -10,7 +10,7 @@ import java.util.List;
 public interface Repository {
     List<MemberVO> selectAllMember();
     MemberVO selectOneMember(String mem_id);
-    boolean savePost(BoardVO boardVO);
+    void savePost(BoardVO boardVO);
     int getAllPostNumber();
     BoardVO getPost(String post_no);
     List<BoardVO> getPagePosts(int page);

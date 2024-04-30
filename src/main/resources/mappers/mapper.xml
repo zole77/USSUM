@@ -40,9 +40,10 @@
     <select id="getPagePosts" resultType="com.mycom.ussum.vo.BoardVO" parameterType="int">
         <![CDATA[
             SELECT *
-            FROM "board_table"
+            FROM (SELECT *
+                  FROM "board_table"
+                  ORDER BY POST_DATE DESC)
             WHERE ROWNUM BETWEEN (#{page} - 1) * 10 + 1 AND #{page} * 10
-            ORDER BY POST_DATE DESC
         ]]>
     </select>
 </mapper>
