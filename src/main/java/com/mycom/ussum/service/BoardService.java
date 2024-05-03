@@ -3,6 +3,7 @@ package com.mycom.ussum.service;
 import com.mycom.ussum.vo.BoardVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BoardService {
     boolean savePost(BoardVO board);
@@ -11,5 +12,5 @@ public interface BoardService {
     List<BoardVO> getPagePosts(int page);
     void updatePost(BoardVO board);
     void deletePost(String post_no);
-    int addClap(String post_no, String mem_id);
+    Map<String, Integer> addClap(String post_no, String mem_id);
 }

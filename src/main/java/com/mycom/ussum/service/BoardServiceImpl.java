@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -53,13 +55,17 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int addClap(String post_no, String mem_id) {
-        if (repository.getMemberClapInBoard(post_no, mem_id) == 50){
-            return 50;
+    public Map<String, Integer> addClap(String post_no, String mem_id) {
+        Map<String, Integer> map = new HashMap<>();
+        int nowPersonalClap = repository.getMemberClapInBoard(post_no, mem_id);
+        if (nowPersonalClap == 50) {
+            map.put("personalClap", 50);
         } else {
             repository.addClap(post_no, mem_id);
+            map.put("personalClap", nowPersonalClap+1);
             repository.addTotalClap(post_no);
-            return repository.getTotalClap(post_no);
         }
+        map.put("totalClap", repository.getTotalClap(post_no));
+        return map;
     }
 }
