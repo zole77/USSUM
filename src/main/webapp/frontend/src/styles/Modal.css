@@ -1,0 +1,15 @@
+.modal {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 300px; /* 모달의 너비를 조정 */
+    height: 250px;
+    margin: 5px; /* 모달 간격을 조정 */
+    box-sizing: border-box;
+  }
+  .modal-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
