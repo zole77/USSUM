@@ -41,7 +41,8 @@ public class BoardController {
 
     @GetMapping("/post/{post_no}")
     @Tag(name = "Board API")
-    @Operation(summary = "조회", description = "특정 게시물을 조회합니다. GET방식을 사용하며 인자로 게시글 번호를 받습니다.")
+    @Operation(summary = "조회", description = "특정 게시물을 조회합니다. GET방식을 사용하며 인자로 게시글 번호를 받습니다. " +
+            "{post_no} 자리에 게시글 번호를 넣어서 서버로 요청을 보내면 됩니다.")
     public BoardVO getPost(@Parameter(description = "게시글 번호") @PathVariable("post_no") String post_no){
         return boardService.getPost(post_no);
     }
@@ -58,7 +59,8 @@ public class BoardController {
     @Tag(name = "Board API")
     @Operation(summary = "일정 개수만큼 게시글 조회",
     description = "페이징 기능을 위한 API입니다. 페이지 번호를 지정하면 10개씩 잘라서 프론트로 넘깁니다. " +
-            "예를 들어 2를 인자로 넘기면 11번째 게시물과 20번째 게시물까지 가져옵니다.")
+            "예를 들어 2를 인자로 넘기면 11번째 게시물과 20번째 게시물까지 가져옵니다. " +
+            "{page} 자리에 페이지 번호를 넣어서 서버로 넘겨주면 됩니다.")
     public List<BoardVO> getPagePosts(@Parameter(description = "페이지 번호") @PathVariable("page") int page){
         return boardService.getPagePosts(page);
     }
