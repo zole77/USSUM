@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import { LabelContext } from "./labelDataContext";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Grid from "@material-ui/core/Grid";
-import "../../styles/Join_styles.css"
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Grid from "@mui/material/Grid";
+import "../../styles/Join_styles.css";
 
-const JoinId = (props) => {
+const JoinId = () => {
   const value = useContext(LabelContext);
   const joinId = value.userInfo.JoinId;
   const [idAvailable, setIdAvailable] = useState(false); // 아이디 사용 가능 여부
@@ -70,6 +70,9 @@ const JoinId = (props) => {
             variant="contained"
             color="primary"
             style={{ marginLeft: "10px", height: "56px" }}
+            disabled={
+              !isInputValid(joinId.Id, EMAIL_REGEX) || joinId.Id.trim() === ""
+            }
           >
             중복 확인
           </Button>
@@ -91,8 +94,9 @@ const JoinId = (props) => {
           }
           onClick={() => value.nextPage()}
           style={{ margin: 25 }}
+          className="join-btn-hover color"
         >
-          Next
+          다음
         </Button>
       </ButtonGroup>
     </form>

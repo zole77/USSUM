@@ -1,13 +1,12 @@
 import React, { useState, useContext } from "react";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LabelContext } from "./labelDataContext";
-import "../../styles/Join_styles.css"
 
 const JoinPwd = () => {
   const { userInfo, setJoinPwdInfo, nextPage, prevPage } =
@@ -37,7 +36,7 @@ const JoinPwd = () => {
 
     if (!validatePassword(value)) {
       setPasswordError(
-        "비밀번호는 8자 이상이어야 하며, 문자, 숫자, 특수문자 중 2가지를 포함해야 합니다."
+        "비밀번호는 8자 이상이어야 하며, 문자, 숫자, 특수문자 중 2가지를 포함해야 합니다.",
       );
     } else {
       setPasswordError("");
@@ -118,12 +117,17 @@ const JoinPwd = () => {
         aria-label="text primary button group"
         style={{ marginTop: 15 }}
       >
-        <Button onClick={prevPage} style={{ margin: 25 }}>
-          Previous
+        <Button
+          onClick={prevPage}
+          style={{ margin: 25 }}
+          className="join-btn-hover color"
+        >
+          이전
         </Button>
         <Button
           onClick={handleSubmit}
           style={{ margin: 25 }}
+          className="join-btn-hover color"
           disabled={
             !!passwordError ||
             !!confirmError ||
@@ -131,7 +135,7 @@ const JoinPwd = () => {
             userInfo.JoinPwd.pwd2.length === 0
           }
         >
-          Next
+          다음
         </Button>
       </ButtonGroup>
     </form>

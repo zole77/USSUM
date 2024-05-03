@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "../../styles/Join_styles.css"
+import "../../styles/Join_styles.css";
 
 import Stepper from "react-stepper-horizontal";
 import JoinId from "./JoinId";
@@ -11,6 +11,7 @@ import { LabelContext } from "./labelDataContext";
 
 const Join = (props) => {
   const value = useContext(LabelContext);
+
   return (
     <div className="Join">
       {value.page !== 5 && (

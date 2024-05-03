@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { LabelContext } from "./labelDataContext";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Grid from "@material-ui/core/Grid";
-import "../../styles/Join_styles.css"
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Grid from "@mui/material/Grid";
+import "../../styles/Join_styles.css";
 
-const JoinNickname = (props) => {
+const JoinNickname = () => {
   const value = useContext(LabelContext);
   const joinNickname = value.userInfo.JoinNickname;
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(true); // 중복 확인 여부
@@ -52,6 +52,7 @@ const JoinNickname = (props) => {
             variant="contained"
             color="primary"
             style={{ marginLeft: "10px", height: "56px" }}
+            className="join-btn-hover color"
           >
             중복 확인
           </Button>
@@ -64,15 +65,20 @@ const JoinNickname = (props) => {
         aria-label="text primary button group"
         style={{ marginTop: 15 }}
       >
-        <Button onClick={() => value.prevPage()} style={{ margin: 25 }}>
-          Previous
+        <Button
+          onClick={() => value.prevPage()}
+          style={{ margin: 25 }}
+          className="join-btn-hover color"
+        >
+          이전
         </Button>
         <Button
           disabled={isDuplicateChecked} // 중복 확인 후 결과값이 true일 때만 버튼 비활성화.
           onClick={() => value.nextPage()}
           style={{ margin: 25 }}
+          className="join-btn-hover color"
         >
-          Next
+          다음
         </Button>
       </ButtonGroup>
     </form>

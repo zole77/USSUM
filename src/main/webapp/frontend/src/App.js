@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import {useEffect, useState} from "react";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "./Layout/Main";
+import Join from "./routes/Join/Join";
+import Login from "./routes/Login/Login";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("/api/test")
-        .then((response) => response.json())
-        .then((json) => setMessage(json.SUCCESS_TEXT));
-  }, []);
-
   return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
-          {message}
-        </header>
-      </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/join" element={<Join />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

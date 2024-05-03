@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import { LabelContext } from "./labelDataContext";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import "../../styles/Join_styles.css"
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import "../../styles/Join_styles.css";
 
 const JoinType = () => {
   const val = useContext(LabelContext);
@@ -39,15 +41,16 @@ const JoinType = () => {
             ].map((item, idx) => (
               <Grid item xs={6} sm={2} key={idx}>
                 <div className="checkbox">
-                  <input
-                    type="checkbox"
-                    id={item}
-                    checked={checkedList.includes(item)}
-                    onChange={(e) => checkHandler(item, e.target.checked)}
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={checkedList.includes(item)}
+                        onChange={(e) => checkHandler(item, e.target.checked)}
+                        id={item}
+                      />
+                    }
+                    label={item}
                   />
-                  <label htmlFor={item} className="label">
-                    {item}
-                  </label>
                 </div>
               </Grid>
             ))}
@@ -59,8 +62,12 @@ const JoinType = () => {
           aria-label="text primary button group"
           style={{ marginTop: 15 }}
         >
-          <Button onClick={() => val.prevPage()} style={{ margin: 25 }}>
-            Previous
+          <Button
+            onClick={() => val.prevPage()}
+            style={{ margin: 25 }}
+            className="join-btn-hover color"
+          >
+            이전
           </Button>
           <Button
             onClick={() => {
@@ -68,8 +75,9 @@ const JoinType = () => {
               val.nextPage();
             }}
             style={{ margin: 25 }}
+            className="join-btn-hover color"
           >
-            Next
+            다음
           </Button>
         </ButtonGroup>
       </form>
