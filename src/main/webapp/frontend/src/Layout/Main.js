@@ -8,6 +8,8 @@ function Main() {
       <Link to="/join">Join page</Link>
       <br />
       <Link to="/login">Login page</Link>
+      <br />
+      <Link to="/services">services</Link>
     </div>
   );
 }

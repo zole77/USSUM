@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./Layout/Main";
 import Join from "./routes/Join/Join";
 import Login from "./routes/Login/Login";
+import Services from "./routes/Services";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
         <Route path="/login" element={<Login />} />
+        <Route patt="/services" element={<Services />} />
       </Routes>
     </BrowserRouter>
   );
