@@ -24,7 +24,7 @@ public class BoardController {
     @Tag(name = "Board API")
     @Operation(summary = "등록", description = "새로운 글을 등록합니다.")
     public Map<String, Boolean> savePost(@RequestBody BoardVO boardVO){
-        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        Map<String, Boolean> map = new HashMap<>();
 
         boolean isSuccess = boardService.savePost(boardVO);
         map.put("success", isSuccess);

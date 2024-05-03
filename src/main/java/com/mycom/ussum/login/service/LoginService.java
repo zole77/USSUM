@@ -5,6 +5,6 @@ import com.mycom.ussum.login.vo.LoginVO;
 import java.util.List;
 
 public interface LoginService {
-    public List<LoginVO> login(String mem_id, String mem_password);
+    List<LoginVO> login(String mem_id, String mem_password);
 }
 
