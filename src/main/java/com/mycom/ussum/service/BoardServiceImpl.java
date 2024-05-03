@@ -39,4 +39,14 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardVO> getPagePosts(int page) {
         return repository.getPagePosts(page);
     }
+
+    @Override
+    public void updatePost(BoardVO board) {
+        repository.updatePost(board);
+    }
+
+    @Override
+    public void deletePost(String post_no) {
+        repository.deletePost(post_no);
+    }
 }

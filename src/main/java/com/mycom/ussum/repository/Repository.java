@@ -14,4 +14,6 @@ public interface Repository {
     int getAllPostNumber();
     BoardVO getPost(String post_no);
     List<BoardVO> getPagePosts(int page);
+    void updatePost(BoardVO boardVO);
+    void deletePost(String post_no);
 }

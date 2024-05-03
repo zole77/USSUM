@@ -46,4 +46,19 @@
             WHERE ROWNUM BETWEEN (#{page} - 1) * 10 + 1 AND #{page} * 10
         ]]>
     </select>
+
+    <update id="updatePost" parameterType="com.mycom.ussum.vo.BoardVO">
+        <![CDATA[
+        UPDATE "board_table"
+        SET POST_CONTENT = #{post_content} AND POST_TITLE = #{post_title}
+        WHERE POST_NO = #{post_no}
+        ]]>
+    </update>
+
+    <delete id="deletePost" parameterType="java.lang.String">
+        <![CDATA[
+            DELETE FROM "board_table"
+            WHERE POST_NO = #{post_no}
+        ]]>
+    </delete>
 </mapper>
