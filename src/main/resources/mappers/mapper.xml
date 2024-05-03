@@ -61,4 +61,36 @@
             WHERE POST_NO = #{post_no}
         ]]>
     </delete>
+
+    <select id="getMemberClapInBoard" resultType="int">
+        <![CDATA[
+            SELECT CLAP
+            FROM CLAP
+            WHERE MEM_ID = #{mem_id} AND POST_NO = #{post_no}
+        ]]>
+    </select>
+
+    <update id="addClap">
+        <![CDATA[
+            UPDATE CLAP
+            SET CLAP = CLAP + 1
+            WHERE POST_NO = #{post_no} AND MEM_ID = #{mem_id}
+        ]]>
+    </update>
+
+    <update id="addTotalClap">
+        <![CDATA[
+            UPDATE "board_table"
+            SET TOTAL_CLAP = TOTAL_CLAP +1
+            WHERE POST_NO = #{post_no}
+        ]]>
+    </update>
+
+    <select id="getTotalClap" resultType="int">
+        <![CDATA[
+            SELECT TOTAL_CLAP
+            FROM "board_table"
+            WHERE POST_NO = #{post_no}
+        ]]>
+    </select>
 </mapper>

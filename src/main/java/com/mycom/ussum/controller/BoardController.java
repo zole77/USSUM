@@ -71,4 +71,10 @@ public class BoardController {
     public void deletePost(@Parameter(description = "게시글 번호") @PathVariable("post_no") String post_no){
         boardService.deletePost(post_no);
     }
+
+    @PostMapping("/addClap")
+    @Operation(summary = "좋아요 추가", description = "좋아요 1 추가")
+    public int addClap(@RequestParam("post_no") String post_no, @RequestParam("mem_id") String mem_id){
+        return boardService.addClap(post_no, mem_id);
+    }
 }

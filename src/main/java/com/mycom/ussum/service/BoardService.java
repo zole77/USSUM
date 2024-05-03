@@ -11,4 +11,5 @@ public interface BoardService {
     List<BoardVO> getPagePosts(int page);
     void updatePost(BoardVO board);
     void deletePost(String post_no);
+    int addClap(String post_no, String mem_id);
 }

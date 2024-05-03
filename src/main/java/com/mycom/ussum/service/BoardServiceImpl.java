@@ -3,10 +3,12 @@ package com.mycom.ussum.service;
 import com.mycom.ussum.repository.Repository;
 import com.mycom.ussum.vo.BoardVO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
@@ -19,7 +21,7 @@ public class BoardServiceImpl implements BoardService {
         try {
             repository.savePost(board);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             result = false;
         }
         return result;
@@ -48,5 +50,16 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void deletePost(String post_no) {
         repository.deletePost(post_no);
+    }
+
+    @Override
+    public int addClap(String post_no, String mem_id) {
+        if (repository.getMemberClapInBoard(post_no, mem_id) == 50){
+            return 50;
+        } else {
+            repository.addClap(post_no, mem_id);
+            repository.addTotalClap(post_no);
+            return repository.getTotalClap(post_no);
+        }
     }
 }

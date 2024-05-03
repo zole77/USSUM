@@ -19,7 +19,6 @@ public class FileApiController {
     private final String uploadDir = Paths.get("C:", "tui-editor", "upload").toAbsolutePath().toString();
 
     @PostMapping("/imgupload")
-    @Tag(name = "File API")
     @Operation(summary = "이미지 업로드", description = "사용자가 Toast Editor에서 업로드한 이미지를 저장합니다.")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
