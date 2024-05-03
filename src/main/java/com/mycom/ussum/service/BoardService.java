@@ -9,4 +9,6 @@ public interface BoardService {
     int getAllPostNumber();
     BoardVO getPost(String post_no);
     List<BoardVO> getPagePosts(int page);
+    void updatePost(BoardVO board);
+    void deletePost(String post_no);
 }
