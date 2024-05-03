@@ -1,0 +1,27 @@
+.Join {
+  font-family: sans-serif;
+  text-align: center;
+  margin: 30px;
+  padding: 10px;
+}
+h5,
+h4 {
+  color: rgb(80, 150, 255);
+}
+h6 {
+  position: absolute;
+  color: rgb(80, 150, 255);
+  left: 80px;
+}
+.form {
+  min-height: 180px;
+}
+.child {
+  position: relative;
+  margin-top: 40px;
+}
+.label {
+  display: inline-block;
+  width: 100px;
+  line-height: 50px;
+}

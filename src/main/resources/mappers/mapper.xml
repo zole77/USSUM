@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycom.ussum.repository.Repository">
+    <select id="selectAllMember" resultType="com.mycom.ussum.vo.MemberVO">
+        <![CDATA[
+            SELECT *
+            FROM "member_table"
+        ]]>
+    </select>
+
+    <select id="selectOneMember" resultType="com.mycom.ussum.vo.MemberVO" parameterType="java.lang.String">
+        <![CDATA[
+            SELECT *
+            FROM "member_table"
+            WHERE MEM_ID = #{mem_id}
+        ]]>
+    </select>
+
+    <insert id="savePost" parameterType="com.mycom.ussum.vo.BoardVO">
+        <![CDATA[
+            INSERT INTO "board_table" (POST_NO, POST_DATE, POST_TITLE, MEM_ID, POST_CONTENT)
+            VALUES ((SELECT MAX(POST_NO)+1
+                     FROM "board_table"),
+                    #{post_date}, #{post_title}, #{mem_id}, #{post_content})
+        ]]>
+    </insert>
+
+    <select id="getAllPostNumber" resultType="int">
+        <![CDATA[
+            SELECT COUNT(*)
+            FROM "board_table"
+        ]]>
+    </select>
+
+    <select id="getPost" resultType="com.mycom.ussum.vo.BoardVO" parameterType="java.lang.String">
+        <![CDATA[SELECT * FROM "board_table" WHERE POST_NO = #{post_no}]]>
+    </select>
+
+    <select id="getPagePosts" resultType="com.mycom.ussum.vo.BoardVO" parameterType="int">
+        <![CDATA[
+            SELECT *
+            FROM (SELECT *
+                  FROM "board_table"
+                  ORDER BY POST_DATE DESC)
+            WHERE ROWNUM BETWEEN (#{page} - 1) * 10 + 1 AND #{page} * 10
+        ]]>
+    </select>
+</mapper>
