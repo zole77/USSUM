@@ -1,21 +1,9 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Main from "./Layout/Main";
-import Join from "./routes/Join/Join";
-import Login from "./routes/Login/Login";
-import Services from "./routes/Services";
+import "./App.css";
+import Layout from "./Layout/Layout.js";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/join" element={<Join />} />
-        <Route path="/login" element={<Login />} />
-        <Route patt="/services" element={<Services />} />
-      </Routes>
-    </BrowserRouter>
-  );
+    return <Layout />;
 }
 
 export default App;
