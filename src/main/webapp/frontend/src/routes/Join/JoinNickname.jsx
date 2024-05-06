@@ -38,17 +38,15 @@ const JoinNickname = () => {
           <Grid item xs={3}>
             <Button
                 onClick={() => value.prevPage()}
-                style={{ marginRight: "10px", marginTop: "5px" }} // 화살표를 약간 아래로 내립니다.
+                style={{ marginTop: "50px" }}
                 className="join-btn-hover color"
             >
               <ArrowBackIcon />
             </Button>
           </Grid>
           <Grid item xs={9}>
-            <h4 style={{ marginBottom: 15 }}>회원가입</h4>
+            <h4 style={{ marginTop: "50px", marginRight: "80px" }}>회원가입</h4>
           </Grid>
-          <Grid item xs={3}></Grid> {/* 회원가입 왼쪽의 버튼 영역과 동일한 공간을 만듭니다. */}
-          <Grid item xs={9}></Grid> {/* 회원가입 왼쪽의 버튼 영역과 동일한 공간을 만듭니다. */}
           <Grid item xs={9}>
             <TextField
                 label="닉네임을 입력해주세요"
@@ -67,10 +65,10 @@ const JoinNickname = () => {
                 style={{ marginLeft: "10px", height: "56px" }}
                 className="join-btn-hover color"
             >
-              중복 확인
+              확인
             </Button>
           </Grid>
-          <Grid item xs={3}></Grid> {/* 회원가입 왼쪽의 버튼 영역과 동일한 공간을 만듭니다. */}
+          <Grid item xs={3}></Grid> {/* 화살표 영역만큼 오른쪽에 공간을 만듭니다. */}
           <Grid item xs={9}>
             <div style={{ marginTop: 15 }}>
               <Button
