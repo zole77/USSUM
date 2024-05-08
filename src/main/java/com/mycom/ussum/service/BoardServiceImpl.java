@@ -68,7 +68,7 @@ public class BoardServiceImpl implements BoardService {
             }
             repository.addClap(post_no, mem_id);
             map.put("personalClap", nowPersonalClap+1);
-            repository.addTotalClap(post_no);
+            repository.updateTotalClap(post_no);
         }
         map.put("totalClap", repository.getTotalClap(post_no));
         return map;

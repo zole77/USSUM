@@ -85,10 +85,12 @@
         ]]>
     </update>
 
-    <update id="addTotalClap">
+    <update id="updateTotalClap">
         <![CDATA[
             UPDATE "board_table"
-            SET TOTAL_CLAP = TOTAL_CLAP +1
+            SET TOTAL_CLAP = (SELECT SUM(CLAP)
+                              FROM CLAP
+                              WHERE CLAP.POST_NO = #{post_no})
             WHERE POST_NO = #{post_no}
         ]]>
     </update>
