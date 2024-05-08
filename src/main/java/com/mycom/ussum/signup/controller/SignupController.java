@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class SingupController {
+public class SignupController {
 
     private final SignupService signupService;
 
     @Autowired
-    public SingupController(SignupService signupService) {
+    public SignupController(SignupService signupService) {
         this.signupService = signupService;
     }
     @RequestMapping("/signup")
@@ -41,7 +41,7 @@ public class SingupController {
     public int checkById(@RequestParam String mem_id){
         return signupService.checkById((mem_id));
     }
-    @PostMapping("/signup/url")
+    @PostMapping("/signup/url2")
     @ResponseBody
     public int checkByNickname(@RequestParam String mem_nickname){
         return signupService.checkByNickname(mem_nickname);
