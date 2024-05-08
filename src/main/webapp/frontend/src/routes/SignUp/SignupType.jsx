@@ -5,9 +5,9 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import "../../styles/Join_styles.css";
+import "../../styles/Signup_styles.css";
 
-const JoinType = () => {
+const SignupType = () => {
   const val = useContext(LabelContext);
   const [checkedList, setCheckedList] = useState([]);
 
@@ -21,10 +21,10 @@ const JoinType = () => {
 
   return (
     <div>
-      <h4>회원가입</h4>
+      <h4 className="Signup-heading">회원가입</h4>
       <form>
-        <main className="container">
-          <Grid container spacing={2}>
+        <main className="container-wide">
+          <Grid container spacing={1}>
             {[
               "즉흥적",
               "계획적",
@@ -56,33 +56,27 @@ const JoinType = () => {
             ))}
           </Grid>
         </main>
-        <ButtonGroup
-          variant="contained"
-          color="primary"
-          aria-label="text primary button group"
-          style={{ marginTop: 15 }}
+
+        <Button
+          onClick={() => val.prevPage()}
+          style={{ margin: 25 }}
+          className="Signup-btn-hover color"
         >
-          <Button
-            onClick={() => val.prevPage()}
-            style={{ margin: 25 }}
-            className="join-btn-hover color"
-          >
-            이전
-          </Button>
-          <Button
-            onClick={() => {
-              val.userInfo.travelPreference = checkedList;
-              val.nextPage();
-            }}
-            style={{ margin: 25 }}
-            className="join-btn-hover color"
-          >
-            다음
-          </Button>
-        </ButtonGroup>
+          이전
+        </Button>
+        <Button
+          onClick={() => {
+            val.userInfo.travelPreference = checkedList;
+            val.nextPage();
+          }}
+          style={{ margin: 25 }}
+          className="btn-hover color"
+        >
+          다음
+        </Button>
       </form>
     </div>
   );
 };
 
-export default JoinType;
+export default SignupType;

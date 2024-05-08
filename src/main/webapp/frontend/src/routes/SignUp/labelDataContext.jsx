@@ -5,14 +5,14 @@ export const LabelContext = createContext();
 export const LabelProvider = (props) => {
   const [page, setPage] = useState(0);
   const [userInfo, setUserInfo] = useState({
-    JoinId: {
+    SignupId: {
       Id: "",
     },
-    JoinPwd: {
+    SignupPwd: {
       pwd1: "",
       pwd2: "",
     },
-    JoinNickname: {
+    SignupNickname: {
       nickname: "",
     },
     type: "",
@@ -29,30 +29,33 @@ export const LabelProvider = (props) => {
     setUserInfo({ ...userInfo, [prop]: event.target.value });
   };
 
-  const setJoinIdInfo = (prop) => (event) => {
+  const setSignupIdInfo = (prop) => (event) => {
     setUserInfo({
       ...userInfo,
-      JoinId: { ...userInfo.JoinId, [prop]: event.target.value },
+      SignupId: { ...userInfo.SignupId, [prop]: event.target.value },
     });
   };
-  const setJoinPwdInfo = (prop) => (event) => {
+  const setSignupPwdInfo = (prop) => (event) => {
     setUserInfo({
       ...userInfo,
-      JoinPwd: { ...userInfo.JoinPwd, [prop]: event.target.value },
+      SignupPwd: { ...userInfo.SignupPwd, [prop]: event.target.value },
     });
   };
-  const setJoinNicknameInfo = (prop) => (event) => {
+  const setSignupNicknameInfo = (prop) => (event) => {
     setUserInfo({
       ...userInfo,
-      JoinNickname: { ...userInfo.JoinNickname, [prop]: event.target.value },
+      SignupNickname: {
+        ...userInfo.SignupNickname,
+        [prop]: event.target.value,
+      },
     });
   };
   const steps = [
-    { title: "아이디를 입력해주세요" },
-    { title: "비밀번호를 입력해주세요" },
-    { title: "닉네임을 입력해주세요" },
-    { title: "여행 취향을 선택해주세요" },
-    { title: "확인" },
+    { title: "" },
+    { title: "" },
+    { title: "" },
+    { title: "" },
+    { title: "" },
   ];
 
   return (
@@ -64,9 +67,9 @@ export const LabelProvider = (props) => {
         prevPage,
         userInfo,
         handleChange,
-        setJoinIdInfo,
-        setJoinPwdInfo,
-        setJoinNicknameInfo,
+        setSignupIdInfo,
+        setSignupPwdInfo,
+        setSignupNicknameInfo,
       }}
     >
       {props.children}

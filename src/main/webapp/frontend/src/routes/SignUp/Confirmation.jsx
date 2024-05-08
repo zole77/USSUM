@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
-import "../../styles/Join_styles.css";
+import "../../styles/Signup_styles.css";
 
 const Confirmation = () => {
   const value = useContext(LabelContext);
@@ -15,10 +15,10 @@ const Confirmation = () => {
 
     try {
       const formData = {
-        id: value.userInfo.JoinId.Id,
-        password: value.userInfo.JoinPwd.pwd1,
-        nickname: value.userInfo.JoinNickname.nickname,
-        travelPreference: value.userInfo.travelPreference.join(", "),
+        id: value.userInfo.SignupId.Id,
+        password: value.userInfo.SignupPwd.pwd1,
+        nickname: value.userInfo.SignupNickname.nickname,
+        travelPreference: value.userInfo.travelPreference.Signup(", "),
       };
 
       const response = await axios.post("/api/registration", formData);
@@ -42,7 +42,7 @@ const Confirmation = () => {
         <TextField
           style={{ margin: 8, width: "93%" }}
           fullWidth
-          value={value.userInfo.JoinId.Id}
+          value={value.userInfo.SignupId.Id}
           inputProps={{
             readOnly: true,
           }}
@@ -53,7 +53,7 @@ const Confirmation = () => {
         <TextField
           style={{ margin: 8, width: "93%" }}
           fullWidth
-          value={value.userInfo.JoinPwd.pwd1}
+          value={value.userInfo.SignupPwd.pwd1}
           type="password"
           inputProps={{
             readOnly: true,
@@ -66,7 +66,7 @@ const Confirmation = () => {
           style={{ margin: 8, width: "93%" }}
           fullWidth
           margin="normal"
-          value={value.userInfo.JoinNickname.nickname}
+          value={value.userInfo.SignupNickname.nickname}
           inputProps={{
             readOnly: true,
           }}
@@ -78,7 +78,7 @@ const Confirmation = () => {
           id="travelPreference"
           style={{ margin: 8, width: "93%" }}
           fullWidth
-          value={value.userInfo.travelPreference.join(", ")}
+          value={value.userInfo.travelPreference.Signup(", ")}
           inputProps={{
             readOnly: true,
           }}
@@ -94,14 +94,14 @@ const Confirmation = () => {
           type="button"
           onClick={() => value.prevPage()}
           style={{ margin: 25 }}
-          className="join-btn-hover color"
+          className="Signup-btn-hover color"
         >
           이전
         </Button>
         <Button
           type="submit"
           style={{ margin: 25 }}
-          className="join-btn-hover color"
+          className="Signup-btn-hover color"
         >
           확인
         </Button>

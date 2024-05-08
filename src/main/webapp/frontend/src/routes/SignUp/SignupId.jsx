@@ -4,11 +4,11 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Grid from "@mui/material/Grid";
-import "../../styles/Join_styles.css";
+import "../../styles/Signup_styles.css";
 
-const JoinId = () => {
+const SignupId = () => {
   const value = useContext(LabelContext);
-  const joinId = value.userInfo.JoinId;
+  const SignupId = value.userInfo.SignupId;
   const [idAvailable, setIdAvailable] = useState(false); // 아이디 사용 가능 여부
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false); // 중복 확인 여부
 
@@ -44,7 +44,7 @@ const JoinId = () => {
 
   return (
     <form>
-      <h4>회원가입</h4>
+      <h4 className="Signup-heading">회원가입</h4>
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={9}>
           <TextField
@@ -52,13 +52,13 @@ const JoinId = () => {
             style={{ width: "100%" }}
             fullWidth
             required
-            onChange={(event) => value.setJoinIdInfo("Id")(event)} // 수정된 부분
-            value={joinId.Id}
+            onChange={(event) => value.setSignupIdInfo("Id")(event)} // 수정된 부분
+            value={SignupId.Id}
             error={
-              !isInputValid(joinId.Id, EMAIL_REGEX) && joinId.Id.length > 0
+              !isInputValid(SignupId.Id, EMAIL_REGEX) && SignupId.Id.length > 0
             }
             helperText={
-              !isInputValid(joinId.Id, EMAIL_REGEX) && joinId.Id.length > 0
+              !isInputValid(SignupId.Id, EMAIL_REGEX) && SignupId.Id.length > 0
                 ? "올바른 이메일 형식이 아닙니다."
                 : ""
             }
@@ -71,36 +71,30 @@ const JoinId = () => {
             color="primary"
             style={{ marginLeft: "10px", height: "56px" }}
             disabled={
-              !isInputValid(joinId.Id, EMAIL_REGEX) || joinId.Id.trim() === ""
+              !isInputValid(SignupId.Id, EMAIL_REGEX) ||
+              SignupId.Id.trim() === ""
             }
           >
-            중복 확인
+            확인
           </Button>
         </Grid>
       </Grid>
 
-      <ButtonGroup
-        variant="contained"
-        color="primary"
-        aria-label="text primary button group"
-        style={{ marginTop: 15 }}
+      <Button
+        disabled={
+          !isInputValid(SignupId.Id, EMAIL_REGEX) ||
+          SignupId.Id.trim() === "" ||
+          !idAvailable ||
+          !isDuplicateChecked // 중복 확인을 하지 않았으면 비활성화
+        }
+        onClick={() => value.nextPage()}
+        style={{ margin: 25 }}
+        className="btn-hover color"
       >
-        <Button
-          disabled={
-            !isInputValid(joinId.Id, EMAIL_REGEX) ||
-            joinId.Id.trim() === "" ||
-            !idAvailable ||
-            !isDuplicateChecked // 중복 확인을 하지 않았으면 비활성화
-          }
-          onClick={() => value.nextPage()}
-          style={{ margin: 25 }}
-          className="join-btn-hover color"
-        >
-          다음
-        </Button>
-      </ButtonGroup>
+        다음
+      </Button>
     </form>
   );
 };
 
-export default JoinId;
+export default SignupId;

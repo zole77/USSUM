@@ -1,7 +1,10 @@
-.Join {
+.Signup {
   font-family: sans-serif;
   text-align: center;
-  margin: 30px;
+  position: fixed; /* 또는 absolute, 단, fixed는 스크롤에 영향을 받지 않음 */
+  top: 50%; /* 상단으로부터 50% 위치 */
+  left: 50%; /* 왼쪽으로부터 50% 위치 */
+  transform: translate(-50%, -50%); /* 자신의 크기의 반만큼 좌측과 상단으로 이동 */
   padding: 10px;
 }
 h5,
@@ -55,12 +58,12 @@ h6 {
   outline: none;
 }
 
-.join-btn-hover.color:hover {
+.btn-hover.color:hover {
   background-color: #45C4B1;
   border-color: #39C0B3;
 }
 
-.Join{
+.Signup{
   display: inline-block;
   background: #FFFFFF;
   width: 700px;
@@ -68,4 +71,28 @@ h6 {
   margin-top: 10%;
   border-radius: 22px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.container-wide {
+  max-width:2000px;
+  margin: 0 auto;
+}
+
+.Signup-heading {
+  color: rgb(80, 150, 255);
+  margin-top: 60px;
+  margin-bottom: 30px;
+
+}
+
+.Signuppwd-heading {
+  color: rgb(80, 150, 255);
+  margin: 60px 91px 30px 0;
+
+}
+
+.Signupnickname-heading {
+  color: rgb(80, 150, 255);
+  margin: 60px 91px 30px 0;
+
 }
