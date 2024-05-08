@@ -103,6 +103,16 @@
         ]]>
     </select>
 
+    <select id="getHotPosts" resultType="com.mycom.ussum.vo.BoardVO">
+        <![CDATA[
+            SELECT *
+            FROM (SELECT *
+                  FROM BOARD_TABLE
+                  ORDER BY TOTAL_CLAP DESC)
+            WHERE ROWNUM BETWEEN 1 AND 10
+        ]]>
+    </select>
+
     <!--  comment  -->
     <insert id="createComment" parameterType="com.mycom.ussum.vo.CommentVO">
         <![CDATA[

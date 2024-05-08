@@ -13,4 +13,5 @@ public interface BoardService {
     void updatePost(BoardVO board);
     void deletePost(String post_no);
     Map<String, Integer> addClap(String post_no, String mem_id);
+    List<BoardVO> getHotPosts();
 }

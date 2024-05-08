@@ -73,4 +73,9 @@ public class BoardServiceImpl implements BoardService {
         map.put("totalClap", repository.getTotalClap(post_no));
         return map;
     }
+
+    @Override
+    public List<BoardVO> getHotPosts() {
+        return repository.getHotPosts();
+    }
 }
