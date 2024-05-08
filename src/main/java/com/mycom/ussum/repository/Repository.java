@@ -20,7 +20,10 @@ public interface Repository {
     List<BoardVO> getPagePosts(int page);
     void updatePost(BoardVO boardVO);
     void deletePost(String post_no);
+
+    //Clap
     int getMemberClapInPost(@Param("post_no") String post_no, @Param("mem_id") String mem_id);
+    void createClap(@Param("post_no") String post_no, @Param("mem_id") String mem_id);
     void addClap(@Param("post_no") String post_no, @Param("mem_id") String mem_id);
     void addTotalClap(String post_no);
     int getTotalClap(String post_no);

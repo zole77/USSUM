@@ -62,9 +62,16 @@
         ]]>
     </delete>
 
+    <insert id="createClap">
+        <![CDATA[
+            INSERT INTO CLAP(POST_NO, MEM_ID)
+            VALUES (#{post_no}, #{mem_id})
+        ]]>
+    </insert>
+
     <select id="getMemberClapInPost" resultType="int">
         <![CDATA[
-            SELECT CLAP
+            SELECT NVL(MAX(CLAP), 0)
             FROM CLAP
             WHERE MEM_ID = #{mem_id} AND POST_NO = #{post_no}
         ]]>
