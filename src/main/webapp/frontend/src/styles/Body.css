@@ -1,0 +1,60 @@
+.body {
+    display: flex;
+  }
+  
+  .left-section,
+  .right-section {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .divider {
+    border-left: 1px solid #535050aa;
+    height: 100%;
+    margin: 0 20px;
+  }
+  
+  .modal-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .modal-wrapper {
+    width: calc(50% - 10px); /* 모달의 너비를 반으로 조정하고 간격을 조정 */
+    margin: 5px;
+  }
+  .dropdown-container {
+    margin-bottom: 10px;
+  }
+  
+  .modal-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .modal-wrapper {
+    width: calc(50% - 10px);
+    margin: 5px;
+  }
+  
+  /* 드롭다운 박스 스타일 */
+  select {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 10px;
+  }
+  .dropdown-row {
+    display: flex;
+  }
+  
+  .dropdown-container {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  /* 추가적인 스타일은 기존 스타일 유지 */
+  
+  

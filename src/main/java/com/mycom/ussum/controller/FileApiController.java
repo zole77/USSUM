@@ -1,5 +1,7 @@
 package com.mycom.ussum.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,10 +14,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/tui-editor")
+@Tag(name = "File API", description = "Toast 에디터와 관련된 기능입니다.")
 public class FileApiController {
     private final String uploadDir = Paths.get("C:", "tui-editor", "upload").toAbsolutePath().toString();
 
     @PostMapping("/imgupload")
+    @Operation(summary = "이미지 업로드", description = "사용자가 Toast Editor에서 업로드한 이미지를 저장합니다.")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             return "";
@@ -40,6 +44,7 @@ public class FileApiController {
         }
     }
     @GetMapping(value = "/image-print", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    @Operation(summary = "이미지 뿌리기", description = "서버에 사용자가 업로드한 이미지를 사용자가 볼 수 있도록 뿌려줍니다.")
     public byte[] printEditorImage(@RequestParam final String filename){
         String fileFullPath = Paths.get(uploadDir, filename).toString();
 
