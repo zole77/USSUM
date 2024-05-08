@@ -54,7 +54,7 @@ public class LoginController {
         session.removeAttribute("mem_no");
 
         session.invalidate();
-        System.out.print("세션삭제완료");
+        System.out.println("세션삭제완료");
         return "redirect:/";
     }
 }

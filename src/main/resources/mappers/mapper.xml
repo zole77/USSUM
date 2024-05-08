@@ -20,9 +20,9 @@
     <insert id="savePost" parameterType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
             INSERT INTO "board_table" (POST_NO, POST_DATE, POST_TITLE, MEM_ID, POST_CONTENT)
-            VALUES ((SELECT MAX(POST_NO)+1
+            VALUES ((SELECT NVL(MAX(POST_NO)+1, 1)
                      FROM "board_table"),
-                    #{post_date}, #{post_title}, #{mem_id}, #{post_content})
+                    SYSDATE, #{post_title}, #{mem_id}, #{post_content})
         ]]>
     </insert>
 
@@ -62,9 +62,16 @@
         ]]>
     </delete>
 
-    <select id="getMemberClapInBoard" resultType="int">
+    <insert id="createClap">
         <![CDATA[
-            SELECT CLAP
+            INSERT INTO CLAP(POST_NO, MEM_ID)
+            VALUES (#{post_no}, #{mem_id})
+        ]]>
+    </insert>
+
+    <select id="getMemberClapInPost" resultType="int">
+        <![CDATA[
+            SELECT NVL(MAX(CLAP), 0)
             FROM CLAP
             WHERE MEM_ID = #{mem_id} AND POST_NO = #{post_no}
         ]]>
@@ -78,10 +85,12 @@
         ]]>
     </update>
 
-    <update id="addTotalClap">
+    <update id="updateTotalClap">
         <![CDATA[
             UPDATE "board_table"
-            SET TOTAL_CLAP = TOTAL_CLAP +1
+            SET TOTAL_CLAP = (SELECT SUM(CLAP)
+                              FROM CLAP
+                              WHERE CLAP.POST_NO = #{post_no})
             WHERE POST_NO = #{post_no}
         ]]>
     </update>
@@ -93,4 +102,31 @@
             WHERE POST_NO = #{post_no}
         ]]>
     </select>
+
+    <!--  comment  -->
+    <insert id="createComment" parameterType="com.mycom.ussum.vo.CommentVO">
+        <![CDATA[
+            INSERT INTO "comment"(com_no, post_no, com_field, create_date, mem_id)
+            VALUES (NVL((SELECT MAX(COM_NO)
+                         FROM "comment"
+                         WHERE POST_NO = #{post_no})+1, 1),
+                    #{post_no}, #{com_field}, SYSDATE, #{mem_id})
+        ]]>
+    </insert>
+
+    <select id="getComments" resultType="com.mycom.ussum.vo.CommentVO">
+        <![CDATA[
+            SELECT *
+            FROM "comment"
+            WHERE POST_NO = #{post_no}
+        ]]>
+    </select>
+
+    <update id="deleteComment">
+        <![CDATA[
+            UPDATE "comment"
+            SET USE = 'N'
+            WHERE POST_NO=#{post_no} AND COM_NO=#{com_no}
+        ]]>
+    </update>
 </mapper>
