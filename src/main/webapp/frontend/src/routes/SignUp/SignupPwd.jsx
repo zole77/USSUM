@@ -58,8 +58,7 @@ const SignupPwd = () => {
         <Grid item xs={3}>
           <Button
             onClick={() => prevPage()} // 'value.prevPage()' 대신 'prevPage()'를 사용합니다.
-            style={{ marginTop: "50px" }}
-            className="Signup-btn-hover color"
+            style={{ marginTop: "30px" }}
           >
             <ArrowBackIcon />
           </Button>

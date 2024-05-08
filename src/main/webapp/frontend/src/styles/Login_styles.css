@@ -1,44 +1,44 @@
-body{
 
-    height: 100%;
-    width: 100%;
-    text-align: center;
-}
 
-h4{
+.login_title {
     font-family: 'Segoe UI', bold;
     font-size: 35px;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    color: #45C4B1
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    color: #45C4B1;
 }
 
-form{
+form {
     display: inline-block;
     align-items: center;
-    height: 130px;
+    height: 300px;
     width: 350px;
     margin-bottom: 155px;
 }
-.text_area{
+
+.text_area {
     align-content: center;
     border-radius: 22px;
     margin-bottom: 30px;
     width: 100%;
     height: 64px;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.text_input{
-
-    font-size: 20px;
+.text_area input {
+    font-size: 15px;
     border: none;
     width: 80%;
     outline: none;
 }
-.text_input::placeholder {
-    font-size: 14px; /* 원하는 크기로 조절하세요 */
-}
+
+/*.text_area input::placeholder {*/
+/*    font-size: 14px;*/
+/*}*/
+
 .btn {
     margin: 10%;
     text-align: center;
@@ -52,29 +52,34 @@ form{
     cursor: pointer;
     margin: 20px;
     height: 55px;
-    text-align:center;
+    text-align: center;
     border: none;
     background-size: 300% 100%;
     border-radius: 50px;
-    transition: all .4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 
 .btn-hover:hover {
     background-position: 100% 0;
-    transition: all .4s ease-in-out;
 }
 
 .btn-hover:focus {
     outline: none;
 }
 
-.btn-hover.color{
+.btn-hover.color {
     background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
     box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
 }
 
-
 .login{
+    font-family: sans-serif;
+    text-align: center;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 자신의 크기의 반만큼 좌측과 상단으로 이동 */
+    padding: 10px;
     display: inline-block;
     background: #FFFFFF;
     width: 700px;
@@ -84,8 +89,8 @@ form{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.link{
-    color: #0E4579;
+.link {
+    color: #0e4579;
     font-size: 15px;
     cursor: pointer;
     display: block;
@@ -95,7 +100,7 @@ form{
 .transparent-btn {
     background-color: transparent;
     border: none;
-    color: #45C4B1;
+    color: #45c4b1;
     font-size: 15px;
     cursor: pointer;
     text-decoration: none;

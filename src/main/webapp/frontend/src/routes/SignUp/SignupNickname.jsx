@@ -45,8 +45,7 @@ const SignupNickname = () => {
         <Grid item xs={3}>
           <Button
             onClick={() => value.prevPage()}
-            style={{ marginTop: "50px" }}
-            className="Signup-btn-hover color"
+            style={{ marginTop: "30px" }}
           >
             <ArrowBackIcon />
           </Button>

@@ -4,7 +4,6 @@ import { LabelContext } from "./labelDataContext";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-
 import "../../styles/Signup_styles.css";
 
 const Confirmation = () => {
@@ -18,7 +17,7 @@ const Confirmation = () => {
         id: value.userInfo.SignupId.Id,
         password: value.userInfo.SignupPwd.pwd1,
         nickname: value.userInfo.SignupNickname.nickname,
-        travelPreference: value.userInfo.travelPreference.Signup(", "),
+        travelPreference: value.userInfo.travelPreference.join(", "), // 배열을 문자열로 변환
       };
 
       const response = await axios.post("/api/registration", formData);
@@ -31,78 +30,52 @@ const Confirmation = () => {
       }
     } catch (error) {
       console.error("Error:", error.message);
-      // 에러 발생 시 적절한 처리
+      alert("Registration failed: " + error.message);
     }
   };
 
   return (
     <form onSubmit={handleConfirmation}>
-      <h6> 아이디</h6>
-      <div className="child">
-        <TextField
-          style={{ margin: 8, width: "93%" }}
-          fullWidth
-          value={value.userInfo.SignupId.Id}
-          inputProps={{
-            readOnly: true,
-          }}
-        />
-      </div>
-      <h6> 비밀번호</h6>
-      <div className="child">
-        <TextField
-          style={{ margin: 8, width: "93%" }}
-          fullWidth
-          value={value.userInfo.SignupPwd.pwd1}
-          type="password"
-          inputProps={{
-            readOnly: true,
-          }}
-        />
-      </div>
-      <h6> 닉네임</h6>
-      <div className="child">
-        <TextField
-          style={{ margin: 8, width: "93%" }}
-          fullWidth
-          margin="normal"
-          value={value.userInfo.SignupNickname.nickname}
-          inputProps={{
-            readOnly: true,
-          }}
-        />
-      </div>
-      <h6> 여행 취향</h6>
-      <div className="child">
-        <TextField
-          id="travelPreference"
-          style={{ margin: 8, width: "93%" }}
-          fullWidth
-          value={value.userInfo.travelPreference.Signup(", ")}
-          inputProps={{
-            readOnly: true,
-          }}
-        />
-      </div>
+      <TextField
+        label="아이디"
+        value={value.userInfo.SignupId.Id}
+        fullWidth
+        margin="normal"
+        InputProps={{ readOnly: true }}
+      />
+      <TextField
+        label="비밀번호"
+        value={value.userInfo.SignupPwd.pwd1}
+        type="password"
+        fullWidth
+        margin="normal"
+        InputProps={{ readOnly: true }}
+      />
+      <TextField
+        label="닉네임"
+        value={value.userInfo.SignupNickname.nickname}
+        fullWidth
+        margin="normal"
+        InputProps={{ readOnly: true }}
+      />
+      <TextField
+        label="여행 취향"
+        value={value.userInfo.travelPreference.join(", ")}
+        fullWidth
+        margin="normal"
+        InputProps={{ readOnly: true }}
+      />
+
       <ButtonGroup
         variant="contained"
         color="primary"
         aria-label="text primary button group"
-        style={{ marginTop: 15 }}
+        style={{ marginTop: 20 }}
       >
-        <Button
-          type="button"
-          onClick={() => value.prevPage()}
-          style={{ margin: 25 }}
-          className="Signup-btn-hover color"
-        >
+        <Button onClick={() => value.prevPage()} className="Signup-btn-hover">
           이전
         </Button>
-        <Button
-          type="submit"
-          style={{ margin: 25 }}
-          className="Signup-btn-hover color"
-        >
+        <Button type="submit" className="Signup-btn-hover">
           확인
         </Button>
       </ButtonGroup>

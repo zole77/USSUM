@@ -1,6 +1,7 @@
+// Login.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"; // Axios 라이브러리 임포트
+import axios from "axios";
 import "../../styles/Login_styles.css";
 
 const Login = () => {
@@ -15,6 +16,17 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+
+    // 입력 필드가 비어 있는 경우 경고 메시지 출력
+    if (!userInfo.mem_id) {
+      alert("이메일을 입력해 주세요.");
+      return;
+    }
+    if (!userInfo.mem_password) {
+      alert("비밀번호를 입력해 주세요.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8080/login",
@@ -42,15 +54,10 @@ const Login = () => {
     }
   };
 
-  const isInvalid =
-    userInfo.mem_id.includes("@") &&
-    userInfo.mem_id.includes(".") &&
-    userInfo.mem_password.length >= 8;
-
   return (
     <div className="login">
       <div className="userFrame">
-        <h4>US:SUM</h4>
+        <h4 className="login_title">US:SUM</h4>
         <form onSubmit={handleSubmit}>
           <div className="text_area">
             <input
@@ -60,7 +67,6 @@ const Login = () => {
               value={userInfo.mem_id}
               name="mem_id"
               onChange={handleInputChange}
-              required
             />
           </div>
           <div className="text_area">
@@ -71,15 +77,10 @@ const Login = () => {
               value={userInfo.mem_password}
               name="mem_password"
               onChange={handleInputChange}
-              required
               minLength={8} // 최소 길이 유효성 검사
             />
           </div>
-          <button
-            className="btn-hover color"
-            disabled={!isInvalid}
-            type="submit" // 버튼을 submit 유형으로 설정
-          >
+          <button className="btn-hover color" type="submit">
             로그인
           </button>
           <Link to="/Signup" className="link">
