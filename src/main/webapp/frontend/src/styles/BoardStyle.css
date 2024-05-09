@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "Gisangchung Dalcomgihu";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405@1.0/Gisangchung Dalcomgihu.woff2")
+        format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    text-align: center;
+    background: whitesmoke;
+}
+
+/* 음? */
+button {
+    margin: 20px;
+}
+
+.boardLayout {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+}
+
+.category-container {
+    font-family: "Gisangchung Dalcomgihu";
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* 요소들을 세로 중앙 정렬하고 싶은 경우 */
+}
+
+.categoryBtn {
+    font-family: "Gisangchung Dalcomgihu";
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 5px;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+    margin: 0px 10px 0px 0px;
+}
+
+.categoryBtn.toggled {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.categoryBtn:hover {
+    letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.categoryBtn:active {
+    transform: scale(1.5);
+}
+
+.intro {
+    width: 300px;
+    font-family: "Gisangchung Dalcomgihu";
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Boardwrap {
+    flex: 1;
+    margin-top: 3rem;
+    margin-left: 10rem;
+    margin-right: 10rem;
+    position: relative;
+}
+
+.floatingBox {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 200px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* Board.js에서 쓰는 css */
+
+.list-head {
+    text-align: center;
+    border-top: 4px double black;
+    border-bottom: 4px double black;
+    margin: 0; /* 좌우 여백 제거 */
+    padding: 0; /* 좌우 패딩 제거 */
+}
+
+.list {
+    text-align: center;
+    border-bottom: 1px solid gray;
+    margin: 0; /* 좌우 여백 제거 */
+    padding: 0; /* 좌우 패딩 제거 */
+}
+
+.post-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.post-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.post-head p,
+.post-container p {
+    flex: 1; /* 번호 컬럼의 폭을 최소 80px로 고정하고 컨텐츠에 따라 크기가 자동으로 조절됩니다. */
+    margin: 0;
+}
+
+.post-head h5,
+.post-container h5 {
+    flex: 7; /* 제목 컬럼의 폭을 가장 넓게 설정합니다. */
+    font-size: 16px;
+    font-weight: normal;
+    color: black;
+    padding-left: 30px;
+    text-align: left;
+    margin: 0;
+}
+
+.post-container h5 {
+    cursor: pointer;
+}
+
+.post-head span,
+.post-container span {
+    flex: 1; /* 작성자와 작성일 컬럼의 폭을 좁게 설정합니다. */
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+}
+
+.modal-open-button,
+.modal-close-btn {
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.modal-container {
+    width: 100%; /* 뷰포트 전체 너비를 차지하도록 설정 */
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1); /* 투명도를 0.1로 설정 */
+}
+
+.modal-content {
+    border-radius: 10px;
+    width: 70%; /* modal-container의 너비에 상대적으로 설정 */
+    max-width: 70%; /* modal-content의 최대 너비를 800px로 제한 */
+    height: 90%;
+    padding: 15px;
+}
+
+.writeBtn {
+    font-family: "Gisangchung Dalcomgihu";
+    float: right;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.writeBtn:hover {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.pageBtn-container {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+.pageBtn {
+    background-color: transparent;
+    color: #007bff;
+    border: none;
+    margin: 3px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.pageBtn:hover {
+    color: #0056b3;
+    border-color: #0056b3;
+}

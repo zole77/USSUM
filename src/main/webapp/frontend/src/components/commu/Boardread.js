@@ -23,9 +23,18 @@ function Boardread(props) {
                     className="modal-content"
                     style={{ backgroundColor: "#fff", borderRadius: "10px" }}
                 >
-                    <p>글 읽기 모달창</p>
-                    <p>{props.postId}</p>
-                    <p>글 상세</p>
+                    <h5>USSUM 여행 커뮤니티</h5>
+                    <div
+                        style={{
+                            display: "flex",
+                            position: "relative",
+                            backgroundColor: "gray",
+                        }}
+                    >
+                        <p style={{ position: "absolute", top: "25%" }}>작성자 ID</p>
+                        <p style={{ marginLeft: "auto" }}>created</p>
+                    </div>
+                    <p>{find.title}</p>
                     <div
                         className="post-content"
                         style={{
@@ -39,14 +48,20 @@ function Boardread(props) {
                         {text}
                     </div>
                     <button>박수</button>
-                    <button
+                    {/* <button
                         className="modal-close-btn"
                         onClick={() => {
                             props.setReadModalOpen(false);
                         }}
                     >
                         확인
-                    </button>
+                    </button> */}
+
+                    <div>
+                        <input placeholder="댓글"></input>
+                        <span className="CommentBtn">등록</span>
+                    </div>
+                    <div className="CommentBox"></div>
                 </div>
             </div>
         </div>

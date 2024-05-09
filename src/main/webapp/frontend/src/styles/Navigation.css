@@ -4,75 +4,76 @@
     justify-content: space-between;
     padding: 10px;
     background-color: white;
-  }
-  
-  .logo {
+    border-bottom: 1px solid;
+}
+
+.logo {
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 60px;
     margin-right: 40px;
-  }
-  
-  .logo span {
+}
+
+.logo span {
     font-size: 24px;
     font-weight: bold;
     color: #007bff;
-  }
-  
-  .nav-links {
+}
+
+.nav-links {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
     align-items: center;
     margin-right: auto;
-  }
-  
-  .nav-links li {
+}
+
+.nav-links li {
     margin-right: 50px;
-  }
-  
-  .nav-link {
+}
+
+.nav-link {
     text-decoration: none;
     color: #333;
     font-weight: bold;
-  }
-  
-  .nav-link:hover,
-  .nav-link.active {
+}
+
+.nav-link:hover,
+.nav-link.active {
     text-decoration: underline;
-  }
-  
-  .icons-container {
+}
+
+.icons-container {
     display: flex;
     align-items: center;
-  }
-  /* 드롭다운 토글 버튼 그룹 */
-  .dropdown-toggle-group {
+}
+/* 드롭다운 토글 버튼 그룹 */
+.dropdown-toggle-group {
     display: flex;
     align-items: center;
-  }
-  
-  /* 드롭다운 토글 버튼 */
-  .dropdown-toggle {
+}
+
+/* 드롭다운 토글 버튼 */
+.dropdown-toggle {
     cursor: pointer;
     position: relative;
     margin-right: 15px;
-  }
-  
-  /* 마지막 아이콘에는 마진을 적용하지 않습니다. */
-  .dropdown-toggle:last-child {
+}
+
+/* 마지막 아이콘에는 마진을 적용하지 않습니다. */
+.dropdown-toggle:last-child {
     margin-right: 60px;
-  }
-  
-  /* 아이콘 이미지 스타일 */
-  .dropdown-toggle img {
+}
+
+/* 아이콘 이미지 스타일 */
+.dropdown-toggle img {
     width: 24px;
     height: 24px;
-  }
-  
-  /* 드롭다운 메뉴 */
-  .dropdown-menu {
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu {
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
@@ -82,26 +83,26 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     padding: 8px;
     z-index: 1000;
-  }
-  
-  /* 드롭다운 메뉴 항목 */
-  .dropdown-menu li {
+}
+
+/* 드롭다운 메뉴 항목 */
+.dropdown-menu li {
     list-style: none;
     padding: 8px 16px;
     cursor: pointer;
-  }
-  
-  /* 드롭다운 메뉴 항목에 마우스 호버 시 스타일 변경 */
-  .dropdown-menu li:hover {
+}
+
+/* 드롭다운 메뉴 항목에 마우스 호버 시 스타일 변경 */
+.dropdown-menu li:hover {
     background-color: #f2f2f2;
-  }
-  
-  /* 글쓰기 버튼 스타일 */
-  .write-button {
+}
+
+/* 글쓰기 버튼 스타일 */
+.write-button {
     padding: 8px 16px;
     background-color: #007bff;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     margin-right: 40px;
-  }
+}
