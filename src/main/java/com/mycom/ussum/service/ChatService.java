@@ -1,6 +1,5 @@
 package com.mycom.ussum.service;
 
-//import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycom.ussum.vo.ChatRoom;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +12,11 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class ChatService {
-//    private final ObjectMapper objectMapper;
+
     private Map<String, ChatRoom> chatRooms;
 
     @PostConstruct
-    private void init() {
+    public void init() {
         chatRooms = new LinkedHashMap<>();
     }
 
