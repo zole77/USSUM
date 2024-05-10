@@ -45,6 +45,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         } else {
             sendToEachSocket(sessions, message);
         }
+        chatService.saveMsg(message.toString(), room.getRoomId(), chatMessage.getSender(), chatMessage.getType().toString());
     }
 
     private void sendToEachSocket(Set<WebSocketSession> sessions, TextMessage message) {

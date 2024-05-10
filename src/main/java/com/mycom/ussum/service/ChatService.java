@@ -1,5 +1,7 @@
 package com.mycom.ussum.service;
 
+import com.mycom.ussum.repository.ChatRepository;
+import com.mycom.ussum.vo.ChatMessage;
 import com.mycom.ussum.vo.ChatRoom;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +14,8 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class ChatService {
-
     private Map<String, ChatRoom> chatRooms;
+    private final ChatRepository chatRepository;
 
     @PostConstruct
     public void init() {
@@ -32,6 +34,15 @@ public class ChatService {
         String randomId = UUID.randomUUID().toString();
         ChatRoom chatRoom = ChatRoom.builder().roomId(randomId).name(name).build();
         chatRooms.put(randomId, chatRoom);
+        chatRepository.createRoom(randomId, name);
         return chatRoom;
+    }
+
+    public void saveMsg(String msg, String roomId, String mem_id, String type){
+        chatRepository.saveMsg(msg, roomId, mem_id, type);
+    }
+
+    public List<ChatMessage> getMsg(String roomId){
+        return chatRepository.getMsg(roomId);
     }
 }
