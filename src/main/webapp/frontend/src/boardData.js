@@ -410,8 +410,8 @@ let data = [
     {
         id: 24,
         title: "세 번째 글",
-        content: "그 내용은 다음과 같음3",
-        author: "power",
+        content: "국민경제자문회의",
+        author: "wwwr",
         create: "2024-05-01",
         clap: 88,
     },

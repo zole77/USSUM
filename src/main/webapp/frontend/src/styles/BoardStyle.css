@@ -180,14 +180,18 @@ button {
     justify-content: center;
     align-items: center;
     background: rgba(255, 255, 255, 0.1); /* 투명도를 0.1로 설정 */
+    z-index: 1000;
 }
 
 .modal-content {
     border-radius: 10px;
-    width: 70%; /* modal-container의 너비에 상대적으로 설정 */
-    max-width: 70%; /* modal-content의 최대 너비를 800px로 제한 */
-    height: 90%;
     padding: 15px;
+    width: 70%; /* modal-container의 너비에 상대적으로 설정 */
+    max-width: 800px; /* modal-content의 최대 너비를 800px로 제한 */
+    height: 90%;
+    background-color: #ffffff; /* 모달 창 배경색 */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* 그림자 추가 */
+    overflow: auto;
 }
 
 .writeBtn {

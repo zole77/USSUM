@@ -8,6 +8,7 @@ import Login from "./../routes/Login/Login.jsx";
 import SignUp from "../routes/SignUp/SignUp";
 
 function Body(props) {
+
   return (
     <div>
       <Routes>
