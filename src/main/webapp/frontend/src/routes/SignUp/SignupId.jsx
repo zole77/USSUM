@@ -1,7 +1,7 @@
+// src/routes/SignUp/SignupId.js
 import React, { useState, useContext } from "react";
+import axios from "axios";
 import { LabelContext } from "./labelDataContext";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import "../../styles/Signup_styles.css";
 
@@ -18,18 +18,35 @@ const SignupId = () => {
 
   const isInputValid = (input, regex) => input.length > 0 && regex.test(input);
 
-  const checkDuplicate = () => {
-    // 실제로 백엔드와 통신하여 중복 확인을 수행해야 합니다.
-    // 임시로 true 또는 false를 반환하는 것으로 대체합니다.
-    const response = false; // 예시: 백엔드로부터 받은 응답
+  const checkDuplicate = async () => {
+    if (!SignupId.Id) {
+      alert("아이디를 입력해주세요.");
+      return;
+    }
 
-    setIsDuplicateChecked(true); // 중복 확인이 완료됨을 표시
-    if (!response) {
-      alert("사용 가능한 아이디입니다.");
-      setIdAvailable(true); // 아이디 사용 가능
-    } else {
-      alert("이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.");
-      setIdAvailable(false); // 아이디 사용 불가능
+    try {
+      const response = await axios.post("/signup/url", null, {
+        params: { mem_id: SignupId.Id },
+      });
+
+      setIsDuplicateChecked(true); // 중복 확인 완료 표시
+
+      if (response.data === 0) {
+        alert("사용 가능한 아이디입니다.");
+        setIdAvailable(true); // 아이디 사용 가능
+      } else {
+        alert("이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.");
+        setIdAvailable(false); // 아이디 사용 불가능
+      }
+    } catch (error) {
+      console.error(
+        "Error checking duplicate ID:",
+        error.response ? error.response.data : error.message,
+      );
+      alert(
+        "중복 확인 중 오류가 발생했습니다: " +
+          (error.response ? error.response.data : error.message),
+      );
     }
   };
 
@@ -40,51 +57,52 @@ const SignupId = () => {
       <h4 className="Signup-heading">회원가입</h4>
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={9}>
-          <TextField
-            label="아이디(이메일)을 입력해주세요"
-            style={{ width: "100%" }}
-            fullWidth
-            required
+          <input
+            type="email"
+            className={`signup-input ${
+              !isInputValid(SignupId.Id, EMAIL_REGEX) && SignupId.Id.length > 0
+                ? "input-error"
+                : ""
+            }`}
+            placeholder="email@example.com"
             value={SignupId.Id}
             onChange={(event) => setSignupIdInfo("Id")(event)}
-            error={
-              !isInputValid(SignupId.Id, EMAIL_REGEX) && SignupId.Id.length > 0
-            }
-            helperText={
-              !isInputValid(SignupId.Id, EMAIL_REGEX) && SignupId.Id.length > 0
-                ? "올바른 이메일 형식이 아닙니다."
-                : ""
-            }
+            required
           />
+          {!isInputValid(SignupId.Id, EMAIL_REGEX) &&
+            SignupId.Id.length > 0 && (
+              <small className="input-helper-text">
+                올바른 이메일 형식이 아닙니다.
+              </small>
+            )}
         </Grid>
         <Grid item xs={3}>
-          <Button
+          <button
+            type="button"
+            className="signup-button-confirm"
             onClick={handleCheckDuplicate}
-            variant="contained"
-            color="primary"
-            style={{ marginLeft: "10px", height: "56px" }}
             disabled={
               !isInputValid(SignupId.Id, EMAIL_REGEX) ||
               SignupId.Id.trim() === ""
             }
           >
             확인
-          </Button>
+          </button>
         </Grid>
       </Grid>
-      <Button
+      <button
+        type="button"
+        onClick={nextPage}
         disabled={
           !isInputValid(SignupId.Id, EMAIL_REGEX) ||
           SignupId.Id.trim() === "" ||
           !idAvailable ||
           !isDuplicateChecked
         }
-        onClick={nextPage}
-        style={{ margin: 25 }}
         className="btn-hover color"
       >
         다음
-      </Button>
+      </button>
     </form>
   );
 };

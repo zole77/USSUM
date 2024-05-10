@@ -42,7 +42,7 @@
             SELECT *
             FROM (SELECT *
                   FROM BOARD_TABLE
-                  ORDER BY POST_DATE DESC)
+                  ORDER BY POST_NO DESC)
             WHERE ROWNUM BETWEEN (#{page} - 1) * 10 + 1 AND #{page} * 10
         ]]>
     </select>

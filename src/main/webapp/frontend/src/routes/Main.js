@@ -5,7 +5,7 @@ function Main() {
     <div>
       <p>Main page</p>
 
-      <Link to="/join">Join page</Link>
+      <Link to="/signup">signup page</Link>
       <br />
       <Link to="/login">Login page</Link>
       <br />

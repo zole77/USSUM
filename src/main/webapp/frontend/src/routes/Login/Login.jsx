@@ -83,7 +83,7 @@ const Login = () => {
           <button className="btn-hover color" type="submit">
             로그인
           </button>
-          <Link to="/Signup" className="link">
+          <Link to="/signup" className="link">
             회원 가입
           </Link>
         </form>
