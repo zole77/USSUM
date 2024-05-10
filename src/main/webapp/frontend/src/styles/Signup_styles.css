@@ -84,10 +84,8 @@ h6 {
 .Signup {
   font-family: sans-serif;
   text-align: center;
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative; /* fixed에서 relative로 변경 */
+  margin: 0 auto;
   padding: 10px;
   display: inline-block;
   background: #ffffff;
@@ -183,27 +181,10 @@ h6 {
   margin-left: 8px;
 }
 
-.btn-hover {
-  width: 200px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-  margin: 20px;
-  height: 55px;
+.footer {
+  width: 100%;
   text-align: center;
-  border: none;
-  background-size: 300% 100%;
-  border-radius: 50px;
-  transition: all 0.4s ease-in-out;
-}
-
-.btn-hover.color {
-  background-color: #45c4b1;
-}
-
-.btn-hover.color:hover {
-  background-position: 100% 0;
-  transition: all 0.4s ease-in-out;
-  background-color: #7fb5ab;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  background-color: #f0f0f0;
 }
