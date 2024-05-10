@@ -8,13 +8,13 @@
     </insert>
 
     <select id="checkById" resultType="int" parameterType="string">
-        SELECT *
+        SELECT COUNT(*)
         FROM member_table
         WHERE mem_Id = #{mem_Id}
     </select>
 
     <select id="checkByNickname" resultType="int" parameterType="string">
-        SELECT *
+        SELECT COUNT(*)
         FROM member_table
         WHERE mem_nickname = #{mem_nickname}
     </select>
