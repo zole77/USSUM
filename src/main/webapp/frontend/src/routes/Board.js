@@ -7,7 +7,6 @@ import Boardwrite from "../components/commu/Boardwrite.js";
 import Boardread from "../components/commu/Boardread.js";
 import Boardupdate from "../components/commu/Boardupdate.js";
 import "../styles/BoardStyle.css";
-import "../App.css";
 
 function Board(props) {
     const [boardCategory, setboardCategory] = useState(1);
@@ -75,11 +74,13 @@ function Board(props) {
     const handleBtn1Click = () => {
         setBtn1Toggled(true);
         setBtn2Toggled(false);
+        setCurrentPage(1);
     };
 
     const handleBtn2Click = () => {
         setBtn1Toggled(false);
         setBtn2Toggled(true);
+        setCurrentPage(1);
     };
 
     return (
@@ -113,10 +114,10 @@ function Board(props) {
 
                 <div className="list-head">
                     <div className="post-head">
-                        <p>번호</p>
-                        <h5>제목</h5>
-                        <span>작성자</span>
-                        <span>작성일</span>
+                        <p style={{ textAlign: "center" }}>번호</p>
+                        <h5 style={{ textAlign: "center" }}>제목</h5>
+                        <span style={{ textAlign: "center" }}>작성자</span>
+                        <span style={{ textAlign: "center" }}>작성일</span>
                     </div>
                 </div>
 
