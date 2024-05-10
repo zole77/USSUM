@@ -39,8 +39,9 @@ public class SignupController {
     @PostMapping("/signup/url")
     @ResponseBody
     public int checkById(@RequestParam String mem_id){
-        return signupService.checkById((mem_id));
+        return signupService.checkById(mem_id);
     }
+
     @PostMapping("/signup/url2")
     @ResponseBody
     public int checkByNickname(@RequestParam String mem_nickname){

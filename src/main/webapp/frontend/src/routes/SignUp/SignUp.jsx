@@ -1,6 +1,6 @@
+// Signup.js
 import React, { useContext } from "react";
 import "../../styles/Signup_styles.css";
-
 import Stepper from "react-stepper-horizontal";
 import SignupId from "./SignupId";
 import SignupPwd from "./SignupPwd";
@@ -25,4 +25,5 @@ const Signup = (props) => {
     </div>
   );
 };
+
 export default Signup;

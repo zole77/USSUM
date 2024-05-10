@@ -3,8 +3,9 @@ import ServiceIntro from "../routes/ServiceIntro";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Board from "../routes/Board.js";
 import Main from "../routes/Main.js";
-import Join from "../routes/SignUp/SignUp";
+
 import Login from "./../routes/Login/Login.jsx";
+import SignUp from "../routes/SignUp/SignUp";
 
 function Body(props) {
   return (
@@ -14,7 +15,7 @@ function Body(props) {
         <Route path="/board" element={<Board />} />
         <Route path="*" element={<div>404에러</div>} />
         <Route path="/" element={<Main />} />
-        <Route path="/join" element={<Join />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

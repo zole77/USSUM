@@ -11,13 +11,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // root.render를 호출하여 앱을 렌더링합니다.
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <LabelProvider>
-                <App />
-            </LabelProvider>
-        </BrowserRouter>
-    </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <LabelProvider>
+        <App />
+      </LabelProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
 );
 
 reportWebVitals();

@@ -54,9 +54,11 @@ function Header(props) {
         <div className="dropdown-toggle" onClick={handleDropdownToggle}>
           <img src={AlaramIcon} alt="Dropdown" />
         </div>
-        {/* 글쓰기 버튼 */}
-        <div className="write-button" onClick={handleWriteModalToggle}>
-          글쓰기
+        {/* 커스텀 로그인 버튼 */}
+        <div className="login-button-container">
+          <Link to="/login">
+            <button className="login-button">로그인</button>
+          </Link>
         </div>
       </div>
 
