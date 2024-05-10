@@ -1,8 +1,6 @@
 import React, { useRef } from "react";
 import { Editor, Viewer } from "@toast-ui/react-editor";
 import "@toast-ui/editor/toastui-editor.css";
-import "../../App.css";
-import axios from "axios";
 
 function Boardwrite(props) {
     const modalBackground = useRef();
@@ -37,7 +35,7 @@ function Boardwrite(props) {
                         }
                     }}
                 >
-                    <div className="modal-content" style={{ backgroundColor: "#fff" }}>
+                    <div className="modal-content">
                         <p>글쓰기 모달창</p>
                         <p>
                             제목

@@ -89,4 +89,10 @@ public class BoardController {
     public Map<String, Integer> addClap(@RequestParam("post_no") String post_no, @RequestParam("mem_id") String mem_id){
         return boardService.addClap(post_no, mem_id);
     }
+
+    @GetMapping("/hot")
+    @Operation(summary = "인기 게시글 불러오기", description = "추천수 많은 것 10개 가져옴")
+    public List<BoardVO> getHotPosts(){
+        return boardService.getHotPosts();
+    }
 }

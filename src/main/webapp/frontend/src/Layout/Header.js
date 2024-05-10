@@ -17,6 +17,7 @@ function Header(props) {
         setWriteModalOpen(!writeModalOpen); // 글쓰기 모달 열림/닫힘 상태를 변경합니다.
     };
 
+<<<<<<< HEAD
     return (
         <nav className="navigation">
             <div className="logo">
@@ -29,7 +30,7 @@ function Header(props) {
                     </Link>
                 </li>
                 <li>
-                    <Link to="/about" className="nav-link">
+                    <Link to="/board" className="nav-link">
                         여행 커뮤니티
                     </Link>
                 </li>
@@ -59,6 +60,52 @@ function Header(props) {
                     글쓰기
                 </div>
             </div>
+=======
+  return (
+    <nav className="navigation">
+      <div className="logo">
+        <span>US:SUM</span>
+      </div>
+      <ul className="nav-links">
+        <li>
+          <Link to="/" className="nav-link">
+            서비스 소개
+          </Link>
+        </li>
+        <li>
+          <Link to="/about" className="nav-link">
+            여행 커뮤니티
+          </Link>
+        </li>
+        <li>
+          <Link to="/services" className="nav-link">
+            같이 가요!
+          </Link>
+        </li>
+      </ul>
+      {/* 아이콘들과 글쓰기 버튼을 감싸는 컨테이너 */}
+      <div className="icons-container">
+        {/* 드롭다운 토글 버튼 */}
+        <div className="dropdown-toggle" onClick={handleDropdownToggle}>
+          <img src={ChatIcon} alt="Dropdown" />
+        </div>
+        <div className="dropdown-toggle" onClick={handleDropdownToggle}>
+          <img src={AlaramIcon} alt="Dropdown" />
+        </div>
+        <div className="dropdown-toggle" onClick={handleDropdownToggle}>
+          <img src={AlaramIcon} alt="Dropdown" />
+        </div>
+        <div className="dropdown-toggle" onClick={handleDropdownToggle}>
+          <img src={AlaramIcon} alt="Dropdown" />
+        </div>
+        {/* 커스텀 로그인 버튼 */}
+        <div className="login-button-container">
+          <Link to="/login">
+            <button className="login-button">로그인</button>
+          </Link>
+        </div>
+      </div>
+>>>>>>> bf978530d0a2717e144bcf4551d37a43b63a1724
 
             {/* 드롭다운 메뉴 */}
             {dropdownOpen && (

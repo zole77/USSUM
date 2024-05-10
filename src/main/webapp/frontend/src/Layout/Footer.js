@@ -1,11 +1,11 @@
 import react from "react";
-import { Container } from "react-bootstrap";
+import "../styles/Footer.css";
 
 const Footer = () => {
     return (
-        <footer className="py-5 bg-white">
-            <div className="container">
-                <p className="m-0 text-center text-black">Copyright &copy; US:SUM 2024</p>
+        <footer style={{ height: "20px", position: "relative", transform: "translateY(-100%)" }}>
+            <div>
+                <p>Copyright &copy; US:SUM 2024</p>
             </div>
         </footer>
     );

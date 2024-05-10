@@ -1,0 +1,209 @@
+/* 기본 헤딩 스타일 */
+h4, h5 {
+  color: rgb(80, 150, 255);
+}
+
+h6 {
+  position: absolute;
+  color: rgb(80, 150, 255);
+  left: 80px;
+}
+
+/* 폼 관련 스타일 */
+.form {
+  min-height: 180px;
+}
+
+.child {
+  position: relative;
+  margin-top: 40px;
+}
+
+.label {
+  display: inline-block;
+  width: 100px;
+  line-height: 50px;
+}
+
+/* 버튼 공통 스타일 */
+.signup-button-confirm {
+  width: auto;
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: #45c4b1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.signup-button-confirm:hover {
+  background-color: #7fb5ab;
+}
+
+.signup-button-confirm:active {
+  transform: scale(0.98);
+}
+
+.btn {
+  margin: 10%;
+  text-align: center;
+}
+
+.btn-hover {
+  width: 200px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 20px;
+  height: 55px;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-hover.color {
+  background-color: #45c4b1;
+}
+
+.btn-hover.color:hover {
+  background-position: 100% 0;
+  transition: all 0.4s ease-in-out;
+  background-color: #7fb5ab;
+}
+
+.btn-hover:focus {
+  outline: none;
+}
+
+/* Signup 컨테이너 스타일 */
+.Signup {
+  font-family: sans-serif;
+  text-align: center;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  display: inline-block;
+  background: #ffffff;
+  width: 700px;
+  height: 500px;
+  margin-top: 10%;
+  border-radius: 22px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.container-wide {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.Signup-heading,
+.Signuppwd-heading,
+.Signupnickname-heading {
+  color: #45c4b1;
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+
+.signup_title {
+  font-family: 'Segoe UI', bold;
+  font-size: 35px;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  color: #45c4b1;
+}
+
+/* 수평 정렬을 위한 스타일 */
+.form-group-horizontal {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Input 필드 스타일 */
+.signup-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #45c4b1;
+  background-color: #e6f9f7;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.signup-input:focus {
+  border-color: #359d8f;
+  box-shadow: 0 0 8px rgba(69, 196, 177, 0.5);
+}
+
+.input-error {
+  border-color: #e74c3c;
+}
+
+.input-helper-text {
+  color: #e74c3c;
+  font-size: 0.875rem;
+}
+
+/* ArrowBackIcon을 위한 스타일 */
+.signup-back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+.signup-back-button svg {
+  fill: #45c4b1;
+}
+
+/* Grid 및 Checkbox 관련 스타일 */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.grid-item {
+  padding: 10px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox label {
+  margin-left: 8px;
+}
+
+.btn-hover {
+  width: 200px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 20px;
+  height: 55px;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-hover.color {
+  background-color: #45c4b1;
+}
+
+.btn-hover.color:hover {
+  background-position: 100% 0;
+  transition: all 0.4s ease-in-out;
+  background-color: #7fb5ab;
+}
