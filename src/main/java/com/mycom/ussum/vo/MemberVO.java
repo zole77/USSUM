@@ -9,7 +9,7 @@ import java.sql.Date;
 @Setter
 public class MemberVO {
     private String mem_id;
-    private String mem_password;
+    private String mem_pwd;
     private String member_age;
     private String mem_gender;
     private String mem_phone;

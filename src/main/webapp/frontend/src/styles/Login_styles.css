@@ -1,5 +1,4 @@
-
-
+/* 로그인 타이틀 */
 .login_title {
     font-family: 'Segoe UI', bold;
     font-size: 35px;
@@ -8,6 +7,7 @@
     color: #45C4B1;
 }
 
+/* 로그인 폼 */
 form {
     display: inline-block;
     align-items: center;
@@ -16,6 +16,7 @@ form {
     margin-bottom: 155px;
 }
 
+/* 텍스트 영역 */
 .text_area {
     align-content: center;
     border-radius: 22px;
@@ -35,15 +36,13 @@ form {
     outline: none;
 }
 
-/*.text_area input::placeholder {*/
-/*    font-size: 14px;*/
-/*}*/
-
+/* 버튼 영역 */
 .btn {
     margin: 10%;
     text-align: center;
 }
 
+/* 호버 버튼 */
 .btn-hover {
     width: 200px;
     font-size: 16px;
@@ -72,13 +71,12 @@ form {
     box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
 }
 
-.login{
+/* 로그인 컨테이너 */
+.login {
     font-family: sans-serif;
     text-align: center;
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* 자신의 크기의 반만큼 좌측과 상단으로 이동 */
+    position: relative; /* fixed에서 relative로 변경 */
+    margin: 0 auto;
     padding: 10px;
     display: inline-block;
     background: #FFFFFF;
@@ -89,6 +87,7 @@ form {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+/* 링크 스타일 */
 .link {
     color: #0e4579;
     font-size: 15px;
@@ -97,6 +96,7 @@ form {
     text-decoration: none;
 }
 
+/* 투명 버튼 */
 .transparent-btn {
     background-color: transparent;
     border: none;

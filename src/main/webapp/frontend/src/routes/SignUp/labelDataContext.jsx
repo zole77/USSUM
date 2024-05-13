@@ -64,6 +64,7 @@ export const LabelProvider = ({ children }) => {
       prevPage,
       userInfo,
       handleChange,
+      setUserInfo,
       setSignupIdInfo,
       setSignupPwdInfo,
       setSignupNicknameInfo,

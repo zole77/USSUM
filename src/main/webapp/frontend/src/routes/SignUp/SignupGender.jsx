@@ -26,7 +26,7 @@ const SignupGender = () => {
   return (
     <div>
       <Grid container spacing={3} alignItems="center">
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={3}>
           <button
             type="button"
             className="signup-back-button"

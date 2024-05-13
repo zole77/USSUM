@@ -1,4 +1,12 @@
 /* 네비게이션 바 스타일 */
+@font-face {
+    font-family: "JalnanGothic";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
 .navigation {
     display: flex;
     align-items: center;
@@ -19,11 +27,12 @@
 .logo span {
     font-size: 24px;
     font-weight: bold;
-    color:  #45C4B1;
+    color: #45c4b1;
 }
 
 /* 네비게이션 링크 스타일 */
 .nav-links {
+    font-family: "JalnanGothic";
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -104,20 +113,26 @@
 
 /* 3D 로그인 버튼 컨테이너 */
 .login-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-right: 40px;
 }
 
 /* 3D 로그인 버튼 스타일 */
 button.login-button {
-    font-weight: 600;
+    font-family: "JalnanGothic";
+    font-weight: 100;
     color: #382b22;
     text-transform: uppercase;
     padding: 0.7em 1.5em;
-    background: #FFFFFF;
-    border: 2px solid  #45C4B1;
+    background: #ffffff;
+    border: 2px solid #45c4b1;
     border-radius: 0.6em;
     transform-style: preserve-3d;
-    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
+        background 150ms cubic-bezier(0, 0, 0.58, 1);
+    margin-top: 10px;
 }
 
 /* 로그인 버튼에 대한 3D 효과 */
@@ -130,31 +145,32 @@ button.login-button::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: #78E0D8;
+    background: #78e0d8;
     border-radius: inherit;
-    box-shadow: 0 0 0 2px #45C4B1, 0 0.5em 0 0#9FE0DC;
+    box-shadow: 0 0 0 2px #45c4b1, 0 0.5em 0 0 #9fe0dc;
     transform: translate3d(0, 0.75em, -1em);
-    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
+        box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
 }
 
 /* 로그인 버튼 호버 스타일 */
 button.login-button:hover {
-    background:#D7FAF3;
+    background: #d7faf3;
     transform: translate(0, 0.25em);
 }
 
 button.login-button:hover::before {
-    box-shadow: 0 0 0 2px#45C4B1, 0 0.3em 0 0 #9FE0DC;
+    box-shadow: 0 0 0 2px #45c4b1, 0 0.3em 0 0 #9fe0dc;
     transform: translate3d(0, 0.5em, -1em);
 }
 
 /* 로그인 버튼 활성화 스타일 */
 button.login-button:active {
-    background:#D7FAF3;
+    background: #d7faf3;
     transform: translate(0em, 0.75em);
 }
 
 button.login-button:active::before {
-    box-shadow: 0 0 0 2px #45C4B1, 0 0 #9FE0DC;
+    box-shadow: 0 0 0 2px #45c4b1, 0 0 #9fe0dc;
     transform: translate3d(0, 0, -1em);
 }

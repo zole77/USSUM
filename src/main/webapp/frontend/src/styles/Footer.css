@@ -1,0 +1,9 @@
+
+/* Footer 스타일 */
+.footer {
+    position: relative;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;}
