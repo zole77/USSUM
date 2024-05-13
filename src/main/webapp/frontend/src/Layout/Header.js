@@ -5,6 +5,7 @@ import "../styles/Navigation.css";
 import ChatIcon from "../img/Chat.png";
 import AlaramIcon from "../img/Alarm.png";
 import WriteModal from "../components/WriteModal";
+import logo from "../img/logo.png";
 
 function Header() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -34,7 +35,7 @@ function Header() {
     return (
         <nav className="navigation">
             <div className="logo">
-                <span>US:SUM</span>
+                <img src={logo} alt="logo" style={{ width: "150px", height: "35px" }}></img>
             </div>
             <ul className="nav-links">
                 <li>

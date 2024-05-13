@@ -64,3 +64,13 @@
     display: flex;
     margin: 15px 0px 15px 0px;
 }
+
+.user-commnet {
+    display: flex;
+}
+
+.commentDiv p {
+    margin-top: 5px;
+    margin-left: 10px;
+    text-align: left;
+}
