@@ -17,7 +17,8 @@ const Confirmation = () => {
         id: value.userInfo.SignupId.Id,
         password: value.userInfo.SignupPwd.pwd1,
         nickname: value.userInfo.SignupNickname.nickname,
-        travelPreference: value.userInfo.travelPreference.join(", "), // 배열을 문자열로 변환
+        gender: value.userInfo.gender.join(", "),
+        travelType: value.userInfo.travelType.join(", "),
       };
 
       const response = await axios.post("/api/registration", formData);
@@ -59,8 +60,15 @@ const Confirmation = () => {
         InputProps={{ readOnly: true }}
       />
       <TextField
+        label="성별"
+        value={value.userInfo.gender.join(", ")}
+        fullWidth
+        margin="normal"
+        InputProps={{ readOnly: true }}
+      />
+      <TextField
         label="여행 취향"
-        value={value.userInfo.travelPreference.join(", ")}
+        value={value.userInfo.travelType.join(", ")}
         fullWidth
         margin="normal"
         InputProps={{ readOnly: true }}

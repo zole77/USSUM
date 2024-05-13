@@ -63,7 +63,7 @@ const SignupType = () => {
         <button
           type="button"
           onClick={() => {
-            val.userInfo.travelPreference = checkedList;
+            val.userInfo.travelType = checkedList;
             val.nextPage();
           }}
           style={{ margin: "25px" }}

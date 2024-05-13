@@ -8,6 +8,7 @@ import Confirmation from "./Confirmation";
 import SignupNickname from "./SignupNickname";
 import SignupType from "./SignupType";
 import { LabelContext } from "./labelDataContext";
+import SignupGender from "./SignupGender";
 
 const Signup = (props) => {
   const value = useContext(LabelContext);
@@ -20,8 +21,9 @@ const Signup = (props) => {
       {value.page === 0 && <SignupId />}
       {value.page === 1 && <SignupPwd />}
       {value.page === 2 && <SignupNickname />}
-      {value.page === 3 && <SignupType />}
-      {value.page === 4 && <Confirmation />}
+      {value.page === 3 && <SignupGender />}
+      {value.page === 4 && <SignupType />}
+      {value.page === 5 && <Confirmation />}
     </div>
   );
 };
