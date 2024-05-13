@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { PiHandsClapping, PiHandsClappingBold } from "react-icons/pi";
 import { IoIosClose } from "react-icons/io";
 import "../../styles/BoardReadModal.css";
-import profile from "../../img/defaultProfile.png";
+import defaultProfile from "../../img/defaultProfile.png";
 
 function Boardread(props) {
     const modalBackground = useRef();
@@ -115,9 +115,9 @@ function CommentBox(props) {
                 <div className="user-commnet" key={index}>
                     <div className="img-container" style={{ width: "100px", height: "100px" }}>
                         <img
-                            src={profile}
+                            src={defaultProfile}
                             alt="profile"
-                            style={{ width: "100px", height: "100px" }}
+                            style={{ marginTop: "10px", width: "75px", height: "75px" }}
                         ></img>
                     </div>
                     <div className="commentDiv">
