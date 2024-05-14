@@ -1,26 +1,57 @@
-// src/routes/SignUp/SignupType.js
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LabelContext } from "./labelDataContext";
+import Grid from "@mui/material/Grid";
 import "../../styles/Signup_styles.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const SignupType = () => {
-  const val = useContext(LabelContext);
-  const [checkedList, setCheckedList] = useState([]);
+  const { prevPage, nextPage, userInfo, setUserInfo } =
+      useContext(LabelContext);
 
-  const checkHandler = (value, isChecked) => {
-    if (isChecked) {
-      setCheckedList((prev) => [...prev, value]);
-    } else {
-      setCheckedList((prev) => prev.filter((item) => item !== value));
-    }
+  // 사용자가 이전에 선택한 travelType을 기반으로 초기 상태를 설정
+  const [checkedList, setCheckedList] = useState(userInfo.travelType || []);
+
+  useEffect(() => {
+    // userInfo 상태에 현재 checkedList를 저장
+    setUserInfo({ ...userInfo, travelType: checkedList });
+  }, [checkedList, setUserInfo, userInfo]);
+
+  const checkHandler = (item, isChecked) => {
+    setCheckedList((prev) =>
+        isChecked ? [...prev, item] : prev.filter((x) => x !== item),
+    );
   };
 
   return (
-    <div>
-      <h4 className="Signup-heading">회원가입</h4>
-      <form>
-        <div className="container-wide">
-          <div className="grid-container">
+      <div>
+        <Grid container spacing={3} alignItems="center">
+          <Grid item xs={12}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={2}>
+                {/* 빈 공간 */}
+              </Grid>
+              <Grid item xs={2}>
+                <button
+                    type="button"
+                    className="signup-back-button"
+                    onClick={prevPage}
+                >
+                  <ArrowBackIcon />
+                </button>
+              </Grid>
+              <Grid item xs={4}>
+                <h4 className="Signupnickname-heading">회원가입</h4>
+              </Grid>
+
+              <Grid item xs={2}>
+                {/* 빈 공간 */}
+              </Grid>
+              <Grid item xs={2}>
+                {/* 빈 공간 */}
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} container spacing={2}>
             {[
               "즉흥적",
               "계획적",
@@ -35,44 +66,32 @@ const SignupType = () => {
               "액티비티",
               "포토스팟",
             ].map((item, idx) => (
-              <div className="grid-item" key={idx}>
-                <div className="checkbox">
+                <Grid item xs={6} sm={3} key={idx}>
                   <label>
                     <input
-                      type="checkbox"
-                      checked={checkedList.includes(item)}
-                      onChange={(e) => checkHandler(item, e.target.checked)}
-                      id={item}
+                        type="checkbox"
+                        checked={checkedList.includes(item)}
+                        onChange={(e) => checkHandler(item, e.target.checked)}
                     />
                     {item}
                   </label>
-                </div>
-              </div>
+                </Grid>
             ))}
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => val.prevPage()}
-          style={{ margin: "25px" }}
-          className="btn-hover color"
-        >
-          이전
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            val.userInfo.travelPreference = checkedList;
-            val.nextPage();
-          }}
-          style={{ margin: "25px" }}
-          className="btn-hover color"
-        >
-          다음
-        </button>
-      </form>
-    </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div style={{ marginTop: 15, textAlign: "center" }}>
+              <button
+                  type="button"
+                  onClick={nextPage}
+                  disabled={checkedList.length === 0}
+                  className="btn-hover color"
+              >
+                다음
+              </button>
+            </div>
+          </Grid>
+        </Grid>
+      </div>
   );
 };
 
