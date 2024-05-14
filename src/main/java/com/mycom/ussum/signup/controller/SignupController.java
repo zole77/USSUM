@@ -36,13 +36,13 @@ public class SignupController {
         }
     }
 
-    @PostMapping("/signup/url")
+    @PostMapping("/signup/checkDuplicate")
     @ResponseBody
     public int checkById(@RequestParam String mem_id){
         return signupService.checkById(mem_id);
     }
 
-    @PostMapping("/signup/url2")
+    @PostMapping("/signup/checkNickname")
     @ResponseBody
     public int checkByNickname(@RequestParam String mem_nickname){
         return signupService.checkByNickname(mem_nickname);

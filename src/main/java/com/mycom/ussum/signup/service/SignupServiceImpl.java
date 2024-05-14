@@ -20,13 +20,13 @@ public class SignupServiceImpl implements SignupService{
     public boolean signUp(@NotNull SignupVO signupVO){
         int checkById = signupDAO.checkById(signupVO.getMem_id());
 
-        int checkByNickname = signupDAO.checkByNickname(signupVO.getMem_nickname());
+        //int checkByNickname = signupDAO.checkByNickname(signupVO.getMem_nickname());
 
-        if (checkById == 0 && checkByNickname == 0) {
+        if (checkById == 0) {
             signupDAO.signUp(signupVO);
-            return true; // 회원 가입 성공
+            return true;  //ㅇㅋ
         } else {
-            return false; // 회원 가입 실패
+            return false; // x
         }
     }
 
