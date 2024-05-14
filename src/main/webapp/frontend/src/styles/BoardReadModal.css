@@ -1,9 +1,17 @@
 @charset "UTF-8";
 
 @font-face {
-    font-family: "Gisangchung Dalcomgihu";
-    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405@1.0/Gisangchung Dalcomgihu.woff2")
+    font-family: "LINESeedKR-Bd";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2")
         format("woff2");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "JalnanGothic";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff")
+        format("woff");
     font-weight: normal;
     font-style: normal;
 }
@@ -34,7 +42,7 @@
 
 .commentBtn {
     flex: 1;
-    font-family: "Gisangchung Dalcomgihu";
+    font-family: "LINESeedKR-Bd";
     border: none;
     padding: 10px 10px;
     border-radius: 5px;
@@ -63,4 +71,14 @@
 .author-created {
     display: flex;
     margin: 15px 0px 15px 0px;
+}
+
+.user-commnet {
+    display: flex;
+}
+
+.commentDiv p {
+    margin-top: 5px;
+    margin-left: 10px;
+    text-align: left;
 }
