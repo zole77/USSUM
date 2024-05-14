@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { LabelContext } from "./labelDataContext";
 import Grid from "@mui/material/Grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { LabelContext } from "./labelDataContext";
 import "../../styles/Signup_styles.css";
 
 const SignupNickname = () => {
@@ -13,8 +13,59 @@ const SignupNickname = () => {
     nextPage,
   } = useContext(LabelContext);
 
+  const [nicknameAvailable, setNicknameAvailable] = useState(false); // 닉네임 사용 가능 여부
+  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false); // 중복 확인 여부
+
+  const checkDuplicate = async () => {
+    if (!SignupNickname.nickname) {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/signup/nickname-check", null, {
+        params: { nickname: SignupNickname.nickname },
+      });
+
+      setIsDuplicateChecked(true); // 중복 확인 완료 표시
+
+      if (response.data === 0) {
+        alert("사용 가능한 닉네임입니다.");
+        setNicknameAvailable(true); // 닉네임 사용 가능
+      } else {
+        alert("이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.");
+        setNicknameAvailable(false); // 닉네임 사용 불가능
+      }
+    } catch (error) {
+      console.error("Error checking duplicate nickname:", error.response ? error.response.data : error.message);
+      console.log("Error details:", error.response ? error.response : error); // 오류 상세 내용을 console.log로 출력
+      alert(
+          "중복 확인 중 오류가 발생했습니다: " +
+          (error.response ? error.response.data : error.message)
+      );
+    }
+  };
+
+  const handleCheckDuplicate = () => checkDuplicate();
+
+  const handleNextPage = () => {
+    if (!SignupNickname.nickname.trim()) {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+
+    if (!nicknameAvailable) {
+      alert("닉네임 중복 확인을 해주세요.");
+      return;
+    }
+
+    nextPage();
+  };
+
   const handleNicknameChange = (event) => {
     setSignupNicknameInfo("nickname")(event);
+    setNicknameAvailable(false);
+    setIsDuplicateChecked(false);
   };
 
   return (
@@ -47,6 +98,7 @@ const SignupNickname = () => {
             <button
                 type="button"
                 className="signup-button-confirm"
+                onClick={handleCheckDuplicate}
                 disabled={!SignupNickname.nickname}
             >
               확인
@@ -57,7 +109,8 @@ const SignupNickname = () => {
               <button
                   type="button"
                   className="btn-hover color"
-                  onClick={nextPage}
+                  onClick={handleNextPage}
+                  disabled={!SignupNickname.nickname || !nicknameAvailable || !isDuplicateChecked}
               >
                 다음
               </button>
