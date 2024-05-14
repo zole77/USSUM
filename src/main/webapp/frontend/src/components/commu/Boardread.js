@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { PiHandsClapping, PiHandsClappingBold } from "react-icons/pi";
 import { IoIosClose } from "react-icons/io";
 import "../../styles/BoardReadModal.css";
+import defaultProfile from "../../img/defaultProfile.png";
 
 function Boardread(props) {
     const modalBackground = useRef();
@@ -22,14 +23,6 @@ function Boardread(props) {
         }, 50);
     };
 
-    useEffect(() => {
-        // 모달이 열릴 때 body 요소에 overflow: hidden 속성 추가
-        document.body.style.overflow = "hidden";
-        return () => {
-            // 모달이 닫힐 때 body 요소의 overflow 속성 초기화
-            document.body.style.overflow = "";
-        };
-    }, []);
     // 전체 게시글 리스트에서 id가 props로 넘겨온 postId와 같은 데이터인 데이터를 추출하기
     // 전체 게시글 리스트를 순회하면서 게시글.id === postId인지 비교 그 값이 true면 게시글 데이터를 추출
     // find는 boardList에서 게시글 고유 id와 일치하는 게시글의 JSON 값을 가지고 있음
@@ -108,10 +101,6 @@ function Boardread(props) {
                     </div>
                     <CommentForm handleCommentSubmit={handleCommentSubmit} />
                     <CommentBox comments={comments} />
-
-                    <div className="commentBox">
-                        <div></div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -123,7 +112,19 @@ function CommentBox(props) {
         <div>
             <h2 style={{ textAlign: "left" }}>댓글 목록</h2>
             {props.comments.map((comment, index) => (
-                <div key={index}>{comment}</div>
+                <div className="user-commnet" key={index}>
+                    <div className="img-container" style={{ width: "100px", height: "100px" }}>
+                        <img
+                            src={defaultProfile}
+                            alt="profile"
+                            style={{ marginTop: "10px", width: "75px", height: "75px" }}
+                        ></img>
+                    </div>
+                    <div className="commentDiv">
+                        <p>댓글 작성자 ID</p>
+                        <p>{comment}</p>
+                    </div>
+                </div>
             ))}
         </div>
     );

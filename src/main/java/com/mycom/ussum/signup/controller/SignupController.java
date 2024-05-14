@@ -24,7 +24,7 @@ public class SignupController {
         System.out.println("회원가입 페이지 실행");
         return "signup";
     }
-    @PostMapping("/signup/어디")
+    @PostMapping("/signup/register")
     public String signUp(SignupVO signupVO, RedirectAttributes redirectAttributes){
         boolean isSuccess = signupService.signUp(signupVO);
         if(isSuccess){
@@ -36,7 +36,7 @@ public class SignupController {
         }
     }
 
-    @PostMapping("/signup/url")
+    @PostMapping("/signup/checkDuplicate")
     @ResponseBody
     public int checkById(@RequestParam String mem_id){
         return signupService.checkById(mem_id);
