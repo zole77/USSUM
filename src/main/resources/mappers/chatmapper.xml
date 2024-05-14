@@ -5,25 +5,60 @@
     <insert id="createRoom">
         <![CDATA[
             INSERT INTO CHAT_TABLE(ROOM_ID, ROOM_NAME)
-            VALUES (ROOM_ID = #{room_id}, ROOM_NAME = #{room_name})
+            VALUES (#{room_id}, #{room_name})
         ]]>
     </insert>
 
     <insert id="saveMsg">
-        INSERT INTO MESSAGE_TABLE(ROOM_ID, CHAT_NO, MESSAGE, MEM_ID, TYPE)
-        VALUES (ROOM_ID=#{room_id},
-                (SELECT count(*) + 1
-                 FROM MESSAGE_TABLE
-                 WHERE ROOM_ID = #{room_id}),
-                MESSAGE = #{message},
-                MEM_ID = #{mem_id},
-                TYPE = #{type})
+        <![CDATA[
+            INSERT INTO MESSAGE_TABLE(ROOM_ID, CHAT_NO, MESSAGE, MEM_ID, TYPE, CREATED_TIME, MEM_NICKNAME)
+            VALUES (#{room_id},
+                    (SELECT count(*) + 1
+                     FROM MESSAGE_TABLE
+                     WHERE ROOM_ID = #{room_id}),
+                    #{message},
+                    #{mem_id},
+                    #{type},
+                    SYSDATE,
+                    #{mem_nickname})
+        ]]>
     </insert>
 
     <select id="getMsg" resultType="com.mycom.ussum.vo.ChatMessage">
-        SELECT MESSAGE, MEM_ID, TYPE
-        FROM MESSAGE_TABLE
-        WHERE ROOM_ID = #{room_id}
-        ORDER BY CHAT_NO
+        <![CDATA[
+            SELECT MESSAGE, MEM_NICKNAME, TYPE, CREATED_TIME
+            FROM MESSAGE_TABLE
+            WHERE ROOM_ID = #{room_id}
+            ORDER BY CHAT_NO
+        ]]>
+    </select>
+
+    <insert id="enterRoom">
+        <![CDATA[
+            INSERT INTO PARTIC_TABLE(MEM_ID, ROOM_ID)
+            VALUES (#{mem_id}, #{room_id})
+        ]]>
+    </insert>
+
+    <delete id="quitRoom">
+        <![CDATA[
+            DELETE FROM PARTIC_TABLE
+            WHERE MEM_ID = #{mem_id} AND ROOM_ID = #{room_id}
+        ]]>
+    </delete>
+
+    <select id="getRooms" resultType="com.mycom.ussum.vo.ChatRoom">
+        <![CDATA[
+            SELECT *
+            FROM PARTIC_TABLE
+            WHERE MEM_ID = #{mem_id}
+        ]]>
+    </select>
+
+    <select id="loadAllRooms" resultType="com.mycom.ussum.vo.ChatRoom">
+        <![CDATA[
+            SELECT *
+            FROM CHAT_TABLE
+        ]]>
     </select>
 </mapper>

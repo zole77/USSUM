@@ -20,6 +20,7 @@ public class ChatService {
     @PostConstruct
     public void init() {
         chatRooms = new LinkedHashMap<>();
+        initList();
     }
 
     public List<ChatRoom> findAllRoom() {
@@ -38,11 +39,30 @@ public class ChatService {
         return chatRoom;
     }
 
-    public void saveMsg(String msg, String roomId, String mem_id, String type){
-        chatRepository.saveMsg(msg, roomId, mem_id, type);
+    public void saveMsg(String msg, String roomId, String mem_id, String nickname, String type){
+        chatRepository.saveMsg(msg, roomId, mem_id, nickname, type);
     }
 
     public List<ChatMessage> getMsg(String roomId){
         return chatRepository.getMsg(roomId);
+    }
+
+    public void enterRoom(String roomId, String mem_id){
+        chatRepository.enterRoom(roomId, mem_id);
+    }
+
+    public void quitRoom(String roomId, String mem_id){
+        chatRepository.quitRoom(roomId, mem_id);
+    }
+
+    public List<ChatRoom> getRooms(String room_id, String mem_id){
+        return chatRepository.getRooms(room_id, mem_id);
+    }
+
+    private void initList(){
+        List<ChatRoom> rooms = chatRepository.loadAllRooms();
+        for (ChatRoom room : rooms) {
+            chatRooms.put(room.getRoomId(), room);
+        }
     }
 }
