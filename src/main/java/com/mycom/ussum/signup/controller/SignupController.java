@@ -42,7 +42,7 @@ public class SignupController {
         return signupService.checkById(mem_id);
     }
 
-    @PostMapping("/signup/url2")
+    @PostMapping("/signup/checkNickname")
     @ResponseBody
     public int checkByNickname(@RequestParam String mem_nickname){
         return signupService.checkByNickname(mem_nickname);
