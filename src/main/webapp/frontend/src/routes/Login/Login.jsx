@@ -1,8 +1,8 @@
-// Login.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/Login_styles.css";
+import logo from "../../img/logo.png";
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState({ mem_id: "", mem_password: "" });
@@ -36,7 +36,7 @@ const Login = () => {
             headers: {
               "Content-Type": "application/json",
             },
-          },
+          }
       );
 
       if (response.data.message === "LOGIN SUCCESS") {
@@ -55,7 +55,9 @@ const Login = () => {
   return (
       <div className="login">
         <div className="userFrame">
-          <h4 className="login_title">US:SUM</h4>
+          <h4 className="login_title">
+            <img src={logo} alt="US:SUM" style={{ width: "200px", height: "auto" }} />
+          </h4>
           <form onSubmit={handleSubmit}>
             <div className="text_area">
               <input
