@@ -21,6 +21,7 @@ public interface Repository {
     void updatePost(BoardVO boardVO);
     void deletePost(String post_no);
     List<BoardVO> getHotPosts();
+    List<BoardVO> getAllPosts();
 
     //Clap
     int getMemberClapInPost(@Param("post_no") String post_no, @Param("mem_id") String mem_id);

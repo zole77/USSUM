@@ -78,4 +78,9 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardVO> getHotPosts() {
         return repository.getHotPosts();
     }
+
+    @Override
+    public List<BoardVO> getAllPosts() {
+        return repository.getAllPosts();
+    }
 }
