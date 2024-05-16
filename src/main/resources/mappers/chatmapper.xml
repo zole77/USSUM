@@ -47,9 +47,9 @@
         ]]>
     </delete>
 
-    <select id="getRooms" resultType="com.mycom.ussum.vo.ChatRoom">
+    <select id="getRooms" resultType="string">
         <![CDATA[
-            SELECT *
+            SELECT ROOM_ID
             FROM PARTIC_TABLE
             WHERE MEM_ID = #{mem_id}
         ]]>

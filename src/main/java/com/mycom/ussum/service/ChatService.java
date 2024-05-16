@@ -55,8 +55,12 @@ public class ChatService {
         chatRepository.quitRoom(roomId, mem_id);
     }
 
-    public List<ChatRoom> getRooms(String room_id, String mem_id){
-        return chatRepository.getRooms(room_id, mem_id);
+    public List<ChatRoom> getRooms(String mem_id){
+        List<ChatRoom> rooms = new ArrayList<>();
+        for (String roomId : chatRepository.getRooms(mem_id)){
+            rooms.add(findRoomById(roomId));
+        }
+        return rooms;
     }
 
     private void initList(){

@@ -16,7 +16,7 @@ public interface ChatRepository {
 
     void enterRoom(@Param("room_id") String room_id, @Param("mem_id") String mem_id);
     void quitRoom(@Param("room_id") String room_id, @Param("mem_id") String mem_id);
-    List<ChatRoom> getRooms(@Param("room_id") String room_id, @Param("mem_id") String mem_id);
+    List<String> getRooms(String mem_id);
 
     List<ChatRoom> loadAllRooms();
 }
