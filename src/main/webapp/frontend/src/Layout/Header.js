@@ -1,4 +1,3 @@
-// Header.js
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navigation.css";
@@ -32,14 +31,19 @@ function Header() {
         setIsLoggedIn(!!token);
     }, []);
 
+    // 로고 클릭 핸들러
+    const handleLogoClick = () => {
+        navigate("/");
+    };
+
     return (
         <nav className="navigation">
-            <div className="logo">
-                <img src={logo} alt="logo" style={{ width: "150px", height: "35px" }}></img>
+            <div className="logo" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
+                <img src={logo} alt="logo" style={{ width: "150px", height: "auto" }} />
             </div>
             <ul className="nav-links">
                 <li>
-                    <Link to="/" className="nav-link">
+                    <Link to="/info" className="nav-link">
                         서비스 소개
                     </Link>
                 </li>

@@ -3,6 +3,8 @@ package com.mycom.ussum.controller;
 import com.mycom.ussum.service.ChatService;
 import com.mycom.ussum.vo.ChatMessage;
 import com.mycom.ussum.vo.ChatRoom;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/chat")
+@Tag(name = "Chat API")
 public class ChatController {
     private final ChatService chatService;
 
@@ -44,8 +47,9 @@ public class ChatController {
     }
 
     @PostMapping("/getRooms")
-    public List<ChatRoom> getRooms(@RequestParam("roomId") String roomId, @RequestParam("memId") String memId){
-        return chatService.getRooms(roomId, memId);
+    @Operation(description = "사용자가 참여하고 있는 채팅방 목록 호출")
+    public List<ChatRoom> getRooms(@RequestParam("memId") String memId){
+        return chatService.getRooms(memId);
     }
 
 }

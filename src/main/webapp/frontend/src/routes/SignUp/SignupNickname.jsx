@@ -23,8 +23,8 @@ const SignupNickname = () => {
     }
 
     try {
-      const response = await axios.post("/signup/nickname-check", null, {
-        params: { nickname: SignupNickname.nickname },
+      const response = await axios.post("/signup/checkNickname", null, {
+        params: { mem_nickname: SignupNickname.nickname },
       });
 
       setIsDuplicateChecked(true); // 중복 확인 완료 표시
