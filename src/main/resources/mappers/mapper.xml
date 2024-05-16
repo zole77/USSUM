@@ -105,11 +105,10 @@
 
     <select id="getHotPosts" resultType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
-            SELECT *
-            FROM (SELECT *
-                  FROM BOARD_TABLE
-                  ORDER BY TOTAL_CLAP DESC)
-            WHERE ROWNUM BETWEEN 1 AND 10
+            SELECT POST_NO, POST_DATE, POST_TITLE, MEM_ID, TOTAL_CLAP
+            FROM BOARD_TABLE
+            ORDER BY TOTAL_CLAP DESC
+
         ]]>
     </select>
 
@@ -139,6 +138,14 @@
             WHERE POST_NO=#{post_no} AND COM_NO=#{com_no}
         ]]>
     </update>
+
+    <select id="getAllPosts" resultType="com.mycom.ussum.vo.BoardVO">
+        <![CDATA[
+            SELECT POST_NO, POST_DATE, POST_TITLE, MEM_ID, TOTAL_CLAP
+            FROM BOARD_TABLE
+            ORDER BY POST_DATE DESC
+        ]]>
+    </select>
 
 </mapper>
 
