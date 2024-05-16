@@ -17,14 +17,12 @@ const Confirmation = () => {
 
     try {
       const formData = {
-        id: userInfo.SignupId.Id,
-        password: userInfo.SignupPwd.pwd1,
-        nickname: userInfo.SignupNickname.nickname,
-        gender: userInfo.gender,
-        travelType: (userInfo.travelType || []).join(", "),
+        mem_id: userInfo.SignupId.Id,
+        mem_pwd: userInfo.SignupPwd.pwd1,
+        mem_nickname: userInfo.SignupNickname.nickname,
+        mem_gender: userInfo.gender,
+        mem_type: (userInfo.travelType || []).join(", "),
       };
-
-      console.log("Form Data to be sent to the backend:", formData);
 
       const response = await axios.post("/signup/register", formData);
 
@@ -169,7 +167,7 @@ const Confirmation = () => {
         </Grid>
         <Grid item xs={12} style={{ textAlign: "center" }}>
           <button type="submit" className="btn-hover color">
-            가입 완료!
+            확인
           </button>
         </Grid>
       </Grid>

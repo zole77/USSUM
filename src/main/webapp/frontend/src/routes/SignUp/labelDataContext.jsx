@@ -19,6 +19,7 @@ export const LabelProvider = ({ children }) => {
       { title: "닉네임" },
       { title: "성별" },
       { title: "여행 유형" },
+      { title: "가입" },
     ],
     [],
   );

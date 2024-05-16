@@ -78,13 +78,15 @@ const SignupId = () => {
               <Grid item xs={9}>
                 <input
                   type="email"
+                  id="email"
+                  name="email"
                   className={`signup-input ${
                     !isInputValid(SignupId.Id, EMAIL_REGEX) &&
                     SignupId.Id.length > 0
                       ? "input-error"
                       : ""
                   }`}
-                  placeholder="email@example.com"
+                  placeholder="example@email.com"
                   value={SignupId.Id}
                   onChange={(event) => setSignupIdInfo("Id")(event)}
                   required
