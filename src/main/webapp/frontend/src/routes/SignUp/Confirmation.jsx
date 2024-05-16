@@ -26,7 +26,7 @@ const Confirmation = () => {
 
       console.log("Form Data to be sent to the backend:", formData);
 
-      const response = await axios.post("/api/registration", formData);
+      const response = await axios.post("/signup/register", formData);
 
       if (response.status === 200) {
         console.log("Registration successful:", response.data);
