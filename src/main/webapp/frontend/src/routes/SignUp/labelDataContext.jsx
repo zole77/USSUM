@@ -1,5 +1,4 @@
-import React, { useState, createContext, useMemo } from "react";
-import SignupGender from "./SignupGender";
+import React, { useState, createContext, useMemo, useCallback } from "react";
 
 export const LabelContext = createContext();
 
@@ -9,21 +8,30 @@ export const LabelProvider = ({ children }) => {
     SignupId: { Id: "" },
     SignupPwd: { pwd1: "", pwd2: "" },
     SignupNickname: { nickname: "" },
-    SignupGender: "",
-    type: "",
+    gender: "",
+    travelType: [], // 빈 배열로 초기화
   });
 
-  const nextPage = () => {
+  const steps = useMemo(() => [
+    { title: "ID" },
+    { title: "비밀번호" },
+    { title: "닉네임" },
+    { title: "성별" },
+    { title: "여행 유형" },
+    { title: "확인" },
+  ], []);
+
+  const nextPage = useCallback(() => {
     setPage((prev) => Math.min(prev + 1, steps.length - 1));
-  };
+  }, [steps.length]);
 
-  const prevPage = () => {
+  const prevPage = useCallback(() => {
     setPage((prev) => Math.max(prev - 1, 0));
-  };
+  }, []);
 
-  const handleChange = (field, value) => {
+  const handleChange = useCallback((field, value) => {
     setUserInfo((prev) => ({ ...prev, [field]: value }));
-  };
+  }, []);
 
   const setSignupIdInfo = (prop) => (event) => {
     setUserInfo((prev) => ({
@@ -46,33 +54,23 @@ export const LabelProvider = ({ children }) => {
     }));
   };
 
-  const steps = [
-    { title: "ID" },
-    { title: "비밀번호" },
-    { title: "닉네임" },
-    { title: "성별" },
-    { title: "여행 유형" },
-    { title: "확인" },
-  ];
-
-  // useMemo를 사용하여 value 객체 메모이제이션
   const value = useMemo(
-    () => ({
-      page,
-      steps,
-      nextPage,
-      prevPage,
-      userInfo,
-      handleChange,
-      setUserInfo,
-      setSignupIdInfo,
-      setSignupPwdInfo,
-      setSignupNicknameInfo,
-    }),
-    [page, userInfo],
+      () => ({
+        page,
+        steps,
+        nextPage,
+        prevPage,
+        userInfo,
+        handleChange,
+        setUserInfo,
+        setSignupIdInfo,
+        setSignupPwdInfo,
+        setSignupNicknameInfo,
+      }),
+      [page, userInfo, nextPage, prevPage, steps, handleChange]
   );
 
   return (
-    <LabelContext.Provider value={value}>{children}</LabelContext.Provider>
+      <LabelContext.Provider value={value}>{children}</LabelContext.Provider>
   );
 };

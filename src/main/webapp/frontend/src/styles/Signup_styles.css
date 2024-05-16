@@ -1,6 +1,7 @@
 /* 기본 헤딩 스타일 */
 h4, h5 {
-  color: rgb(80, 150, 255);
+  color: #45c4b1;
+  margin: 20px;
 }
 
 /* 폼 관련 스타일 */
@@ -34,10 +35,10 @@ h4, h5 {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-/* 수평 정렬을 위한 스타일 */
 .form-group-horizontal {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 /* Input 필드 스타일 */
@@ -51,6 +52,9 @@ h4, h5 {
   margin-bottom: 0;
 }
 
+.signup-input-pwd {
+  width: 70% !important;
+}
 .signup-input:focus {
   border-color: #359d8f;
   box-shadow: 0 0 8px rgba(69, 196, 177, 0.5);
@@ -65,20 +69,23 @@ h4, h5 {
   color: #e74c3c;
   font-size: 0.75rem;
   margin-top: 5px;
-  text-align: left;
+  text-align: center;
   width: 100%;
 }
 
-/* ArrowBackIcon을 위한 스타일 */
+.signup-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+}
 .signup-back-button {
-  fill: #45c4b1;
-  margin-top: 30px;
   background: none;
   border: none;
   cursor: pointer;
-  margin-left: 0px;
+  padding: 10px;
+  font-size: 1.2em;
 }
-
 
 .grid-container-fixed-height {
   height: 600px;
@@ -126,6 +133,17 @@ h4, h5 {
   transition: background-color 0.3s, transform 0.1s;
 }
 
+.signup-button-confirm:hover {
+  background-color: #7fb5ab;
+}
+
+.signup-button-confirm:active {
+  transform: scale(0.98);
+}
+
+
+
+/* btn-hover와 color 클래스 정의 */
 .btn-hover {
   width: 200px;
   font-size: 16px;
@@ -141,19 +159,15 @@ h4, h5 {
   transition: all 0.4s ease-in-out;
 }
 
-.signup-button-confirm:hover, .btn-hover:hover {
-  background-color: #7fb5ab;
-}
-
-.btn-hover:focus {
-  outline: none;
-}
-
 .btn-hover.color {
   background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
   box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
 }
 
-.signup-button-confirm:active {
-  transform: scale(0.98);
+.btn-hover:hover {
+  background-color: #7fb5ab;
+}
+
+.btn-hover:focus {
+  outline: none;
 }

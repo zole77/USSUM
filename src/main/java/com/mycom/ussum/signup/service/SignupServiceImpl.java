@@ -17,10 +17,10 @@ public class SignupServiceImpl implements SignupService{
     }
 
     @Override
-    public boolean signUp(@NotNull SignupVO signupVO){
+    public boolean signUp(SignupVO signupVO){
         int checkById = signupDAO.checkById(signupVO.getMem_id());
 
-        //int checkByNickname = signupDAO.checkByNickname(signupVO.getMem_nickname());
+        int checkByNickname = signupDAO.checkByNickname(signupVO.getMem_nickname());
 
         if (checkById == 0) {
             signupDAO.signUp(signupVO);
