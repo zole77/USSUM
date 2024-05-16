@@ -36,6 +36,12 @@ public class BoardController {
         return map;
     }
 
+    @GetMapping("/allposts")
+    @Operation(summary = "전체 게시글 조회")
+    public List<BoardVO> getAllPosts(){
+        return boardService.getAllPosts();
+    }
+
     @PostMapping("/update")
     @Operation(summary = "수정", description = "기존의 글을 수정합니다.")
     public void updatePost(@RequestBody BoardVO boardVO){
@@ -91,7 +97,7 @@ public class BoardController {
     }
 
     @GetMapping("/hot")
-    @Operation(summary = "인기 게시글 불러오기", description = "추천수 많은 것 10개 가져옴")
+    @Operation(summary = "인기 게시글 불러오기", description = "전체 게시글을 불러오되 추천 수가 많은 순으로 정렬합니다.")
     public List<BoardVO> getHotPosts(){
         return boardService.getHotPosts();
     }

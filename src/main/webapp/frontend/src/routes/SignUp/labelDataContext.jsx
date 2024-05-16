@@ -12,14 +12,16 @@ export const LabelProvider = ({ children }) => {
     travelType: [], // 빈 배열로 초기화
   });
 
-  const steps = useMemo(() => [
-    { title: "ID" },
-    { title: "비밀번호" },
-    { title: "닉네임" },
-    { title: "성별" },
-    { title: "여행 유형" },
-    { title: "확인" },
-  ], []);
+  const steps = useMemo(
+    () => [
+      { title: "ID" },
+      { title: "비밀번호" },
+      { title: "닉네임" },
+      { title: "성별" },
+      { title: "여행 유형" },
+    ],
+    [],
+  );
 
   const nextPage = useCallback(() => {
     setPage((prev) => Math.min(prev + 1, steps.length - 1));
@@ -55,22 +57,22 @@ export const LabelProvider = ({ children }) => {
   };
 
   const value = useMemo(
-      () => ({
-        page,
-        steps,
-        nextPage,
-        prevPage,
-        userInfo,
-        handleChange,
-        setUserInfo,
-        setSignupIdInfo,
-        setSignupPwdInfo,
-        setSignupNicknameInfo,
-      }),
-      [page, userInfo, nextPage, prevPage, steps, handleChange]
+    () => ({
+      page,
+      steps,
+      nextPage,
+      prevPage,
+      userInfo,
+      handleChange,
+      setUserInfo,
+      setSignupIdInfo,
+      setSignupPwdInfo,
+      setSignupNicknameInfo,
+    }),
+    [page, userInfo, nextPage, prevPage, steps, handleChange],
   );
 
   return (
-      <LabelContext.Provider value={value}>{children}</LabelContext.Provider>
+    <LabelContext.Provider value={value}>{children}</LabelContext.Provider>
   );
 };

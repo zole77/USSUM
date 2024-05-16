@@ -1,14 +1,12 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
 import ServiceIntro from "../routes/ServiceIntro";
-import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
-import Board from "../routes/Board.js";
-import Main from "../routes/Main.js";
-
-import Login from "./../routes/Login/Login.jsx";
+import Board from "../routes/Board";
+import Main from "../routes/Main";
+import Login from "../routes/Login/Login";
 import SignUp from "../routes/SignUp/SignUp";
 
-function Body(props) {
-
+function Body() {
   return (
     <div>
       <Routes>
