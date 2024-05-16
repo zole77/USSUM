@@ -3,7 +3,6 @@ import axios from "axios";
 import { LabelContext } from "./labelDataContext";
 import Grid from "@mui/material/Grid";
 import "../../styles/Signup_styles.css";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -12,7 +11,6 @@ const SignupId = () => {
     userInfo: { SignupId },
     setSignupIdInfo,
     nextPage,
-    prevPage, // prevPage 추가
   } = useContext(LabelContext);
   const [idAvailable, setIdAvailable] = useState(false); // 아이디 사용 가능 여부
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false); // 중복 확인 여부
