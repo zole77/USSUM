@@ -38,14 +38,17 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
             sessions.add(session);
             chatMessage.setMessage(chatMessage.getSender() + "님이 입장했습니다.");
             sendToEachSocket(sessions, new TextMessage(objectMapper.writeValueAsString(chatMessage)));
+            chatService.enterRoom(room.getRoomId(), chatMessage.getMemId());
         } else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
             sessions.remove(session);
             chatMessage.setMessage(chatMessage.getSender() + "님이 퇴장했습니다.");
             sendToEachSocket(sessions, new TextMessage(objectMapper.writeValueAsString(chatMessage)));
+            chatService.quitRoom(room.getRoomId(), chatMessage.getMemId());
         } else {
             sendToEachSocket(sessions, message);
         }
-        chatService.saveMsg(message.toString(), room.getRoomId(), chatMessage.getSender(), chatMessage.getType().toString());
+        chatService.saveMsg(message.toString(), room.getRoomId(), chatMessage.getMemId(),
+                chatMessage.getSender(), chatMessage.getType().toString());
     }
 
     private void sendToEachSocket(Set<WebSocketSession> sessions, TextMessage message) {

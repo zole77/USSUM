@@ -42,4 +42,10 @@ public class ChatController {
     public List<ChatMessage> getMessages(@PathVariable("roomId") String roomId){
         return chatService.getMsg(roomId);
     }
+
+    @PostMapping("/getRooms")
+    public List<ChatRoom> getRooms(@RequestParam("roomId") String roomId, @RequestParam("memId") String memId){
+        return chatService.getRooms(roomId, memId);
+    }
+
 }
