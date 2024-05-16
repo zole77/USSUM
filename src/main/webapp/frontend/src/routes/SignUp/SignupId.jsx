@@ -26,7 +26,7 @@ const SignupId = () => {
     }
 
     try {
-      const response = await axios.post("/signup/url", null, {
+      const response = await axios.post("/signup/checkDuplicate", null, {
         params: { mem_id: SignupId.Id },
       });
 
