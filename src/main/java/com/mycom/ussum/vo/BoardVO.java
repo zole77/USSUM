@@ -13,4 +13,5 @@ public class BoardVO {
     private String post_title;
     private String mem_id;
     private String post_content;
+    private int total_clap;
 }
