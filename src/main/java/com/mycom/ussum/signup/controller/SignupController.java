@@ -25,25 +25,14 @@ public class SignupController {
         return "signup";
     }
 
-    @PostMapping("/signup/register12")
+    @PostMapping("/signup/register")
     @ResponseBody
-    public Map<String, Boolean> register12(@RequestBody SignupVO signupVO){
-        boolean isSuccess =  signupService.signUp(signupVO);
+    public Map<String, Boolean> signUp(@RequestBody SignupVO signupVO, RedirectAttributes redirectAttributes){
+        System.out.println(signupVO.getMem_id());
+        boolean isSuccess = signupService.signUp(signupVO);
         Map<String, Boolean> map = new HashMap<>();
         map.put("isSuccess", isSuccess);
         return map;
-    }
-
-    @PostMapping("/signup/register")
-    public String signUp(SignupVO signupVO, RedirectAttributes redirectAttributes){
-        boolean isSuccess = signupService.signUp(signupVO);
-        if(isSuccess){
-            return "redirect:/login";
-        } else{
-            //에러 메시지 주고 회원가입으로 돌아감
-            redirectAttributes.addFlashAttribute("error",true);
-            return "redirect:/signup";
-        }
     }
 
     @PostMapping("/signup/checkDuplicate")
