@@ -91,7 +91,7 @@ public class BoardController {
                     )
             )
     })
-    public Map<String, Integer> addClap(@RequestParam("post_no") String post_no, @RequestParam("mem_id") String mem_id){
+    public Map<String, Integer> addClap(@RequestParam("post_no") int post_no, @RequestParam("mem_id") String mem_id){
         return boardService.addClap(post_no, mem_id);
     }
 

@@ -24,11 +24,11 @@ public interface Repository {
     List<BoardVO> getAllPosts();
 
     //Clap
-    int getMemberClapInPost(@Param("post_no") String post_no, @Param("mem_id") String mem_id);
-    void createClap(@Param("post_no") String post_no, @Param("mem_id") String mem_id);
-    void addClap(@Param("post_no") String post_no, @Param("mem_id") String mem_id);
-    void updateTotalClap(String post_no);
-    int getTotalClap(String post_no);
+    int getMemberClapInPost(@Param("post_no") int post_no, @Param("mem_id") String mem_id);
+    void createClap(@Param("post_no") int post_no, @Param("mem_id") String mem_id);
+    void addClap(@Param("post_no") int post_no, @Param("mem_id") String mem_id);
+    void updateTotalClap(int post_no);
+    int getTotalClap(int post_no);
 
     //Comment
     void createComment(CommentVO commentVO);
