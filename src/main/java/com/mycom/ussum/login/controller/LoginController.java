@@ -31,10 +31,10 @@ public class LoginController {
 
     @PostMapping("/login")
     public String doLogin(@RequestParam("mem_id") String mem_id,
-                          @RequestParam("mem_password") String mem_password,
+                          @RequestParam("mem_pwd") String mem_pwd,
                           RedirectAttributes redirectAttributes,
                           HttpSession session){
-        List<LoginVO> result = loginService.login(mem_id, mem_password);
+        List<LoginVO> result = loginService.login(mem_id, mem_pwd);
 
         if (result.isEmpty()) {
             System.out.println("로그인이 안됨");

@@ -12,13 +12,13 @@ const SignupId = () => {
     setSignupIdInfo,
     nextPage,
   } = useContext(LabelContext);
-  const [idAvailable, setIdAvailable] = useState(false); // 아이디 사용 가능 여부
-  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false); // 중복 확인 여부
+  const [idAvailable, setIdAvailable] = useState(false);
+  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
 
   const isInputValid = (input, regex) => input.length > 0 && regex.test(input);
 
   const checkDuplicate = async () => {
-    if (!SignupId.Id) {
+    if (!SignupId.Id.trim()) {
       alert("아이디를 입력해주세요.");
       return;
     }
@@ -28,29 +28,27 @@ const SignupId = () => {
         params: { mem_id: SignupId.Id },
       });
 
-      setIsDuplicateChecked(true); // 중복 확인 완료 표시
+      setIsDuplicateChecked(true);
 
       if (response.data === 0) {
         alert("사용 가능한 아이디입니다.");
-        setIdAvailable(true); // 아이디 사용 가능
+        setIdAvailable(true);
       } else {
         alert("이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.");
-        setIdAvailable(false); // 아이디 사용 불가능
+        setIdAvailable(false);
       }
     } catch (error) {
       console.error(
         "Error checking duplicate ID:",
         error.response ? error.response.data : error.message,
       );
-      console.log("Error details:", error.response ? error.response : error); // 오류 상세 내용을 console.log로 출력
+      console.log("Error details:", error.response ? error.response : error);
       alert(
         "중복 확인 중 오류가 발생했습니다: " +
           (error.response ? error.response.data : error.message),
       );
     }
   };
-
-  const handleCheckDuplicate = () => checkDuplicate();
 
   const handleNextPage = () => {
     if (!SignupId.Id.trim()) {
@@ -80,13 +78,15 @@ const SignupId = () => {
               <Grid item xs={9}>
                 <input
                   type="email"
+                  id="email"
+                  name="email"
                   className={`signup-input ${
                     !isInputValid(SignupId.Id, EMAIL_REGEX) &&
                     SignupId.Id.length > 0
                       ? "input-error"
                       : ""
                   }`}
-                  placeholder="email@example.com"
+                  placeholder="example@email.com"
                   value={SignupId.Id}
                   onChange={(event) => setSignupIdInfo("Id")(event)}
                   required
@@ -102,7 +102,7 @@ const SignupId = () => {
                 <button
                   type="button"
                   className="signup-button-confirm"
-                  onClick={handleCheckDuplicate}
+                  onClick={checkDuplicate}
                   disabled={
                     !isInputValid(SignupId.Id, EMAIL_REGEX) ||
                     SignupId.Id.trim() === ""
