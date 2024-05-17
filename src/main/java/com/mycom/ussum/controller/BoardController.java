@@ -100,4 +100,5 @@ public class BoardController {
     public List<BoardVO> getHotPosts(){
         return boardService.getHotPosts();
     }
+
 }
