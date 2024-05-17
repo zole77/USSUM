@@ -12,6 +12,7 @@ public class SignupVO {
     private String mem_pwd;
     private String mem_phone;
     private String mem_birth;
+    private String mem_gender;
     private String mem_address;
     private String mem_regdate;
     private String mem_type;
