@@ -26,7 +26,7 @@ public class MemberController {
 
     @PostMapping("/one")
     @Operation(summary = "회원 한 명의 정보를 불러옴", description = "정보 조회는 회원 id를 통해 이루어진다")
-    public MemberVO getOneMember(@Parameter @RequestParam("mem_id") String mem_id){
+    public MemberVO getOneMember(@Parameter @RequestBody String mem_id){
         return memberService.getOneMember(mem_id);
     }
 }

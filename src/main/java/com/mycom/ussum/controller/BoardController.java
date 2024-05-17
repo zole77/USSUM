@@ -91,8 +91,8 @@ public class BoardController {
                     )
             )
     })
-    public Map<String, Integer> addClap(@RequestParam("post_no") String post_no, @RequestParam("mem_id") String mem_id){
-        return boardService.addClap(post_no, mem_id);
+    public Map<String, Integer> addClap(@RequestBody Map<String, String> map){
+        return boardService.addClap(Integer.parseInt(map.get("post_no")), map.get("mem_id"));
     }
 
     @GetMapping("/hot")
@@ -100,4 +100,5 @@ public class BoardController {
     public List<BoardVO> getHotPosts(){
         return boardService.getHotPosts();
     }
+
 }

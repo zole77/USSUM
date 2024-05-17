@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/comment")
@@ -30,8 +31,9 @@ public class CommentController {
     }
 
     @PostMapping("/delete")
-    @Operation(summary = "댓글 삭제", description = "comment 테이블의 use 칼럼값을 N으로 수정합니다.")
-    public void deleteComment(@RequestParam("post_no") String post_no, @RequestParam("com_no") String com_no){
-        commentService.deleteComment(post_no, com_no);
+    @Operation(summary = "댓글 삭제", description = "comment 테이블의 use 칼럼값을 N으로 수정합니다. 실제로 삭제하진 않습니다." +
+            "post_no와 com_no값을 받습니다.")
+    public void deleteComment(@RequestBody Map<String, String> map){
+        commentService.deleteComment(map.get("post_no"), map.get("com_no"));
     }
 }
