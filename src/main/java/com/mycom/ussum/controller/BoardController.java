@@ -76,7 +76,7 @@ public class BoardController {
         boardService.deletePost(post_no);
     }
 
-    @GetMapping("/addClap")
+    @PostMapping("/addClap")
     @Operation(summary = "좋아요 추가", description = "좋아요 추가. 한 사람당 한 게시글에 최대 50번까지 가능. "+
             "결과값으로 현재 게시글의 총 박수 수와 개인 박수 수를 반환한다.",
     responses = {
@@ -91,8 +91,8 @@ public class BoardController {
                     )
             )
     })
-    public Map<String, Integer> addClap(@RequestParam("post_no") int post_no, @RequestParam("mem_id") String mem_id){
-        return boardService.addClap(post_no, mem_id);
+    public Map<String, Integer> addClap(@RequestBody Map<String, String> map){
+        return boardService.addClap(Integer.parseInt(map.get("post_no")), map.get("mem_id"));
     }
 
     @GetMapping("/hot")
