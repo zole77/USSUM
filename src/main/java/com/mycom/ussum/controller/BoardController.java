@@ -76,7 +76,7 @@ public class BoardController {
         boardService.deletePost(post_no);
     }
 
-    @PostMapping("/addClap")
+    @GetMapping("/addClap")
     @Operation(summary = "좋아요 추가", description = "좋아요 추가. 한 사람당 한 게시글에 최대 50번까지 가능. "+
             "결과값으로 현재 게시글의 총 박수 수와 개인 박수 수를 반환한다.",
     responses = {
