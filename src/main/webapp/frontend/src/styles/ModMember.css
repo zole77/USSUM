@@ -1,0 +1,195 @@
+.gender-options {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* 라디오 버튼과 레이블 사이의 간격을 조정합니다 */
+}
+
+.gender-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 30px;
+}
+
+.gender-option label {
+    display: inline-block;
+    width: 50px; /* 레이블의 너비를 설정합니다. 필요에 따라 조정 가능합니다 */
+    text-align: center; /* 레이블 텍스트를 가운데 정렬합니다 */
+}
+
+td.label-cell {
+    text-align: right; /* 좌측 요소 우측 정렬 */
+    padding-right: 10px; /* 약간의 간격을 추가 */
+}
+
+td.input-cell {
+    text-align: left; /* 우측 요소 좌측 정렬 */
+    padding-left: 10px; /* 약간의 간격을 추가 */
+}
+
+.profile-edit-form {
+    text-align: center;
+    position: relative; /* fixed에서 relative로 변경 */
+    margin: 0 auto;
+    padding: 10px;
+    display: inline-block;
+    background: #FFFFFF;
+    width: 700px;
+    height: 1000px;
+    margin-top: 3%;
+    border-radius: 22px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.profile-header {
+    height: 260px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.profile-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.profile-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #5ac7c7;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    text-decoration: none; /* 텍스트 밑줄 제거 */
+    display: inline-block;
+    font-size: 16px;
+}
+
+.profile-button:hover {
+    background-color: #45a5a1;
+}
+
+/* 프로필 수정 테이블 */
+.profile-edit-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.profile-edit-table thead th {
+    font-weight: bold;
+    padding: 10px;
+}
+
+.profile-edit-table td {
+    padding: 13px;
+    vertical-align: middle;
+}
+
+.profile-edit-table label {
+    font-weight: bold;
+}
+
+.profile-edit-table input,
+.profile-edit-table select,
+.profile-edit-table textarea {
+    width: 60%;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid #45c4b1;
+    background-color: #ffffff;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.profile-edit-table input[type="file"] {
+    padding: 3px;
+}
+
+.button-group {
+    display: flex;
+}
+
+.button-group .profile-button {
+    flex: 1;
+    margin: 0;
+    border: none; /* 경계선을 없애서 버튼들이 연결되어 보이게 할 수 있습니다 */
+}
+
+/* 버튼 영역 */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 90px 0 90px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.4s ease-in-out;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #5ac7c7;
+    color: #fff;
+    background-size: 300% 100%;
+}
+
+.form-actions button[type="submit"]:hover {
+    background-position: 100% 0;
+}
+
+.form-actions button[type="button"] {
+    background-color: #ccc;
+    color: #000;
+}
+
+.form-actions button:focus {
+    outline: none;
+}
+
+.form-actions button.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align: center;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    transition: all 0.4s ease-in-out;
+}
+
+.form-actions button.btn-hover.color {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+
+.form-actions button.btn-hover:hover {
+    background-position: 100% 0;
+}
+
+.form-actions button.btn-hover:focus {
+    outline: none;
+}

@@ -11,6 +11,8 @@ function Main() {
             <Link to="/login">Login page</Link>
             <br />
             <Link to="/info">services</Link>
+            <br />
+            <Link to="/mypage">마이페이지</Link>
         </div>
     );
 }
