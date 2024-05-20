@@ -73,7 +73,6 @@ form {
 
 /* 로그인 컨테이너 */
 .login {
-    font-family: sans-serif;
     text-align: center;
     position: relative; /* fixed에서 relative로 변경 */
     margin: 0 auto;

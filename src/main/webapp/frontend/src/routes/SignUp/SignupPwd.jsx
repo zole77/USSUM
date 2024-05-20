@@ -23,7 +23,9 @@ const SignupPwd = () => {
     setSignupPwdInfo("pwd1")(event);
 
     setPasswordError(
-      validatePassword(value) ? "" : "※문자, 숫자, 특수문자 포함 8글자 이상",
+      validatePassword(value)
+        ? ""
+        : "※문자, 숫자, 특수문자 중 2가지 포함 8글자 이상",
     );
   };
 
@@ -44,7 +46,7 @@ const SignupPwd = () => {
       nextPage();
     } else {
       if (!validatePassword(userInfo.SignupPwd.pwd1)) {
-        setPasswordError("※문자, 숫자, 특수문자 포함 8글자 이상");
+        setPasswordError("※문자, 숫자, 특수문자 중 2가지 포함 8글자 이상");
       }
 
       if (userInfo.SignupPwd.pwd1 !== userInfo.SignupPwd.pwd2) {
