@@ -85,6 +85,16 @@
         ]]>
     </update>
 
+    <update id="addClap2">
+        <![CDATA[
+            UPDATE CLAP_TABLE
+            SET CLAP = (SELECT CASE WHEN CLAP + #{addition} >= 50 Then 50 else CLAP + #{addition} end
+                        FROM CLAP_TABLE
+                        WHERE POST_NO = #{post_no} AND MEM_ID = #{mem_id})
+            WHERE POST_NO = #{post_no} AND MEM_ID = #{mem_id}
+        ]]>
+    </update>
+
     <update id="updateTotalClap">
         <![CDATA[
             UPDATE BOARD_TABLE

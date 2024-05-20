@@ -12,7 +12,7 @@ public interface BoardService {
     List<BoardVO> getPagePosts(int page);
     void updatePost(BoardVO board);
     void deletePost(String post_no);
-    Map<String, Integer> addClap(String post_no, String mem_id);
+    Map<String, Integer> addClap(int post_no, String mem_id);
     List<BoardVO> getHotPosts();
     List<BoardVO> getAllPosts();
 }

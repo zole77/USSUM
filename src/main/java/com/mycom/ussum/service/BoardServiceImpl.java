@@ -55,7 +55,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Map<String, Integer> addClap(String post_no, String mem_id) {
+    public Map<String, Integer> addClap(int post_no, String mem_id) {
         Map<String, Integer> map = new HashMap<>();
 
         int nowPersonalClap = repository.getMemberClapInPost(post_no, mem_id);
