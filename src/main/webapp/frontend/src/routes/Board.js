@@ -16,7 +16,7 @@ function Board(props) {
     const [modalOpen, setModalOpen] = useState(false);
     const [readmodalOpen, setReadModalOpen] = useState(false);
     const [updatemodalOpen, setUpdateModalOpen] = useState(false);
-    const [deltemodalOpen, setDeleteModalOpen] = useState(false);
+
     const [postId, setPostId] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentPosts, setCurrentPosts] = useState([]);
@@ -147,7 +147,6 @@ function Board(props) {
                                 setReadModalOpen={setReadModalOpen}
                                 setPostId={setPostId}
                                 setUpdateModalOpen={setUpdateModalOpen}
-                                setDeleteModalOpen={setDeleteModalOpen}
                             />
                             {updatemodalOpen ? (
                                 <Boardupdate
@@ -169,7 +168,6 @@ function Board(props) {
                                     readmodalOpen={readmodalOpen}
                                     setReadModalOpen={setReadModalOpen}
                                     setUpdateModalOpen={setUpdateModalOpen}
-                                    setDeleteModalOpen={setDeleteModalOpen}
                                     postId={postId}
                                     setPostId={setPostId}
                                 />
@@ -194,10 +192,6 @@ function Board(props) {
                     modalOpen={modalOpen}
                     setModalOpen={setModalOpen}
                     fetchPosts={fetchPosts}
-                />
-                <BoardDelete
-                    deltemodalOpen={deltemodalOpen}
-                    setDeleteModalOpen={setDeleteModalOpen}
                 />
                 <div className="pageBtn-container">
                     {/* 페이지 번호 목록 */}
@@ -233,51 +227,6 @@ function CommuPost(props) {
             <span>{props.boardList.post_date}</span>
         </div>
     );
-}
-
-function BoardDelete(props) {
-    const modalBackground = useRef();
-    if (props.deltemodalOpen) {
-        return (
-            <div
-                className="modal-container"
-                ref={modalBackground}
-                onClick={(e) => {
-                    if (e.target === modalBackground.current) {
-                        props.setDeleteModalOpen(false);
-                    }
-                }}
-            >
-                <div
-                    style={{
-                        backgroundColor: "#fff",
-                        width: "350px",
-                        height: "150px",
-                        borderRadius: "10px",
-                        marginLeft: "50px",
-                        marginRight: "50px",
-                        padding: "15px",
-                    }}
-                >
-                    진짜 삭제하실?
-                    <button
-                        onClick={() => {
-                            props.setDeleteModalOpen(false);
-                        }}
-                    >
-                        아니
-                    </button>
-                    <button
-                        onClick={() => {
-                            props.setDeleteModalOpen(false);
-                        }}
-                    >
-                        응
-                    </button>
-                </div>
-            </div>
-        );
-    }
 }
 
 export default Board;
