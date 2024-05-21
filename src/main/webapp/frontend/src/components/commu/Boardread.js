@@ -1,15 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PiHandsClapping, PiHandsClappingBold } from "react-icons/pi";
 import { IoIosClose } from "react-icons/io";
 import "../../styles/BoardReadModal.css";
 import defaultProfile from "../../img/defaultProfile.png";
+import axios from "axios";
 
 function Boardread(props) {
+    let find = props.boardList.find((x) => x.post_no === props.postId);
     const modalBackground = useRef();
-    let find = props.boardList.find((x) => x.id === props.postId);
     const [isBold, setIsBold] = useState(true);
-
+    // postNo와 memId 상태를 생성하고 관리합니다.
+    const [postNo, setPostNo] = useState(find.post_no);
+    const [memId, setMemId] = useState("test1010");
+    // 댓글 상태를 생성하고 관리
     const [comments, setComments] = useState([]);
+    //totalClap을 업데이트하면서 재렌더링
+    const [totalClap, setTotalClap] = useState(find.total_clap);
+
+    console.log(find.post_title);
+    console.log(find);
 
     const handleCommentSubmit = (newComment) => {
         setComments([...comments, newComment]);
@@ -17,7 +26,37 @@ function Boardread(props) {
 
     const handleClap = () => {
         setIsBold(false);
-        find.clap += 1;
+        const url = "http://localhost:3000/board/addClap";
+
+        const requestBody = {
+            post_no: postNo,
+            mem_id: memId,
+        };
+
+        // Request body 확인
+        console.log("Request body:", requestBody);
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(Error);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setTotalClap(data.totalClap);
+                console.log("Response", data);
+            })
+            .catch((error) => {
+                console.error("Error 발생", error);
+            });
+
         setTimeout(() => {
             setIsBold(true);
         }, 50);
@@ -34,6 +73,7 @@ function Boardread(props) {
                 ref={modalBackground}
                 onClick={(e) => {
                     if (e.target === modalBackground.current) {
+                        setTotalClap(totalClap);
                         props.setReadModalOpen(false);
                         document.body.style.overflow = "";
                     }
@@ -43,7 +83,7 @@ function Boardread(props) {
                     className="modal-content"
                     style={{ backgroundColor: "#fff", borderRadius: "10px" }}
                 >
-                    <h5 className="modal-header">
+                    <p className="modal-header">
                         USSUM 여행 커뮤니티
                         <IoIosClose
                             className="modal-x"
@@ -55,13 +95,13 @@ function Boardread(props) {
                                 cursor: "pointer",
                             }}
                         />
-                    </h5>
+                    </p>
                     <div className="author-created">
-                        <p>작성자 ID</p>
-                        <p style={{ marginLeft: "auto" }}>created</p>
+                        <p>{find.mem_id}</p>
+                        <p style={{ marginLeft: "auto" }}>{find.post_date}</p>
                     </div>
                     <p style={{ margin: "20px 0", fontSize: "2rem", color: "#007bff" }}>
-                        {find.title}
+                        {find.post_title}
                     </p>
                     <div
                         className="post-content"
@@ -71,7 +111,7 @@ function Boardread(props) {
                             textAlign: "left",
                         }}
                     >
-                        {find.content}
+                        {find.post_content}
                     </div>
                     <div
                         style={{
@@ -97,7 +137,25 @@ function Boardread(props) {
                                 }}
                             />
                         )}
-                        <span>{find.clap}</span>
+                        <span>{totalClap}</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "right", alignItems: "center" }}>
+                        <button
+                            onClick={() => {
+                                props.setReadModalOpen(false);
+                                props.setUpdateModalOpen(true);
+                                props.setPostId(props.postId);
+                            }}
+                        >
+                            글 수정
+                        </button>
+                        <button
+                            onClick={() => {
+                                props.setDeleteModalOpen(true);
+                            }}
+                        >
+                            글 삭제
+                        </button>
                     </div>
                     <CommentForm handleCommentSubmit={handleCommentSubmit} />
                     <CommentBox comments={comments} />
