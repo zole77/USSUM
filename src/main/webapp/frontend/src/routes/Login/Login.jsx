@@ -5,7 +5,7 @@ import "../../styles/Login_styles.css";
 import logo from "../../img/logo.png";
 
 const Login = () => {
-  const [userInfo, setUserInfo] = useState({ mem_id: "", mem_password: "" });
+  const [userInfo, setUserInfo] = useState({ mem_id: "", mem_pwd: "" });
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
@@ -20,17 +20,17 @@ const Login = () => {
       alert("이메일을 입력해 주세요.");
       return;
     }
-    if (!userInfo.mem_password) {
+    if (!userInfo.mem_pwd) {
       alert("비밀번호를 입력해 주세요.");
       return;
     }
 
     try {
       const response = await axios.post(
-          "http://localhost:8080/login",
+          "/login",
           {
             mem_id: userInfo.mem_id,
-            mem_password: userInfo.mem_password,
+            mem_pwd: userInfo.mem_pwd,
           },
           {
             headers: {
@@ -74,7 +74,7 @@ const Login = () => {
                   className="userInput"
                   type="password"
                   placeholder="비밀번호"
-                  value={userInfo.mem_password}
+                  value={userInfo.mem_pwd}
                   name="mem_password"
                   onChange={handleInputChange}
                   minLength={8}

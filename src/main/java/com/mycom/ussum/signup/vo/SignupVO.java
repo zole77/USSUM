@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class SignupVO {
     private String mem_id;
     private String mem_pwd;
-    private String member_age;
     private String mem_phone;
     private String mem_birth;
     private String mem_address;
@@ -18,7 +17,6 @@ public class SignupVO {
     private String mem_type;
     private String mem_hot;
     private String mem_nickname;
-    private int mem_no;
     private String mem_name;
 
 
