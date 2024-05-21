@@ -27,7 +27,7 @@ public class SignupController {
 
     @PostMapping("/signup/register")
     @ResponseBody
-    public Map<String, Boolean> signUp(@RequestBody SignupVO signupVO, RedirectAttributes redirectAttributes){
+    public Map<String, Boolean> signUp(@RequestBody SignupVO signupVO){
         System.out.println(signupVO.getMem_id());
         boolean isSuccess = signupService.signUp(signupVO);
         Map<String, Boolean> map = new HashMap<>();

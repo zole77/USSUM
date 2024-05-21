@@ -8,14 +8,6 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: "JalnanGothic";
-    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff")
-        format("woff");
-    font-weight: normal;
-    font-style: normal;
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -33,6 +25,7 @@ button {
 }
 
 .boardLayout {
+    font-family: "LINESeedKR-Bd";
     display: flex;
     justify-content: space-between;
     background-color: #fff;
@@ -180,6 +173,7 @@ button {
 }
 
 .modal-container {
+    font-family: "LINESeedKR-Bd";
     width: 100%; /* 뷰포트 전체 너비를 차지하도록 설정 */
     height: 100%;
     position: fixed;

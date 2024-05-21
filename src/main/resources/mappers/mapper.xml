@@ -17,6 +17,17 @@
         ]]>
     </select>
 
+    <update id="updateMember" parameterType="com.mycom.ussum.vo.MemberVO">
+        <![CDATA[
+            UPDATE MEMBER_TABLE
+            SET MEM_PWD = #{mem_pwd} and MEM_GENDER = #{mem_gender}
+            and MEM_PHONE = #{mem_phone} and MEM_BIRTH = #{mem_birth} and
+                          MEM_ADDRESS = #{mem_address} and MEM_TYPE = #{mem_type} and
+                          MEM_NICKNAME = #{mem_nickname} and MEM_NAME = #{mem_name}
+            WHERE MEM_ID = #{mem_id}
+        ]]>
+    </update>
+
     <insert id="savePost" parameterType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
             INSERT INTO BOARD_TABLE (POST_NO, POST_DATE, POST_TITLE, MEM_ID, POST_CONTENT)
@@ -50,7 +61,7 @@
     <update id="updatePost" parameterType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
         UPDATE BOARD_TABLE
-        SET POST_CONTENT = #{post_content} AND POST_TITLE = #{post_title}
+        SET POST_CONTENT = #{post_content}, POST_TITLE = #{post_title}
         WHERE POST_NO = #{post_no}
         ]]>
     </update>
@@ -151,7 +162,7 @@
 
     <select id="getAllPosts" resultType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
-            SELECT POST_NO, POST_DATE, POST_TITLE, MEM_ID, TOTAL_CLAP
+            SELECT POST_NO, POST_DATE, POST_TITLE, MEM_ID, TOTAL_CLAP, POST_CONTENT
             FROM BOARD_TABLE
             ORDER BY POST_DATE DESC
         ]]>

@@ -29,4 +29,10 @@ public class MemberController {
     public MemberVO getOneMember(@Parameter @RequestBody String mem_id){
         return memberService.getOneMember(mem_id);
     }
+
+    @PostMapping("/modify")
+    @Operation(summary = "회원정보 수정")
+    public void updateMember(@RequestBody MemberVO member){
+        memberService.updateMember(member);
+    }
 }
