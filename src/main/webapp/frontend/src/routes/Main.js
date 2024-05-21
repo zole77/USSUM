@@ -13,6 +13,8 @@ function Main() {
             <Link to="/info">services</Link>
             <br />
             <Link to="/mypage">마이페이지</Link>
+            <br />
+            <Link to="/chat">채팅방</Link>
         </div>
     );
 }
