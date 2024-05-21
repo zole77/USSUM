@@ -16,15 +16,13 @@ function Boardread(props) {
     const [comments, setComments] = useState([]);
     //totalClap을 업데이트하면서 재렌더링
     const [totalClap, setTotalClap] = useState(find.total_clap);
-
-    console.log(find.post_title);
-    console.log(find);
+    const [deltemodalOpen, setDeleteModalOpen] = useState(false);
 
     const handleCommentSubmit = (newComment) => {
         setComments([...comments, newComment]);
     };
 
-    const handleClap = () => {
+    const handleClap = async () => {
         setIsBold(false);
         const url = "http://localhost:3000/board/addClap";
 
@@ -33,35 +31,34 @@ function Boardread(props) {
             mem_id: memId,
         };
 
-        // Request body 확인
-        console.log("Request body:", requestBody);
-
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestBody),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(Error);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setTotalClap(data.totalClap);
-                console.log("Response", data);
-            })
-            .catch((error) => {
-                console.error("Error 발생", error);
+        try {
+            const response = await axios.post(url, requestBody, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
+
+            setTotalClap(response.data.totalClap);
+        } catch (error) {
+            console.error("Error 발생", error.message); // 명확한 에러 메시지 출력
+        }
 
         setTimeout(() => {
             setIsBold(true);
-        }, 50);
+        }, 1);
     };
 
+    const deletePost = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:3000/board/delete/${postNo}`);
+            console.log(response.data);
+            props.fetchPosts();
+            props.setReadModalOpen(false);
+            document.body.style.overflow = "";
+        } catch (error) {
+            console.error("게시글 삭제 에러: ", error);
+        }
+    };
     // 전체 게시글 리스트에서 id가 props로 넘겨온 postId와 같은 데이터인 데이터를 추출하기
     // 전체 게시글 리스트를 순회하면서 게시글.id === postId인지 비교 그 값이 true면 게시글 데이터를 추출
     // find는 boardList에서 게시글 고유 id와 일치하는 게시글의 JSON 값을 가지고 있음
@@ -73,6 +70,7 @@ function Boardread(props) {
                 ref={modalBackground}
                 onClick={(e) => {
                     if (e.target === modalBackground.current) {
+                        props.fetchPosts();
                         setTotalClap(totalClap);
                         props.setReadModalOpen(false);
                         document.body.style.overflow = "";
@@ -88,6 +86,7 @@ function Boardread(props) {
                         <IoIosClose
                             className="modal-x"
                             onClick={() => {
+                                props.fetchPosts();
                                 props.setReadModalOpen(false);
                                 document.body.style.overflow = "";
                             }}
@@ -151,18 +150,71 @@ function Boardread(props) {
                         </button>
                         <button
                             onClick={() => {
-                                props.setDeleteModalOpen(true);
+                                setDeleteModalOpen(true);
                             }}
                         >
                             글 삭제
                         </button>
                     </div>
+
+                    <BoardDelete
+                        postNo={postNo}
+                        deletePost={deletePost}
+                        deltemodalOpen={deltemodalOpen}
+                        setDeleteModalOpen={setDeleteModalOpen}
+                    />
                     <CommentForm handleCommentSubmit={handleCommentSubmit} />
                     <CommentBox comments={comments} />
                 </div>
             </div>
         </div>
     );
+}
+
+function BoardDelete(props) {
+    const modalBackground = useRef();
+    if (props.deltemodalOpen) {
+        return (
+            <div
+                className="modal-container"
+                ref={modalBackground}
+                onClick={(e) => {
+                    if (e.target === modalBackground.current) {
+                        props.setDeleteModalOpen(false);
+                    }
+                }}
+            >
+                <div
+                    style={{
+                        backgroundColor: "#fff",
+                        width: "350px",
+                        height: "150px",
+                        borderRadius: "10px",
+                        marginLeft: "50px",
+                        marginRight: "50px",
+                        padding: "15px",
+                    }}
+                >
+                    진짜 삭제하실?
+                    <button
+                        onClick={() => {
+                            props.setDeleteModalOpen(false);
+                        }}
+                    >
+                        아니
+                    </button>
+                    <button
+                        onClick={() => {
+                            props.deletePost();
+                            props.setDeleteModalOpen(false);
+                        }}
+                    >
+                        응
+                    </button>
+                </div>
+            </div>
+        );
+    }
 }
 
 function CommentBox(props) {

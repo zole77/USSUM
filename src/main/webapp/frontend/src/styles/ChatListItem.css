@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "LINESeedKR-Bd";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2")
+        format("woff2");
+    font-weight: 700;
+    font-style: normal;
+}
+
+.chatListItem-container {
+    display: flex;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+.profile-container {
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+}
+
+.chatListItem-info {
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.chatListItem-name {
+    font-family: "LINESeedKR-Bd";
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.recent-message {
+    font-family: "LINESeedKR-Bd";
+    font-size: 12px;
+    font-weight: 100;
+}

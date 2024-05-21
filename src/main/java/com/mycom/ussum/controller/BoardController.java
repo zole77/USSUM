@@ -70,7 +70,7 @@ public class BoardController {
 //        return boardService.getPagePosts(page);
 //    }
 
-    @GetMapping("/delete/{post_no}")
+    @DeleteMapping("/delete/{post_no}")
     @Operation(summary = "삭제", description = "글을 삭제합니다.")
     public void deletePost(@Parameter(description = "게시글 번호") @PathVariable("post_no") String post_no){
         boardService.deletePost(post_no);
@@ -100,4 +100,5 @@ public class BoardController {
     public List<BoardVO> getHotPosts(){
         return boardService.getHotPosts();
     }
+
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginVO {
     private String mem_id;
-    private String mem_password;
+    private String mem_pwd;
     private String mem_age;
     private String mem_phone;
     private String mem_birth;
@@ -18,7 +18,7 @@ public class LoginVO {
     private String mem_type;
     private String mem_hot;
     private String mem_nickname;
-    private int mem_no;
     private String mem_name;
+    private int mem_no;
 
 }

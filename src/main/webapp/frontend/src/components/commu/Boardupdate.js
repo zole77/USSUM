@@ -1,19 +1,52 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Editor, Viewer } from "@toast-ui/react-editor";
 import "@toast-ui/editor/toastui-editor.css";
 import { IoIosClose } from "react-icons/io";
 import "../../App.css";
+import axios from "axios";
 
 function Boardupdate(props) {
+    let find = props.boardList.find((x) => x.post_no === props.postId);
     const modalBackground = useRef();
     const editorRef = useRef(null);
+    const [title, setTitle] = useState(find.post_title);
+
+    const updatePost = async (post) => {
+        try {
+            const response = await axios.post("http://localhost:3000/board/update", post);
+            console.log(response.data);
+            // 게시글 등록 후 부모 컴포넌트의 fetchPosts 함수 호출
+            props.fetchPosts();
+        } catch (error) {
+            console.error("게시글 수정 에러: ", error);
+        }
+    };
 
     const onSubmitBtnClick = () => {
         const content = editorRef.current.getInstance().getMarkdown();
-        alert(content);
-    };
 
-    let find = props.boardList.find((x) => x.post_no === props.postId);
+        console.log(!title.trim());
+        console.log(!content.trim());
+        // 제목과 내용을 확인
+
+        if (!title.trim() || !content.trim()) {
+            alert("제목과 내용을 모두 입력해주세요.");
+            return;
+        }
+
+        // 포스트 데이터 생성
+        const post = {
+            post_title: title,
+            post_content: content,
+            post_no: props.postId,
+        };
+
+        // 게시글 저장 함수 호출
+        updatePost(post);
+
+        // 모달 닫기
+        props.setUpdateModalOpen(false);
+    };
 
     return (
         <div>
@@ -58,7 +91,6 @@ function Boardupdate(props) {
                         <p style={{ textAlign: "left" }}>
                             제목
                             <input
-                                defaultValue={find.post_title}
                                 style={{
                                     marginLeft: "10px",
                                     marginBottom: "10px",
@@ -70,6 +102,8 @@ function Boardupdate(props) {
                                     paddingLeft: "10px",
                                     backgroundColor: "rgb(233, 233, 233)",
                                 }}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                             ></input>
                         </p>
                         <Editor

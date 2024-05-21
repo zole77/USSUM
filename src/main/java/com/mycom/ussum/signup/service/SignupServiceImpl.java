@@ -22,7 +22,7 @@ public class SignupServiceImpl implements SignupService{
 
         int checkByNickname = signupDAO.checkByNickname(signupVO.getMem_nickname());
 
-        if (checkById == 0) {
+        if (checkById == 0 && checkByNickname ==0) {
             signupDAO.signUp(signupVO);
             return true;  //ㅇㅋ
         } else {

@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "LINESeedKR-Bd";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2")
+        format("woff2");
+    font-weight: 700;
+    font-style: normal;
+}
+
+.frinedprofile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* optional: center align items horizontally */
+    padding: 10px; /* optional: add spacing between items */
+}
+
+.friend-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}

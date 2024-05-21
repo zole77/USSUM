@@ -39,7 +39,7 @@ const Login = () => {
     setMsg("Loading...");
 
     try {
-      const response = await axios.post("http://localhost:8080/login", body, {
+      const response = await axios.post("/login", body, {
         headers: {
           "Content-Type": "application/json",
         },

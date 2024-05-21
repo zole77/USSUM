@@ -16,7 +16,7 @@ function Board(props) {
     const [modalOpen, setModalOpen] = useState(false);
     const [readmodalOpen, setReadModalOpen] = useState(false);
     const [updatemodalOpen, setUpdateModalOpen] = useState(false);
-    const [deltemodalOpen, setDeleteModalOpen] = useState(false);
+
     const [postId, setPostId] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentPosts, setCurrentPosts] = useState([]);
@@ -26,21 +26,25 @@ function Board(props) {
 
     const postsPerPage = 10;
 
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get("board/allposts");
+            setBoardList(response.data); // API에서 받아온 게시글을 state에 저장
+            setLoading(false); // 데이터 로딩이 완료되면 로딩 상태를 false로 업데이트
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+            setLoading(false); // 오류가 발생하더라도 로딩 상태를 false로 업데이트
+        }
+    };
+
     // 게시글을 가져오는 useEffect 추가
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await axios.get("board/allposts");
-                setBoardList(response.data); // API에서 받아온 게시글을 state에 저장
-                setLoading(false); // 데이터 로딩이 완료되면 로딩 상태를 false로 업데이트
-            } catch (error) {
-                console.error("Error fetching posts:", error);
-                setLoading(false); // 오류가 발생하더라도 로딩 상태를 false로 업데이트
-            }
-        };
-
         fetchPosts();
     }, []); // []를 전달하여 컴포넌트가 마운트될 때 한 번만 호출되도록 함
+
+    useEffect(() => {
+        setHotPosts(boardList.filter((post) => post.total_clap >= 50));
+    }, [boardList]);
 
     useEffect(() => {
         const reversedBoardList = [...boardList];
@@ -135,18 +139,19 @@ function Board(props) {
                 {/* 배열 역순으로 게시글 정렬 */}
                 {currentPosts.map((post) => {
                     return (
-                        <div key={post.id} className="list">
+                        <div className="list">
                             <CommuPost
+                                key={post.id}
                                 boardList={post}
                                 readmodalOpen={readmodalOpen}
                                 setReadModalOpen={setReadModalOpen}
                                 setPostId={setPostId}
                                 setUpdateModalOpen={setUpdateModalOpen}
-                                setDeleteModalOpen={setDeleteModalOpen}
                             />
                             {updatemodalOpen ? (
                                 <Boardupdate
-                                    key={post.id + "_update"} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
+                                    fetchPosts={fetchPosts}
+                                    key={`${post.id}_update`} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
                                     boardList={boardList}
                                     updatemodalOpen={updatemodalOpen}
                                     setUpdateModalOpen={setUpdateModalOpen}
@@ -157,12 +162,12 @@ function Board(props) {
                             )}
                             {readmodalOpen ? (
                                 <Boardread
-                                    key={post.id + "_read"} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
+                                    key={`${post.id}_read`} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
+                                    fetchPosts={fetchPosts}
                                     boardList={boardList}
                                     readmodalOpen={readmodalOpen}
                                     setReadModalOpen={setReadModalOpen}
                                     setUpdateModalOpen={setUpdateModalOpen}
-                                    setDeleteModalOpen={setDeleteModalOpen}
                                     postId={postId}
                                     setPostId={setPostId}
                                 />
@@ -183,10 +188,10 @@ function Board(props) {
                     글쓰기
                 </button>
 
-                <Boardwrite modalOpen={modalOpen} setModalOpen={setModalOpen} />
-                <BoardDelete
-                    deltemodalOpen={deltemodalOpen}
-                    setDeleteModalOpen={setDeleteModalOpen}
+                <Boardwrite
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
+                    fetchPosts={fetchPosts}
                 />
                 <div className="pageBtn-container">
                     {/* 페이지 번호 목록 */}
@@ -222,51 +227,6 @@ function CommuPost(props) {
             <span>{props.boardList.post_date}</span>
         </div>
     );
-}
-
-function BoardDelete(props) {
-    const modalBackground = useRef();
-    if (props.deltemodalOpen) {
-        return (
-            <div
-                className="modal-container"
-                ref={modalBackground}
-                onClick={(e) => {
-                    if (e.target === modalBackground.current) {
-                        props.setDeleteModalOpen(false);
-                    }
-                }}
-            >
-                <div
-                    style={{
-                        backgroundColor: "#fff",
-                        width: "350px",
-                        height: "150px",
-                        borderRadius: "10px",
-                        marginLeft: "50px",
-                        marginRight: "50px",
-                        padding: "15px",
-                    }}
-                >
-                    진짜 삭제하실?
-                    <button
-                        onClick={() => {
-                            props.setDeleteModalOpen(false);
-                        }}
-                    >
-                        아니
-                    </button>
-                    <button
-                        onClick={() => {
-                            props.setDeleteModalOpen(false);
-                        }}
-                    >
-                        응
-                    </button>
-                </div>
-            </div>
-        );
-    }
 }
 
 export default Board;

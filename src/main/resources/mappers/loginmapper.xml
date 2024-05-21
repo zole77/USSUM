@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycom.ussum.login.dao.LoginDAO">
+    <select id="findByIdAndPassword"  resultType="com.mycom.ussum.login.vo.LoginVO">
+        SELECT COUNT(*)
+        FROM member_table
+        WHERE "mem_Id" = #{mem_Id} AND "mem_pwd" = #{mem_pwd}
+    </select>
+</mapper>
