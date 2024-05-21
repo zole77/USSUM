@@ -166,12 +166,13 @@ const ModMember = () => {
           </tr>
         </tbody>
       </table>
+
       <div className="form-actions">
-        <button type="submit" className="btn-hover color">
-          저장
-        </button>
         <button type="button" className="btn-hover color">
           취소
+        </button>
+        <button type="submit" className="btn-hover color">
+          저장
         </button>
       </div>
     </form>
