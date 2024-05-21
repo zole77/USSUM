@@ -7,52 +7,67 @@ import Boardwrite from "../components/commu/Boardwrite.js";
 import Boardread from "../components/commu/Boardread.js";
 import Boardupdate from "../components/commu/Boardupdate.js";
 import "../styles/BoardStyle.css";
+import axios from "axios";
 
 function Board(props) {
     const [boardCategory, setboardCategory] = useState(1);
-    const [boardList, setBoardList] = useState(boardData);
-    const [hotPosts, setHotPosts] = useState(boardList.filter((post) => post.clap >= 50));
+    const [boardList, setBoardList] = useState([]);
+    const [hotPosts, setHotPosts] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [readmodalOpen, setReadModalOpen] = useState(false);
     const [updatemodalOpen, setUpdateModalOpen] = useState(false);
-    const [deltemodalOpen, setDeleteModalOpen] = useState(false);
+
     const [postId, setPostId] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentPosts, setCurrentPosts] = useState([]);
     const [btn1Toggled, setBtn1Toggled] = useState(true);
     const [btn2Toggled, setBtn2Toggled] = useState(false);
+    const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
     const postsPerPage = 10;
 
-    // 전체 boardList를 역순으로 정렬함
-    // useRef를 쓰면 재렌더링으로 이 과정을 계속 반복하는걸 막을 수 있음
-    const reversedBoardList = useRef([...boardList].reverse());
-    const reversedHotBoardList = useRef([...hotPosts].reverse());
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get("board/allposts");
+            setBoardList(response.data); // API에서 받아온 게시글을 state에 저장
+            setLoading(false); // 데이터 로딩이 완료되면 로딩 상태를 false로 업데이트
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+            setLoading(false); // 오류가 발생하더라도 로딩 상태를 false로 업데이트
+        }
+    };
+
+    // 게시글을 가져오는 useEffect 추가
+    useEffect(() => {
+        fetchPosts();
+    }, []); // []를 전달하여 컴포넌트가 마운트될 때 한 번만 호출되도록 함
 
     useEffect(() => {
+        setHotPosts(boardList.filter((post) => post.total_clap >= 50));
+    }, [boardList]);
+
+    useEffect(() => {
+        const reversedBoardList = [...boardList];
+        const reversedHotBoardList = [...hotPosts];
+
         if (boardCategory === 1) {
             const indexOfLastPost = currentPage * postsPerPage;
             const indexOfFirstPost = indexOfLastPost - postsPerPage;
-            const newCurrentPosts = reversedBoardList.current.slice(
-                indexOfFirstPost,
-                indexOfLastPost
-            );
+            const newCurrentPosts = reversedBoardList.slice(indexOfFirstPost, indexOfLastPost);
             setCurrentPosts(newCurrentPosts);
         } else {
-            // 만약 사용자가 인기 게시글을 보길 원하면
-            // clap이 50 이상인 게시글을 정렬해서 보여주자
             const indexOfLastPost = currentPage * postsPerPage;
             const indexOfFirstPost = indexOfLastPost - postsPerPage;
-            // 정렬할 게시글을 currrentHotPosts로 바꿔줌
-            const newCurrentPosts = reversedHotBoardList.current.slice(
-                indexOfFirstPost,
-                indexOfLastPost
-            );
+            const newCurrentPosts = reversedHotBoardList.slice(indexOfFirstPost, indexOfLastPost);
             setCurrentPosts(newCurrentPosts);
         }
-    }, [currentPage, boardCategory, reversedBoardList.current]);
+    }, [currentPage, boardCategory, boardList, hotPosts]);
 
     // 페이지 번호 목록 렌더링
+
+    if (loading) {
+        return <div>Loading...</div>; // 로딩 중 메시지 표시
+    }
     let pageNumbers;
     if (boardCategory === 1) {
         pageNumbers = [];
@@ -124,41 +139,42 @@ function Board(props) {
                 {/* 배열 역순으로 게시글 정렬 */}
                 {currentPosts.map((post) => {
                     return (
-                        console.log(currentPosts),
-                        (
-                            <div key={post.id} className="list">
-                                <CommuPost
-                                    boardList={post}
+                        <div key={post.id} className="list">
+                            <CommuPost
+                                key={post.id}
+                                boardList={post}
+                                readmodalOpen={readmodalOpen}
+                                setReadModalOpen={setReadModalOpen}
+                                setPostId={setPostId}
+                                setUpdateModalOpen={setUpdateModalOpen}
+                            />
+                            {updatemodalOpen ? (
+                                <Boardupdate
+                                    fetchPosts={fetchPosts}
+                                    key={`${post.id}_update`} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
+                                    boardList={boardList}
+                                    updatemodalOpen={updatemodalOpen}
+                                    setUpdateModalOpen={setUpdateModalOpen}
+                                    postId={postId}
+                                />
+                            ) : (
+                                ""
+                            )}
+                            {readmodalOpen ? (
+                                <Boardread
+                                    key={`${post.id}_read`} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
+                                    fetchPosts={fetchPosts}
+                                    boardList={boardList}
                                     readmodalOpen={readmodalOpen}
                                     setReadModalOpen={setReadModalOpen}
-                                    setPostId={setPostId}
                                     setUpdateModalOpen={setUpdateModalOpen}
-                                    setDeleteModalOpen={setDeleteModalOpen}
+                                    postId={postId}
+                                    setPostId={setPostId}
                                 />
-                                {updatemodalOpen ? (
-                                    <Boardupdate
-                                        key={post.id + "_update"} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
-                                        boardList={boardList}
-                                        updatemodalOpen={updatemodalOpen}
-                                        setUpdateModalOpen={setUpdateModalOpen}
-                                        postId={postId}
-                                    />
-                                ) : (
-                                    ""
-                                )}
-                                {readmodalOpen ? (
-                                    <Boardread
-                                        key={post.id + "_read"} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
-                                        boardList={boardList}
-                                        readmodalOpen={readmodalOpen}
-                                        setReadModalOpen={setReadModalOpen}
-                                        postId={postId}
-                                    />
-                                ) : (
-                                    ""
-                                )}
-                            </div>
-                        )
+                            ) : (
+                                ""
+                            )}
+                        </div>
                     );
                 })}
 
@@ -172,10 +188,10 @@ function Board(props) {
                     글쓰기
                 </button>
 
-                <Boardwrite modalOpen={modalOpen} setModalOpen={setModalOpen} />
-                <BoardDelete
-                    deltemodalOpen={deltemodalOpen}
-                    setDeleteModalOpen={setDeleteModalOpen}
+                <Boardwrite
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
+                    fetchPosts={fetchPosts}
                 />
                 <div className="pageBtn-container">
                     {/* 페이지 번호 목록 */}
@@ -198,64 +214,19 @@ function CommuPost(props) {
     return (
         <div className="post-container">
             {/* 클릭한 글의 상세정보 모달창으로 불러오기 */}
-            <p>{props.boardList.id}</p>
+            <p>{props.boardList.post_no}</p>
             <h5
                 onClick={() => {
                     props.setReadModalOpen(true);
-                    props.setPostId(props.boardList.id);
+                    props.setPostId(props.boardList.post_no);
                 }}
             >
-                {props.boardList.title}
+                {props.boardList.post_title}
             </h5>
-            <span>{props.boardList.author}</span>
-            <span>{props.boardList.create}</span>
+            <span>{props.boardList.mem_id}</span>
+            <span>{props.boardList.post_date}</span>
         </div>
     );
-}
-
-function BoardDelete(props) {
-    const modalBackground = useRef();
-    if (props.deltemodalOpen) {
-        return (
-            <div
-                className="modal-container"
-                ref={modalBackground}
-                onClick={(e) => {
-                    if (e.target === modalBackground.current) {
-                        props.setDeleteModalOpen(false);
-                    }
-                }}
-            >
-                <div
-                    style={{
-                        backgroundColor: "#fff",
-                        width: "350px",
-                        height: "150px",
-                        borderRadius: "10px",
-                        marginLeft: "50px",
-                        marginRight: "50px",
-                        padding: "15px",
-                    }}
-                >
-                    진짜 삭제하실?
-                    <button
-                        onClick={() => {
-                            props.setDeleteModalOpen(false);
-                        }}
-                    >
-                        아니
-                    </button>
-                    <button
-                        onClick={() => {
-                            props.setDeleteModalOpen(false);
-                        }}
-                    >
-                        응
-                    </button>
-                </div>
-            </div>
-        );
-    }
 }
 
 export default Board;

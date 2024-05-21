@@ -1,27 +1,50 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Editor, Viewer } from "@toast-ui/react-editor";
 import "@toast-ui/editor/toastui-editor.css";
+import { IoIosClose } from "react-icons/io";
+import axios from "axios";
 
 function Boardwrite(props) {
     const modalBackground = useRef();
     const editorRef = useRef(null);
+    const [title, setTitle] = useState("");
+
+    const savePost = async (post) => {
+        try {
+            const response = await axios.post("http://localhost:3000/board/save", post);
+            console.log(response.data);
+            // 게시글 등록 후 부모 컴포넌트의 fetchPosts 함수 호출
+            props.fetchPosts();
+        } catch (error) {
+            console.error("게시글 등록 에러: ", error);
+        }
+    };
 
     const onSubmitBtnClick = () => {
         const content = editorRef.current.getInstance().getMarkdown();
-        alert(content);
+
+        console.log(!title.trim());
+        console.log(!content.trim());
+        // 제목과 내용을 확인
+
+        if (!title.trim() || !content.trim()) {
+            alert("제목과 내용을 모두 입력해주세요.");
+            return;
+        }
+
+        // 포스트 데이터 생성
+        const post = {
+            post_title: title,
+            post_content: content,
+            mem_id: "test1010", // 실제 구현에서는 사용자 ID를 동적으로 설정해야 합니다
+        };
+
+        // 게시글 저장 함수 호출
+        savePost(post);
+
+        // 모달 닫기
+        props.setModalOpen(false);
     };
-
-    // const handleImageUpload = async (blob) => {
-    //     console.log('업로드 된 이미지 파일:', blob);
-
-    //     // 에디터에 이미지 삽입
-    //     const markdown = editorRef.current.getInstance().getMarkdown();
-    //     const htmlElement = editorRef.current.getInstance().getHTML();
-
-    //     const json = JSON.stringify(htmlElement);
-    //     console.log(json);
-    //     return onchange(json)
-    // };
 
     return (
         <div>
@@ -31,17 +54,41 @@ function Boardwrite(props) {
                     ref={modalBackground}
                     onClick={(e) => {
                         if (e.target === modalBackground.current) {
-                            props.setModalOpen(false);
+                            if (editorRef.current.getInstance().getMarkdown().trim()) {
+                                if (
+                                    window.confirm(
+                                        "작성 중인 내용이 있습니다. 정말로 닫으시겠습니까?"
+                                    )
+                                ) {
+                                    props.setModalOpen(false);
+                                }
+                            } else {
+                                props.setModalOpen(false);
+                            }
                         }
                     }}
                 >
                     <div className="modal-content">
-                        <p>글쓰기 모달창</p>
-                        <p>
+                        <p className="modal-header">
+                            USSUM 여행 커뮤니티
+                            <IoIosClose
+                                className="modal-x"
+                                onClick={() => {
+                                    props.setModalOpen(false);
+                                    document.body.style.overflow = "";
+                                }}
+                                style={{
+                                    cursor: "pointer",
+                                }}
+                            />
+                        </p>
+                        <p style={{ textAlign: "left" }}>
                             제목
                             <input
                                 placeholder="제목을 입력해보자"
                                 style={{
+                                    marginTop: "10px",
+                                    marginLeft: "10px",
                                     marginBottom: "10px",
                                     width: "60%",
                                     height: "32px",
@@ -51,20 +98,27 @@ function Boardwrite(props) {
                                     paddingLeft: "10px",
                                     backgroundColor: "rgb(233, 233, 233)",
                                 }}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                             ></input>
                         </p>
-                        <Editor
-                            language="ko-KR"
-                            ref={editorRef}
-                            height="300px"
-                            initialValue=" "
-                            initialEditType="wysiwyg"
-                        />
+                        <div
+                            style={{
+                                textAlign: "left",
+                            }}
+                        >
+                            <Editor
+                                language="ko-KR"
+                                ref={editorRef}
+                                height="300px"
+                                initialValue=" "
+                                initialEditType="markdown"
+                            />
+                        </div>
                         <button
                             className="modal-close-btn"
                             onClick={() => {
                                 onSubmitBtnClick();
-                                props.setModalOpen(false);
                             }}
                         >
                             등록하기

@@ -5,6 +5,7 @@ import Board from "../routes/Board";
 import Main from "../routes/Main";
 import Login from "../routes/Login/Login";
 import SignUp from "../routes/SignUp/SignUp";
+import ModMember from "../routes/MyPage/ModMember";
 
 function Body() {
   return (
@@ -16,6 +17,7 @@ function Body() {
         <Route path="/" element={<Main />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/mypage" element={<ModMember />} />
       </Routes>
     </div>
   );
