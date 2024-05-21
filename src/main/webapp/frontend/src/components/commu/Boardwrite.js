@@ -13,6 +13,8 @@ function Boardwrite(props) {
         try {
             const response = await axios.post("http://localhost:3000/board/save", post);
             console.log(response.data);
+            // 게시글 등록 후 부모 컴포넌트의 fetchPosts 함수 호출
+            props.fetchPosts();
         } catch (error) {
             console.error("게시글 등록 에러: ", error);
         }

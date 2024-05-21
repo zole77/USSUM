@@ -24,7 +24,7 @@ function Boardread(props) {
         setComments([...comments, newComment]);
     };
 
-    const handleClap = () => {
+    const handleClap = async () => {
         setIsBold(false);
         const url = "http://localhost:3000/board/addClap";
 
@@ -36,30 +36,22 @@ function Boardread(props) {
         // Request body 확인
         console.log("Request body:", requestBody);
 
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestBody),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(Error);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setTotalClap(data.totalClap);
-                console.log("Response", data);
-            })
-            .catch((error) => {
-                console.error("Error 발생", error);
+        try {
+            const response = await axios.post(url, requestBody, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
+
+            setTotalClap(response.data.totalClap);
+            console.log("Response", response.data);
+        } catch (error) {
+            console.error("Error 발생", error.message); // 명확한 에러 메시지 출력
+        }
 
         setTimeout(() => {
             setIsBold(true);
-        }, 50);
+        }, 1);
     };
 
     // 전체 게시글 리스트에서 id가 props로 넘겨온 postId와 같은 데이터인 데이터를 추출하기
@@ -73,6 +65,7 @@ function Boardread(props) {
                 ref={modalBackground}
                 onClick={(e) => {
                     if (e.target === modalBackground.current) {
+                        props.fetchPosts();
                         setTotalClap(totalClap);
                         props.setReadModalOpen(false);
                         document.body.style.overflow = "";
@@ -88,6 +81,7 @@ function Boardread(props) {
                         <IoIosClose
                             className="modal-x"
                             onClick={() => {
+                                props.fetchPosts();
                                 props.setReadModalOpen(false);
                                 document.body.style.overflow = "";
                             }}

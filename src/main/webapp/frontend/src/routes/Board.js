@@ -26,24 +26,26 @@ function Board(props) {
 
     const postsPerPage = 10;
 
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get("board/allposts");
+            setBoardList(response.data); // API에서 받아온 게시글을 state에 저장
+            setLoading(false); // 데이터 로딩이 완료되면 로딩 상태를 false로 업데이트
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+            setLoading(false); // 오류가 발생하더라도 로딩 상태를 false로 업데이트
+        }
+    };
+
     // 게시글을 가져오는 useEffect 추가
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await axios.get("board/allposts");
-                setBoardList(response.data); // API에서 받아온 게시글을 state에 저장
-                setLoading(false); // 데이터 로딩이 완료되면 로딩 상태를 false로 업데이트
-            } catch (error) {
-                console.error("Error fetching posts:", error);
-                setLoading(false); // 오류가 발생하더라도 로딩 상태를 false로 업데이트
-            }
-        };
-
         fetchPosts();
     }, []); // []를 전달하여 컴포넌트가 마운트될 때 한 번만 호출되도록 함
 
     useEffect(() => {
         const reversedBoardList = [...boardList];
+        setHotPosts(boardList.filter((post) => post.total_clap >= 50));
+        console.log(hotPosts);
         const reversedHotBoardList = [...hotPosts];
 
         if (boardCategory === 1) {
@@ -158,6 +160,7 @@ function Board(props) {
                             {readmodalOpen ? (
                                 <Boardread
                                     key={post.id + "_read"} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
+                                    fetchPosts={fetchPosts}
                                     boardList={boardList}
                                     readmodalOpen={readmodalOpen}
                                     setReadModalOpen={setReadModalOpen}
@@ -183,7 +186,11 @@ function Board(props) {
                     글쓰기
                 </button>
 
-                <Boardwrite modalOpen={modalOpen} setModalOpen={setModalOpen} />
+                <Boardwrite
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
+                    fetchPosts={fetchPosts}
+                />
                 <BoardDelete
                     deltemodalOpen={deltemodalOpen}
                     setDeleteModalOpen={setDeleteModalOpen}
