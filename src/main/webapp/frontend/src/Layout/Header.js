@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navigation.css";
 import ChatIcon from "../img/Chat.png";
@@ -7,14 +7,16 @@ import AlaramIcon from "../img/Alarm.png";
 import WriteModal from "../components/WriteModal";
 import logo from "../img/logo.png";
 import userIcon from "../img/userIcon.png";
+import { clearUser } from "../routes/Login/loginSlice"; // clearUser 액션 가져오기
 
 function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [writeModalOpen, setWriteModalOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // isLoggedIn 상태 추가
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const loginState = useSelector((state) => state.loginSlice);
+  const loginState = useSelector((state) => state.user); // Redux의 user 상태 사용
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -25,14 +27,19 @@ function Header() {
   };
 
   const handleLogout = () => {
+    dispatch(clearUser());
     localStorage.removeItem("token");
-    setIsLoggedIn(false);
+    setIsLoggedIn(false); // 로그아웃 시 isLoggedIn 상태 업데이트
     navigate("/login");
   };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
   }, []);
 
   const handleLogoClick = () => {
@@ -48,6 +55,13 @@ function Header() {
       <div
         className="logo"
         onClick={handleLogoClick}
+        role="button"
+        tabIndex={0}
+        onKeyPress={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            handleLogoClick();
+          }
+        }}
         style={{ cursor: "pointer" }}
       >
         <img src={logo} alt="logo" style={{ width: "150px", height: "auto" }} />
@@ -76,7 +90,7 @@ function Header() {
         <div className="dropdown-toggle" onClick={handleDropdownToggle}>
           <img src={AlaramIcon} alt="Dropdown" />
         </div>
-        {loginState.email && (
+        {isLoggedIn && (
           <div className="user-icon" onClick={handleUserIconClick}>
             <img
               src={userIcon}

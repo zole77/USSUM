@@ -1,12 +1,22 @@
-/* 로그인 타이틀 */
+@font-face {
+    font-family: 'ELAND_Choice_L';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .login_title {
-    font-family: 'Segoe UI', bold;
     font-size: 35px;
     margin-top: 3rem;
     margin-bottom: 3rem;
     color: #45C4B1;
 }
-
+@font-face {
+    font-family: 'ELAND_Choice_L';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 /* 로그인 폼 */
 form {
     display: inline-block;
