@@ -50,7 +50,7 @@
     <update id="updatePost" parameterType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
         UPDATE BOARD_TABLE
-        SET POST_CONTENT = #{post_content} AND POST_TITLE = #{post_title}
+        SET POST_CONTENT = #{post_content}, POST_TITLE = #{post_title}
         WHERE POST_NO = #{post_no}
         ]]>
     </update>
@@ -151,7 +151,7 @@
 
     <select id="getAllPosts" resultType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
-            SELECT POST_NO, POST_DATE, POST_TITLE, MEM_ID, TOTAL_CLAP
+            SELECT POST_NO, POST_DATE, POST_TITLE, MEM_ID, TOTAL_CLAP, POST_CONTENT
             FROM BOARD_TABLE
             ORDER BY POST_DATE DESC
         ]]>

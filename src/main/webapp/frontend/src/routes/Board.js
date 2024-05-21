@@ -43,9 +43,11 @@ function Board(props) {
     }, []); // []를 전달하여 컴포넌트가 마운트될 때 한 번만 호출되도록 함
 
     useEffect(() => {
-        const reversedBoardList = [...boardList];
         setHotPosts(boardList.filter((post) => post.total_clap >= 50));
-        console.log(hotPosts);
+    }, [boardList]);
+
+    useEffect(() => {
+        const reversedBoardList = [...boardList];
         const reversedHotBoardList = [...hotPosts];
 
         if (boardCategory === 1) {
@@ -139,6 +141,7 @@ function Board(props) {
                     return (
                         <div key={post.id} className="list">
                             <CommuPost
+                                key={post.id}
                                 boardList={post}
                                 readmodalOpen={readmodalOpen}
                                 setReadModalOpen={setReadModalOpen}
@@ -148,7 +151,8 @@ function Board(props) {
                             />
                             {updatemodalOpen ? (
                                 <Boardupdate
-                                    key={post.id + "_update"} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
+                                    fetchPosts={fetchPosts}
+                                    key={`${post.id}_update`} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
                                     boardList={boardList}
                                     updatemodalOpen={updatemodalOpen}
                                     setUpdateModalOpen={setUpdateModalOpen}
@@ -159,7 +163,7 @@ function Board(props) {
                             )}
                             {readmodalOpen ? (
                                 <Boardread
-                                    key={post.id + "_read"} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
+                                    key={`${post.id}_read`} // 각 요소의 key 값을 수정하면서 중복을 피합니다.
                                     fetchPosts={fetchPosts}
                                     boardList={boardList}
                                     readmodalOpen={readmodalOpen}
