@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'ELAND_Choice_L';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 .body {
   display: flex;
 }

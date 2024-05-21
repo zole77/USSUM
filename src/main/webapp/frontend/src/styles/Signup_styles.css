@@ -1,4 +1,9 @@
-/* 기본 헤딩 스타일 */
+@font-face {
+  font-family: 'ELAND_Choice_L';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 h4, h5 {
   color: #45c4b1;
   margin: 20px;

@@ -7,7 +7,7 @@ import logo from "../../img/logo.png";
 import { loginUser } from "./loginSlice"; // 변경된 slice에서 loginUser 가져오기
 
 const Login = () => {
-  const [userInfo, setUserInfo] = useState({ mem_id: "", mem_password: "" });
+  const [userInfo, setUserInfo] = useState({ mem_id: "", mem_pwd: "" });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
@@ -25,14 +25,14 @@ const Login = () => {
       alert("이메일을 입력해 주세요.");
       return;
     }
-    if (!userInfo.mem_password) {
+    if (!userInfo.mem_pwd) {
       alert("비밀번호를 입력해 주세요.");
       return;
     }
 
     const body = {
-      id: userInfo.mem_id,
-      password: userInfo.mem_password,
+      mem_id: userInfo.mem_id,
+      mem_pwd: userInfo.mem_pwd,
     };
 
     setLoading(true);
@@ -52,9 +52,8 @@ const Login = () => {
         localStorage.setItem("token", response.data.token);
         dispatch(
           loginUser({
-            email: userInfo.mem_id,
-            name: response.data.name, // 응답에 이름이 포함되어 있다고 가정
-            id: response.data.id, // 응답에 ID가 포함되어 있다고 가정
+            mem_nickname: response.data.mem_nickname, // 응답에 닉네임이 포함되어 있다고 가정
+            mem_id: response.data.mem_id, // 응답에 ID가 포함되어 있다고 가정
           }),
         );
         setMsg("");
@@ -109,8 +108,8 @@ const Login = () => {
               className="userInput"
               type="password"
               placeholder="비밀번호"
-              value={userInfo.mem_password}
-              name="mem_password"
+              value={userInfo.mem_pwd}
+              name="mem_pwd"
               onChange={handleInputChange}
               minLength={8}
             />
