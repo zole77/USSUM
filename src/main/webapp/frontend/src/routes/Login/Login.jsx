@@ -30,10 +30,9 @@ const Login = () => {
       return;
     }
 
-    const body = {
-      mem_id: userInfo.mem_id,
-      mem_pwd: userInfo.mem_pwd,
-    };
+    const body = new URLSearchParams();
+    body.append("mem_id", userInfo.mem_id);
+    body.append("mem_pwd", userInfo.mem_pwd);
 
     setLoading(true);
     setMsg("Loading...");
@@ -41,7 +40,7 @@ const Login = () => {
     try {
       const response = await axios.post("/login", body, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       });
 
@@ -59,26 +58,33 @@ const Login = () => {
         setMsg("");
         navigate("/main");
       } else {
-        setTimeout(() => setMsg(""), 1500);
-        switch (response.data.code) {
-          case 400:
-            alert("비어있는 내용입니다.");
-            break;
-          case 401:
-            alert("존재하지 않는 id입니다.");
-            break;
-          case 402:
-            alert("비밀번호가 일치하지 않습니다.");
-            break;
-          default:
-            alert(response.data.message || "로그인 실패했습니다.");
-        }
+        handleErrorResponse(response.data);
       }
     } catch (error) {
-      console.error("로그인 중 에러 발생:", error);
+      console.error(
+        "로그인 중 에러 발생:",
+        error.response ? error.response.data : error.message,
+      );
       alert("로그인 중 문제가 발생했습니다.");
       setLoading(false);
       setMsg("");
+    }
+  };
+
+  const handleErrorResponse = (data) => {
+    setTimeout(() => setMsg(""), 1500);
+    switch (data.code) {
+      case 400:
+        alert("비어있는 내용입니다.");
+        break;
+      case 401:
+        alert("존재하지 않는 id입니다.");
+        break;
+      case 402:
+        alert("비밀번호가 일치하지 않습니다.");
+        break;
+      default:
+        alert(data.message || "로그인 실패했습니다.");
     }
   };
 
