@@ -6,7 +6,7 @@ import Main from "../routes/Main";
 import Login from "../routes/Login/Login";
 import SignUp from "../routes/SignUp/SignUp";
 import ModMember from "../routes/MyPage/ModMember";
-import ChatRoom from "../routes/Chat/ChatRoom";
+import Chat from "../routes/Chat/Chat";
 
 function Body() {
     return (
@@ -19,7 +19,7 @@ function Body() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/mypage" element={<ModMember />} />
-                <Route path="/chat" element={<ChatRoom />} />
+                <Route path="/chat" element={<Chat />} />
             </Routes>
         </div>
     );

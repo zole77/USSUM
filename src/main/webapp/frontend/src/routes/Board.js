@@ -139,7 +139,7 @@ function Board(props) {
                 {/* 배열 역순으로 게시글 정렬 */}
                 {currentPosts.map((post) => {
                     return (
-                        <div key={post.id} className="list">
+                        <div className="list">
                             <CommuPost
                                 key={post.id}
                                 boardList={post}
