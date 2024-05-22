@@ -13,6 +13,7 @@ public interface Repository {
     List<MemberVO> selectAllMember();
     MemberVO selectOneMember(String mem_id);
     void updateMember(MemberVO member);
+    void deleteMember(String mem_id);
 
     //Post
     void savePost(BoardVO boardVO);
