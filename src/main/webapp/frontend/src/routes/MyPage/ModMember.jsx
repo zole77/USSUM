@@ -52,6 +52,11 @@ const ModMember = () => {
     setConfirmPwd(e.target.value);
   };
 
+  const handleNicknameConfirmClick = () => {
+    // 닉네임 확인 로직을 여기에 추가하세요
+    console.log("Nickname confirmed:", formData.mem_nickname);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Submit form data to the backend
@@ -59,189 +64,196 @@ const ModMember = () => {
   };
 
   return (
-    <div className="profile-edit-container">
-      <form className="profile-edit-form" onSubmit={handleSubmit}>
-        <Profile
-          onEditClick={() => setView("edit")}
-          onMyLogClick={() => setView("mylog")}
-          activeButton={view}
-        />
-        {view === "edit" && (
-          <>
-            <table className="profile-edit-table">
-              <thead>
-                <tr>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="label-cell">
-                    <label htmlFor="mem_id">아이디</label>
-                  </td>
-                  <td className="input-cell">
-                    <input
-                      type="text"
-                      id="mem_id"
-                      value={formData.mem_id}
-                      readOnly
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="label-cell">
-                    <label htmlFor="mem_pwd">비밀번호</label>
-                  </td>
-                  <td className="input-cell">
-                    <input
-                      type="password"
-                      id="mem_pwd"
-                      name="mem_pwd"
-                      value={formData.mem_pwd}
-                      readOnly={!isEditingPwd}
-                      onChange={handleChange}
-                    />
-                    <button
-                      type="button"
-                      className="edit-pwd-button"
-                      onClick={handlePwdEditClick}
-                    >
-                      {isEditingPwd ? "취소" : "수정"}
-                    </button>
-                  </td>
-                </tr>
-                {isEditingPwd && (
+      <div className="profile-edit-container">
+        <form className="profile-edit-form" onSubmit={handleSubmit}>
+          <Profile
+              onEditClick={() => setView("edit")}
+              onMyLogClick={() => setView("mylog")}
+              activeButton={view}
+          />
+          {view === "edit" && (
+              <>
+                <table className="profile-edit-table">
+                  <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
                   <tr>
                     <td className="label-cell">
-                      <label htmlFor="confirm_mem_pwd">확인</label>
+                      <label htmlFor="mem_id">아이디</label>
                     </td>
                     <td className="input-cell">
                       <input
-                        type="password"
-                        id="confirm_mem_pwd"
-                        name="confirm_mem_pwd"
-                        value={confirmPwd}
-                        onChange={handleConfirmPwdChange}
+                          type="text"
+                          id="mem_id"
+                          value={formData.mem_id}
+                          readOnly
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="label-cell">
+                      <label htmlFor="mem_pwd">비밀번호</label>
+                    </td>
+                    <td className="input-cell">
+                      <input
+                          type="password"
+                          id="mem_pwd"
+                          name="mem_pwd"
+                          value={formData.mem_pwd}
+                          readOnly={!isEditingPwd}
+                          onChange={handleChange}
                       />
                       <button
-                        type="button"
-                        className="change-pwd-button"
-                        onClick={handlePwdChangeClick}
+                          type="button"
+                          className="edit-pwd-button"
+                          onClick={handlePwdEditClick}
                       >
-                        변경
+                        {isEditingPwd ? "취소" : "수정"}
                       </button>
                     </td>
                   </tr>
-                )}
-                <tr>
-                  <td className="label-cell">
-                    <label htmlFor="mem_nickname">닉네임</label>
-                  </td>
-                  <td className="input-cell">
-                    <input
-                      type="text"
-                      id="mem_name"
-                      name="mem_name"
-                      value={formData.mem_name}
-                      onChange={handleChange}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="label-cell">
-                    <label>성별</label>
-                  </td>
-                  <td className="input-cell">
-                    <div className="gender-options">
-                      <div className="gender-option">
-                        <input
-                          type="radio"
-                          id="genderMale"
-                          name="mem_gender"
-                          value="male"
-                          checked={formData.mem_gender === "male"}
+                  {isEditingPwd && (
+                      <tr>
+                        <td className="label-cell">
+                          <label htmlFor="confirm_mem_pwd">확인</label>
+                        </td>
+                        <td className="input-cell">
+                          <input
+                              type="password"
+                              id="confirm_mem_pwd"
+                              name="confirm_mem_pwd"
+                              value={confirmPwd}
+                              onChange={handleConfirmPwdChange}
+                          />
+                          <button
+                              type="button"
+                              className="change-edit-button"
+                              onClick={handlePwdChangeClick}
+                          >
+                            변경
+                          </button>
+                        </td>
+                      </tr>
+                  )}
+                  <tr>
+                    <td className="label-cell">
+                      <label htmlFor="mem_nickname">닉네임</label>
+                    </td>
+                    <td className="input-cell">
+                      <input
+                          type="text"
+                          id="mem_nickname"
+                          name="mem_nickname"
+                          value={formData.mem_nickname}
                           onChange={handleChange}
-                        />
-                        <label htmlFor="genderMale">남성</label>
+                      />
+                      <button
+                          type="button"
+                          className="change-edit-button"
+                          onClick={handleNicknameConfirmClick}
+                      >
+                        확인
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="label-cell">
+                      <label>성별</label>
+                    </td>
+                    <td className="input-cell">
+                      <div className="gender-options">
+                        <div className="gender-option">
+                          <input
+                              type="radio"
+                              id="genderMale"
+                              name="mem_gender"
+                              value="male"
+                              checked={formData.mem_gender === "male"}
+                              onChange={handleChange}
+                          />
+                          <label htmlFor="genderMale">남성</label>
+                        </div>
+                        <div className="gender-option">
+                          <input
+                              type="radio"
+                              id="genderFemale"
+                              name="mem_gender"
+                              value="female"
+                              checked={formData.mem_gender === "female"}
+                              onChange={handleChange}
+                          />
+                          <label htmlFor="genderFemale">여성</label>
+                        </div>
                       </div>
-                      <div className="gender-option">
-                        <input
-                          type="radio"
-                          id="genderFemale"
-                          name="mem_gender"
-                          value="female"
-                          checked={formData.mem_gender === "female"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="label-cell">
+                      <label htmlFor="mem_birth">생년월일</label>
+                    </td>
+                    <td className="input-cell">
+                      <input
+                          type="date"
+                          id="mem_birth"
+                          name="mem_birth"
+                          value={formData.mem_birth}
                           onChange={handleChange}
-                        />
-                        <label htmlFor="genderFemale">여성</label>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="label-cell">
-                    <label htmlFor="mem_birth">생년월일</label>
-                  </td>
-                  <td className="input-cell">
-                    <input
-                      type="date"
-                      id="mem_birth"
-                      name="mem_birth"
-                      value={formData.mem_birth}
-                      onChange={handleChange}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="label-cell">
-                    <label htmlFor="mem_phone">휴대전화</label>
-                  </td>
-                  <td className="input-cell">
-                    <input
-                      type="text"
-                      id="mem_phone"
-                      name="mem_phone"
-                      value={formData.mem_phone}
-                      onChange={handleChange}
-                      placeholder="예) 010-1234-5678"
-                    />
-                  </td>
-                </tr>
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="label-cell">
+                      <label htmlFor="mem_phone">휴대전화</label>
+                    </td>
+                    <td className="input-cell">
+                      <input
+                          type="text"
+                          id="mem_phone"
+                          name="mem_phone"
+                          value={formData.mem_phone}
+                          onChange={handleChange}
+                          placeholder="예) 010-1234-5678"
+                      />
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td className="label-cell">
-                    <label htmlFor="mem_address">주소</label>
-                  </td>
-                  <td className="input-cell">
+                  <tr>
+                    <td className="label-cell">
+                      <label htmlFor="mem_address">주소</label>
+                    </td>
+                    <td className="input-cell">
                     <textarea
-                      id="mem_address"
-                      name="mem_address"
-                      value={formData.mem_address}
-                      onChange={handleChange}
+                        id="mem_address"
+                        name="mem_address"
+                        value={formData.mem_address}
+                        onChange={handleChange}
                     ></textarea>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
 
-            <div className="form-actions">
-              <button type="button" className="btn-hover color">
-                취소
-              </button>
-              <button type="submit" className="btn-hover color">
-                저장
-              </button>
-            </div>
-          </>
-        )}
-        {view === "mylog" && (
-          <div className="mylog-container">
-            <h2>마이 로그</h2>
-            {/* 여기에 마이 로그 내용을 추가하세요 */}
-          </div>
-        )}
-      </form>
-    </div>
+                <div className="form-actions">
+                  <button type="button" className="btn-hover color">
+                    취소
+                  </button>
+                  <button type="submit" className="btn-hover color">
+                    저장
+                  </button>
+                </div>
+              </>
+          )}
+          {view === "mylog" && (
+              <div className="mylog-container">
+                <h2>마이 로그</h2>
+                {/* 여기에 마이 로그 내용을 추가하세요 */}
+              </div>
+          )}
+        </form>
+      </div>
   );
 };
 
