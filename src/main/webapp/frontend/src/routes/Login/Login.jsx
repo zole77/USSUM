@@ -45,7 +45,7 @@ const Login = () => {
       });
 
       setLoading(false);
-
+      console.log(response.data.message);
       if (response.data.message === "LOGIN SUCCESS") {
         alert("로그인 되었습니다.");
         localStorage.setItem("token", response.data.token);

@@ -9,14 +9,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
 }
 
 .profile-image {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    margin: 10px 0 10px 0;
+    margin: 20px 0 20px 0;
 }
 
 .profile-buttons {
@@ -59,7 +58,7 @@
     text-align: center;
     position: relative;
     margin: 0 auto;
-    padding: 10px;
+    padding: 30px 0;
     display: inline-block;
     background: #FFFFFF;
     width: 700px;
@@ -96,6 +95,7 @@ td.label-cell {
 td.input-cell {
     text-align: left;
     padding-left: 10px;
+    position: relative;
 }
 
 .profile-edit-table {
@@ -203,5 +203,26 @@ td.input-cell {
 }
 
 .form-actions button.btn-hover:focus {
+    outline: none;
+}
+
+.edit-pwd-button, .change-pwd-button {
+    background-color: #5ac7c7;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.4s ease-in-out;
+    position: absolute;
+    margin : 5px;
+}
+
+.edit-pwd-button:hover, .change-pwd-button:hover {
+    background-color: #45a5a1;
+}
+
+.edit-pwd-button:focus, .change-pwd-button:focus {
     outline: none;
 }
