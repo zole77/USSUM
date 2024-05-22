@@ -6,21 +6,23 @@ import Main from "../routes/Main";
 import Login from "../routes/Login/Login";
 import SignUp from "../routes/SignUp/SignUp";
 import ModMember from "../routes/MyPage/ModMember";
+import Chat from "../routes/Chat/Chat";
 
 function Body() {
-  return (
-    <div>
-      <Routes>
-        <Route path="/info" element={<ServiceIntro />} />
-        <Route path="/board" element={<Board />} />
-        <Route path="*" element={<div>404에러</div>} />
-        <Route path="/" element={<Main />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mypage" element={<ModMember />} />
-      </Routes>
-    </div>
-  );
+    return (
+        <div>
+            <Routes>
+                <Route path="/info" element={<ServiceIntro />} />
+                <Route path="/board" element={<Board />} />
+                <Route path="*" element={<div>404에러</div>} />
+                <Route path="/" element={<Main />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/mypage" element={<ModMember />} />
+                <Route path="/chat" element={<Chat />} />
+            </Routes>
+        </div>
+    );
 }
 
 export default Body;

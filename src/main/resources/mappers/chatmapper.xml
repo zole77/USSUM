@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycom.ussum.repository.ChatRepository">
+<!--    채팅방 만들기-->
     <insert id="createRoom">
         <![CDATA[
             INSERT INTO CHAT_TABLE(ROOM_ID, ROOM_NAME)
@@ -9,6 +10,8 @@
         ]]>
     </insert>
 
+<!--    채팅방에 입력한 메세지 DB에 저장-->
+<!--    메세지 타입 입장, 퇴장, 일반 메세지-->
     <insert id="saveMsg">
         <![CDATA[
             INSERT INTO MESSAGE_TABLE(ROOM_ID, CHAT_NO, MESSAGE, MEM_ID, TYPE, CREATED_TIME, MEM_NICKNAME)
@@ -24,6 +27,7 @@
         ]]>
     </insert>
 
+<!--    채팅방 메세지 가져오기-->
     <select id="getMsg" resultType="com.mycom.ussum.vo.ChatMessage">
         <![CDATA[
             SELECT MESSAGE, MEM_NICKNAME, TYPE, CREATED_TIME
@@ -33,6 +37,7 @@
         ]]>
     </select>
 
+<!--    채팅방 입장-->
     <insert id="enterRoom">
         <![CDATA[
             INSERT INTO PARTIC_TABLE(MEM_ID, ROOM_ID)
@@ -40,6 +45,7 @@
         ]]>
     </insert>
 
+<!--    채팅방 퇴장-->
     <delete id="quitRoom">
         <![CDATA[
             DELETE FROM PARTIC_TABLE
@@ -47,6 +53,7 @@
         ]]>
     </delete>
 
+<!--    로그인한 회원 기준으로-->
     <select id="getRooms" resultType="string">
         <![CDATA[
             SELECT ROOM_ID
@@ -55,6 +62,8 @@
         ]]>
     </select>
 
+<!--    서버 ON OFF시 채팅방 목록 복구-->
+<!--    모든 채팅방 불러오기-->
     <select id="loadAllRooms" resultType="com.mycom.ussum.vo.ChatRoom">
         <![CDATA[
             SELECT *

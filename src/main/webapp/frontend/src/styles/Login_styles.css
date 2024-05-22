@@ -11,12 +11,6 @@
     margin-bottom: 3rem;
     color: #45C4B1;
 }
-@font-face {
-    font-family: 'ELAND_Choice_L';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
 /* 로그인 폼 */
 form {
     display: inline-block;
@@ -45,7 +39,11 @@ form {
     width: 80%;
     outline: none;
 }
-
+.userInput {
+    flex-grow: 0.5;
+    flex-shrink: 0;
+    margin: 0;
+}
 /* 버튼 영역 */
 .btn {
     margin: 10%;

@@ -6,9 +6,10 @@ import "../../App.css";
 import axios from "axios";
 
 function Boardupdate(props) {
+    let find = props.boardList.find((x) => x.post_no === props.postId);
     const modalBackground = useRef();
     const editorRef = useRef(null);
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState(find.post_title);
 
     const updatePost = async (post) => {
         try {
@@ -24,8 +25,8 @@ function Boardupdate(props) {
     const onSubmitBtnClick = () => {
         const content = editorRef.current.getInstance().getMarkdown();
 
-        console.log(title.trim());
-        console.log(content.trim());
+        console.log(!title.trim());
+        console.log(!content.trim());
         // 제목과 내용을 확인
 
         if (!title.trim() || !content.trim()) {
@@ -46,8 +47,6 @@ function Boardupdate(props) {
         // 모달 닫기
         props.setUpdateModalOpen(false);
     };
-
-    let find = props.boardList.find((x) => x.post_no === props.postId);
 
     return (
         <div>
@@ -92,7 +91,6 @@ function Boardupdate(props) {
                         <p style={{ textAlign: "left" }}>
                             제목
                             <input
-                                defaultValue={find.post_title}
                                 style={{
                                     marginLeft: "10px",
                                     marginBottom: "10px",
@@ -104,6 +102,7 @@ function Boardupdate(props) {
                                     paddingLeft: "10px",
                                     backgroundColor: "rgb(233, 233, 233)",
                                 }}
+                                value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                             ></input>
                         </p>
