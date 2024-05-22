@@ -169,7 +169,7 @@
 
     <select id="getAllPosts" resultType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
-            SELECT POST_NO, POST_DATE, POST_TITLE, MEM_ID, TOTAL_CLAP, POST_CONTENT
+            SELECT POST_NO, POST_DATE, POST_TITLE, MEM_ID, TOTAL_CLAP, POST_CONTENT, MEM_NICKNAME
             FROM BOARD_TABLE
             ORDER BY POST_DATE DESC
         ]]>
