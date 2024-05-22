@@ -24,7 +24,7 @@ const Confirmation = () => {
                 mem_type: (userInfo.travelType || []).join(", "),
             };
             console.log(formData)
-            const response = await axios.post("/signup/register12", formData);
+            const response = await axios.post("/signup/register", formData);
 
             if (response.status === 200) {
                 console.log("Registration successful:", response.data);
