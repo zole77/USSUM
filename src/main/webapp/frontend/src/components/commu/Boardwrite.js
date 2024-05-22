@@ -36,7 +36,8 @@ function Boardwrite(props) {
         const post = {
             post_title: title,
             post_content: content,
-            mem_id: "test1010", // 실제 구현에서는 사용자 ID를 동적으로 설정해야 합니다
+            mem_id: props.userId,
+            mem_nickname: props.userNickName,
         };
 
         // 게시글 저장 함수 호출

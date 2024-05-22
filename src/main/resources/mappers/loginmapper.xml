@@ -3,7 +3,7 @@
 
 <mapper namespace="com.mycom.ussum.login.dao.LoginDAO">
     <select id="findByIdAndPassword"  resultType="com.mycom.ussum.login.vo.LoginVO">
-        SELECT MEM_ID
+        SELECT MEM_ID, MEM_NICKNAME
         FROM member_table
         WHERE MEM_ID = #{mem_id} AND MEM_PWD = #{mem_pwd}
     </select>

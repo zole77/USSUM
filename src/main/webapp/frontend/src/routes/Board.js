@@ -8,8 +8,10 @@ import Boardread from "../components/commu/Boardread.js";
 import Boardupdate from "../components/commu/Boardupdate.js";
 import "../styles/BoardStyle.css";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 function Board(props) {
+    const user = useSelector((state) => state.user);
     const [boardCategory, setboardCategory] = useState(1);
     const [boardList, setBoardList] = useState([]);
     const [hotPosts, setHotPosts] = useState([]);
@@ -23,8 +25,12 @@ function Board(props) {
     const [btn1Toggled, setBtn1Toggled] = useState(true);
     const [btn2Toggled, setBtn2Toggled] = useState(false);
     const [loading, setLoading] = useState(true); // 로딩 상태 추가
+    const [userId, setUserId] = useState(user.mem_id);
+    const [userNickName, setUserNickName] = useState(user.mem_nickname);
 
     const postsPerPage = 10;
+
+    console.log(userNickName);
 
     const fetchPosts = async () => {
         try {
@@ -189,6 +195,8 @@ function Board(props) {
                 </button>
 
                 <Boardwrite
+                    userId={userId}
+                    userNickName={userNickName}
                     modalOpen={modalOpen}
                     setModalOpen={setModalOpen}
                     fetchPosts={fetchPosts}

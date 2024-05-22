@@ -24,15 +24,15 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public Map<String, String> doLogin(
+    public Map<String, Object> doLogin(
                           @RequestParam("mem_id") String mem_id,
                           @RequestParam("mem_pwd") String mem_pwd,
                           RedirectAttributes redirectAttributes,
                           HttpSession session){
-        Map<String, String> map = new HashMap<>();
-        String result = loginService.login(mem_id, mem_pwd).getMem_id();
+        Map<String, Object> map = new HashMap<>();
+        LoginVO LoginVO = loginService.login(mem_id, mem_pwd);
 
-        if (result == null) {
+        if (LoginVO == null) {
             System.out.println("로그인이 안됨");
             redirectAttributes.addFlashAttribute("error", "회원 정보를 다시 확인바랍니다.");
 
@@ -40,12 +40,10 @@ public class LoginController {
             return map;
         } else {
 
-            map.put("mem_id", result);
+            map.put("member", LoginVO);
             map.put("message", "LOGIN SUCCESS");
-            session.setAttribute("mem_id", result);
+            session.setAttribute("mem_id", LoginVO.getMem_id());
             return map;
-
-
         }
     }
     @GetMapping("/logout")
