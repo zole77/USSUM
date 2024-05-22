@@ -1,7 +1,7 @@
 import React from "react";
 import ChatList from "./../../components/chat/ChatList";
 import ChatRoom from "../../components/chat/ChatRoom";
-import FriendProfile from "../../components/chat/FrinedProfile";
+import FriendProfile from "../../components/chat/FriendProfile";
 
 function Chat(props) {
     return (

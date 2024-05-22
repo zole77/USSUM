@@ -29,9 +29,7 @@ function Board(props) {
     const [userNickName, setUserNickName] = useState(user.mem_nickname);
 
     const postsPerPage = 10;
-
-    console.log(userNickName);
-
+    console.log(boardList);
     const fetchPosts = async () => {
         try {
             const response = await axios.get("board/allposts");
@@ -136,7 +134,7 @@ function Board(props) {
                 <div className="list-head">
                     <div className="post-head">
                         <p style={{ textAlign: "center" }}>번호</p>
-                        <h5 style={{ textAlign: "center" }}>제목</h5>
+                        <h5 style={{ textAlign: "center", paddingLeft: 0 }}>제목</h5>
                         <span style={{ textAlign: "center" }}>작성자</span>
                         <span style={{ textAlign: "center" }}>작성일</span>
                     </div>
@@ -184,6 +182,18 @@ function Board(props) {
                     );
                 })}
 
+                <div className="pageBtn-container">
+                    {/* 페이지 번호 목록 */}
+                    {pageNumbers.map((number) => (
+                        <button
+                            className="pageBtn"
+                            key={number}
+                            onClick={() => handleClick(number)}
+                        >
+                            {number}
+                        </button>
+                    ))}
+                </div>
                 <button
                     className="writeBtn"
                     type="button"
@@ -201,18 +211,6 @@ function Board(props) {
                     setModalOpen={setModalOpen}
                     fetchPosts={fetchPosts}
                 />
-                <div className="pageBtn-container">
-                    {/* 페이지 번호 목록 */}
-                    {pageNumbers.map((number) => (
-                        <button
-                            className="pageBtn"
-                            key={number}
-                            onClick={() => handleClick(number)}
-                        >
-                            {number}
-                        </button>
-                    ))}
-                </div>
             </div>
         </div>
     );
@@ -224,6 +222,7 @@ function CommuPost(props) {
             {/* 클릭한 글의 상세정보 모달창으로 불러오기 */}
             <p>{props.boardList.post_no}</p>
             <h5
+                style={{ paddingLeft: 0 }}
                 onClick={() => {
                     props.setReadModalOpen(true);
                     props.setPostId(props.boardList.post_no);
@@ -231,7 +230,7 @@ function CommuPost(props) {
             >
                 {props.boardList.post_title}
             </h5>
-            <span>{props.boardList.mem_id}</span>
+            <span>{props.boardList.mem_nickname}</span>
             <span>{props.boardList.post_date}</span>
         </div>
     );
