@@ -17,11 +17,6 @@ public class LoginController {
 
     private final LoginService loginService;
 
-//    @Autowired
-//    public LoginController(LoginService loginService) {
-//        this.loginService = loginService;
-//    }
-
     @GetMapping(value = "/login")
     public String showLoginForm(){
         System.out.println("로그인 페이지 실행");
@@ -40,18 +35,17 @@ public class LoginController {
         if (result == null) {
             System.out.println("로그인이 안됨");
             redirectAttributes.addFlashAttribute("error", "회원 정보를 다시 확인바랍니다.");
-//            return "redirect:/login";
+
 
             return map;
         } else {
-//            System.out.println(result.getFirst().toString());
-            // 로그인 성공 시 세션에 사용자 정보 저장
+
             map.put("mem_id", result);
             map.put("message", "LOGIN SUCCESS");
             session.setAttribute("mem_id", result);
             return map;
 
-//            return "redirect:/";
+
         }
     }
     @GetMapping("/logout")
