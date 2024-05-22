@@ -4,7 +4,7 @@
 .layout-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
     position: relative;
     overflow: auto;
 }
@@ -12,14 +12,15 @@
 /* Body 컴포넌트 스타일 */
 .body-container {
     flex: 1;
+    overflow: auto;
 }
 
 /* 푸터 컴포넌트 마진 추가 */
 .footer {
-    margin-top: auto; /* 레이아웃의 하단에 푸터를 고정 */
-    padding: 20px 0;
-    background-color: #f8f9fa;
+    background-color: "white-smoke";
+    color: #242424;
     text-align: center;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 50px; /* 하단에 추가 공간 생성 */
+    padding: 10px 0;
+    bottom: 0;
+    width: 100%;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ChatListItem from "./ChatListItem";
+import "../../styles/ChatList.css";
 import axios from "axios";
 
 function ChatList(props) {
@@ -13,7 +14,7 @@ function ChatList(props) {
     };
 
     return (
-        <div>
+        <div className="chatList-container">
             <h2>채팅</h2>
             {chatList.map((chatListItem) => {
                 return (
