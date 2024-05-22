@@ -21,12 +21,19 @@
         <![CDATA[
             UPDATE MEMBER_TABLE
             SET MEM_PWD = #{mem_pwd} and MEM_GENDER = #{mem_gender}
-            and MEM_PHONE = #{mem_phone} and MEM_BIRTH = #{mem_birth} and
-                          MEM_ADDRESS = #{mem_address} and MEM_TYPE = #{mem_type} and
-                          MEM_NICKNAME = #{mem_nickname} and MEM_NAME = #{mem_name}
+            and MEM_PHONE = #{mem_phone} , MEM_BIRTH = #{mem_birth} ,
+                          MEM_ADDRESS = #{mem_address} , MEM_TYPE = #{mem_type} ,
+                          MEM_NICKNAME = #{mem_nickname} , MEM_NAME = #{mem_name}
             WHERE MEM_ID = #{mem_id}
         ]]>
     </update>
+
+    <delete id="deleteMember">
+        <![CDATA[
+            DELETE FROM MEMBER_TABLE
+            WHERE MEM_ID = #{mem_id}
+        ]]>
+    </delete>
 
     <insert id="savePost" parameterType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
