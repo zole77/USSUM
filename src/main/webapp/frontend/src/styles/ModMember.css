@@ -1,7 +1,78 @@
+.profile-edit-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 10px 0 10px 0;
+}
+
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.profile-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #5ac7c7;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0;
+}
+
+.profile-button.inactive {
+    background-color: white;
+    color: #5ac7c7;
+    border: 2px solid #5ac7c7;
+}
+
+.profile-button:hover {
+    background-color: #45a5a1;
+    color: white;
+}
+
+.profile-button.inactive:hover {
+    background-color: #5ac7c7;
+    color: white;
+}
+
+.profile-edit-form {
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    padding: 10px;
+    display: inline-block;
+    background: #FFFFFF;
+    width: 700px;
+    height: auto;
+    margin-top: 3%;
+    border-radius: 22px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .gender-options {
     display: flex;
     align-items: center;
-    gap: 20px; /* 라디오 버튼과 레이블 사이의 간격을 조정합니다 */
+    gap: 20px;
 }
 
 .gender-option {
@@ -13,78 +84,20 @@
 
 .gender-option label {
     display: inline-block;
-    width: 50px; /* 레이블의 너비를 설정합니다. 필요에 따라 조정 가능합니다 */
-    text-align: center; /* 레이블 텍스트를 가운데 정렬합니다 */
+    width: 50px;
+    text-align: center;
 }
 
 td.label-cell {
-    text-align: right; /* 좌측 요소 우측 정렬 */
-    padding-right: 10px; /* 약간의 간격을 추가 */
+    text-align: right;
+    padding-right: 10px;
 }
 
 td.input-cell {
-    text-align: left; /* 우측 요소 좌측 정렬 */
-    padding-left: 10px; /* 약간의 간격을 추가 */
+    text-align: left;
+    padding-left: 10px;
 }
 
-.profile-edit-form {
-    text-align: center;
-    position: relative; /* fixed에서 relative로 변경 */
-    margin: 0 auto;
-    padding: 10px;
-    display: inline-block;
-    background: #FFFFFF;
-    width: 700px;
-    height: 1000px;
-    margin-top: 3%;
-    border-radius: 22px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.profile-header {
-    height: 260px;
-    vertical-align: middle;
-    text-align: center;
-}
-
-.profile-header-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-.profile-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-.profile-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.profile-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #5ac7c7;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-align: center; /* 텍스트 가운데 정렬 */
-    text-decoration: none; /* 텍스트 밑줄 제거 */
-    display: inline-block;
-    font-size: 16px;
-}
-
-.profile-button:hover {
-    background-color: #45a5a1;
-}
-
-/* 프로필 수정 테이블 */
 .profile-edit-table {
     width: 100%;
     border-collapse: collapse;
@@ -129,10 +142,9 @@ td.input-cell {
 .button-group .profile-button {
     flex: 1;
     margin: 0;
-    border: none; /* 경계선을 없애서 버튼들이 연결되어 보이게 할 수 있습니다 */
+    border: none;
 }
 
-/* 버튼 영역 */
 .form-actions {
     display: flex;
     justify-content: space-between;

@@ -35,4 +35,10 @@ public class MemberController {
     public void updateMember(@RequestBody MemberVO member){
         memberService.updateMember(member);
     }
+
+    @PostMapping("/drop")
+    @Operation(summary = "회원탈퇴")
+    public void dropMember(@Parameter @RequestBody String mem_id){
+        memberService.deleteMember(mem_id);
+    }
 }

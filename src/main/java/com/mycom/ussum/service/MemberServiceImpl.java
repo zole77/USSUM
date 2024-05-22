@@ -27,4 +27,9 @@ public class MemberServiceImpl implements MemberService {
     public void updateMember(MemberVO member) {
         repository.updateMember(member);
     }
+
+    @Override
+    public void deleteMember(String mem_id) {
+        repository.deleteMember(mem_id);
+    }
 }
