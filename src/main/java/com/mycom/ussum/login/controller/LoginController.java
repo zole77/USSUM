@@ -27,20 +27,19 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public void  doLogin(//@RequestParam("mem_id") String mem_id,
-                          //@RequestParam("mem_pwd") String mem_pwd,
-                          @RequestBody LoginVO loginVO,
+    public void  doLogin(@RequestParam("mem_id") String mem_id,
+                          @RequestParam("mem_pwd") String mem_pwd,
                           RedirectAttributes redirectAttributes,
                           HttpSession session){
-        List<LoginVO> result = loginService.login(loginVO.getMem_id(), loginVO.getMem_pwd());
+        List<LoginVO> result = loginService.login(mem_id, mem_pwd);
 
         if (result == null || result.isEmpty()) {
             System.out.println("로그인이 안됨");
             redirectAttributes.addFlashAttribute("error", "회원 정보를 다시 확인바랍니다.");
 
         } else {
-            for(LoginVO login : result){
-                if(login == null){
+            for(LoginVO loginVO : result){
+                if(loginVO == null){
                     System.out.println("결과 목록에서 Null LoginVO 발견");
                     continue;
                 }
