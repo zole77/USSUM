@@ -25,7 +25,6 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/save")
-    @Tag(name = "Board API")
     @Operation(summary = "등록", description = "새로운 글을 등록합니다.")
     public Map<String, Boolean> savePost(@RequestBody BoardVO boardVO){
         Map<String, Boolean> map = new HashMap<>();
@@ -55,23 +54,23 @@ public class BoardController {
         return boardService.getPost(post_no);
     }
 
-    @GetMapping("/posts")
-    @Operation(summary = "게시글 숫자 조회",
-            description = "등록되어 있는 게시물이 얼마나 있는지 확인힙니다. 페이징을 위해 마련된 기능입니다.")
-    public int getAllPostNumber(){
-        return boardService.getAllPostNumber();
-    }
+//    @GetMapping("/posts")
+//    @Operation(summary = "게시글 숫자 조회",
+//            description = "등록되어 있는 게시물이 얼마나 있는지 확인힙니다. 페이징을 위해 마련된 기능입니다.")
+//    public int getAllPostNumber(){
+//        return boardService.getAllPostNumber();
+//    }
 
-    @GetMapping("/page/{page}")
-    @Operation(summary = "일정 개수만큼 게시글 조회",
-    description = "페이징 기능을 위한 API입니다. 페이지 번호를 지정하면 10개씩 잘라서 프론트로 넘깁니다. " +
-            "예를 들어 2를 인자로 넘기면 11번째 게시물과 20번째 게시물까지 가져옵니다. " +
-            "{page} 자리에 페이지 번호를 넣어서 서버로 넘겨주면 됩니다.")
-    public List<BoardVO> getPagePosts(@Parameter(description = "페이지 번호") @PathVariable("page") int page){
-        return boardService.getPagePosts(page);
-    }
+//    @GetMapping("/page/{page}")
+//    @Operation(summary = "일정 개수만큼 게시글 조회",
+//    description = "페이징 기능을 위한 API입니다. 페이지 번호를 지정하면 10개씩 잘라서 프론트로 넘깁니다. " +
+//            "예를 들어 2를 인자로 넘기면 11번째 게시물과 20번째 게시물까지 가져옵니다. " +
+//            "{page} 자리에 페이지 번호를 넣어서 서버로 넘겨주면 됩니다.")
+//    public List<BoardVO> getPagePosts(@Parameter(description = "페이지 번호") @PathVariable("page") int page){
+//        return boardService.getPagePosts(page);
+//    }
 
-    @GetMapping("/delete/{post_no}")
+    @DeleteMapping("/delete/{post_no}")
     @Operation(summary = "삭제", description = "글을 삭제합니다.")
     public void deletePost(@Parameter(description = "게시글 번호") @PathVariable("post_no") String post_no){
         boardService.deletePost(post_no);
@@ -92,8 +91,8 @@ public class BoardController {
                     )
             )
     })
-    public Map<String, Integer> addClap(@RequestParam("post_no") String post_no, @RequestParam("mem_id") String mem_id){
-        return boardService.addClap(post_no, mem_id);
+    public Map<String, Integer> addClap(@RequestBody Map<String, String> map){
+        return boardService.addClap(Integer.parseInt(map.get("post_no")), map.get("mem_id"));
     }
 
     @GetMapping("/hot")
@@ -101,4 +100,5 @@ public class BoardController {
     public List<BoardVO> getHotPosts(){
         return boardService.getHotPosts();
     }
+
 }

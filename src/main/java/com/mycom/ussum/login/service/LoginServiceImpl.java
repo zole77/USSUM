@@ -2,24 +2,28 @@ package com.mycom.ussum.login.service;
 
 import com.mycom.ussum.login.dao.LoginDAO;
 import com.mycom.ussum.login.vo.LoginVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService{
 
     private final LoginDAO loginDAO;
-    @Autowired
-    public LoginServiceImpl(LoginDAO loginDAO) {
-        LoginDAO LoginDAO = null;
-        this.loginDAO = LoginDAO;}
+//    @Autowired
+//    public LoginServiceImpl(LoginDAO loginDAO) {
+//        LoginDAO LoginDAO = null;
+//        this.loginDAO = LoginDAO;}
 
     @Override
-    public List<LoginVO> login(String mem_id, String mem_pwd){
-        List<LoginVO> areaList = loginDAO.findByIdAndPassword(mem_id, mem_pwd);
-        return areaList;
+    public LoginVO login(String mem_id, String mem_pwd){
+//        System.out.println(mem_id + mem_pwd);
+        LoginVO result =  loginDAO.findByIdAndPassword(mem_id, mem_pwd);
+//        System.out.println(result.getMem_id());
+        return result;
     }
 
 

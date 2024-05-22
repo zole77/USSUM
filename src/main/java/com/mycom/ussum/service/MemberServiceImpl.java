@@ -22,4 +22,14 @@ public class MemberServiceImpl implements MemberService {
     public MemberVO getOneMember(String mem_id) {
         return repository.selectOneMember(mem_id);
     }
+
+    @Override
+    public void updateMember(MemberVO member) {
+        repository.updateMember(member);
+    }
+
+    @Override
+    public void deleteMember(String mem_id) {
+        repository.deleteMember(mem_id);
+    }
 }

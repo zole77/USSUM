@@ -4,11 +4,11 @@ import com.mycom.ussum.signup.service.SignupService;
 import com.mycom.ussum.signup.vo.SignupVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class SignupController {
@@ -24,16 +24,15 @@ public class SignupController {
         System.out.println("회원가입 페이지 실행");
         return "signup";
     }
+
     @PostMapping("/signup/register")
-    public String signUp(SignupVO signupVO, RedirectAttributes redirectAttributes){
+    @ResponseBody
+    public Map<String, Boolean> signUp(@RequestBody SignupVO signupVO){
+        System.out.println(signupVO.getMem_id());
         boolean isSuccess = signupService.signUp(signupVO);
-        if(isSuccess){
-            return "redirect:/login";
-        } else{
-            //에러 메시지 주고 회원가입으로 돌아감
-            redirectAttributes.addFlashAttribute("error",true);
-            return "redirect:/signup";
-        }
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("isSuccess", isSuccess);
+        return map;
     }
 
     @PostMapping("/signup/checkDuplicate")

@@ -1,0 +1,228 @@
+.profile-edit-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 20px 0 20px 0;
+}
+
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.profile-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #5ac7c7;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0;
+}
+
+.profile-button.inactive {
+    background-color: white;
+    color: #5ac7c7;
+    border: 2px solid #5ac7c7;
+}
+
+.profile-button:hover {
+    background-color: #45a5a1;
+    color: white;
+}
+
+.profile-button.inactive:hover {
+    background-color: #5ac7c7;
+    color: white;
+}
+
+.profile-edit-form {
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    padding: 30px 0;
+    display: inline-block;
+    background: #FFFFFF;
+    width: 700px;
+    height: auto;
+    margin-top: 3%;
+    border-radius: 22px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.gender-options {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.gender-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 30px;
+}
+
+.gender-option label {
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+}
+
+td.label-cell {
+    text-align: right;
+    padding-right: 10px;
+}
+
+td.input-cell {
+    text-align: left;
+    padding-left: 10px;
+    position: relative;
+}
+
+.profile-edit-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.profile-edit-table thead th {
+    font-weight: bold;
+    padding: 10px;
+}
+
+.profile-edit-table td {
+    padding: 13px;
+    vertical-align: middle;
+}
+
+.profile-edit-table label {
+    font-weight: bold;
+}
+
+.profile-edit-table input,
+.profile-edit-table select,
+.profile-edit-table textarea {
+    width: 60%;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid #45c4b1;
+    background-color: #ffffff;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.profile-edit-table input[type="file"] {
+    padding: 3px;
+}
+
+.button-group {
+    display: flex;
+}
+
+.button-group .profile-button {
+    flex: 1;
+    margin: 0;
+    border: none;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 90px 0 90px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.4s ease-in-out;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #5ac7c7;
+    color: #fff;
+    background-size: 300% 100%;
+}
+
+.form-actions button[type="submit"]:hover {
+    background-position: 100% 0;
+}
+
+.form-actions button[type="button"] {
+    background-color: #ccc;
+    color: #000;
+}
+
+.form-actions button:focus {
+    outline: none;
+}
+
+.form-actions button.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align: center;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    transition: all 0.4s ease-in-out;
+}
+
+.form-actions button.btn-hover.color {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+
+.form-actions button.btn-hover:hover {
+    background-position: 100% 0;
+}
+
+.form-actions button.btn-hover:focus {
+    outline: none;
+}
+
+.edit-pwd-button, .change-pwd-button {
+    background-color: #5ac7c7;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.4s ease-in-out;
+    position: absolute;
+    margin : 5px;
+}
+
+.edit-pwd-button:hover, .change-pwd-button:hover {
+    background-color: #45a5a1;
+}
+
+.edit-pwd-button:focus, .change-pwd-button:focus {
+    outline: none;
+}

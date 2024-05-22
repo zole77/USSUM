@@ -16,6 +16,10 @@
     font-style: normal;
 }
 
+.commu-container {
+    font-family: "LINESeedKR-Bd";
+}
+
 .comment-container {
     display: flex;
     width: 100%;

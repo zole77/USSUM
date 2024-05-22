@@ -8,5 +8,5 @@ import java.util.List;
 
 @Mapper
 public interface LoginDAO {
-    List<LoginVO> findByIdAndPassword(@Param("mem_id")String mem_id, @Param("mem_password") String mem_password);
+    LoginVO findByIdAndPassword(@Param("mem_id") String mem_id, @Param("mem_pwd") String mem_pwd);
 }

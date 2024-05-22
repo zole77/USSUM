@@ -2,26 +2,25 @@ package com.mycom.ussum.login.controller;
 
 import com.mycom.ussum.login.service.LoginService;
 import com.mycom.ussum.login.vo.LoginVO;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-
+@RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
 
-    @Autowired
-    public LoginController(LoginService loginService) {
-        this.loginService = loginService;
-    }
+//    @Autowired
+//    public LoginController(LoginService loginService) {
+//        this.loginService = loginService;
+//    }
 
     @GetMapping(value = "/login")
     public String showLoginForm(){
@@ -30,23 +29,29 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String doLogin(@RequestParam("mem_id") String mem_id,
-                          @RequestParam("mem_password") String mem_password,
+    public Map<String, String> doLogin(
+                          @RequestParam("mem_id") String mem_id,
+                          @RequestParam("mem_pwd") String mem_pwd,
                           RedirectAttributes redirectAttributes,
                           HttpSession session){
-        List<LoginVO> result = loginService.login(mem_id, mem_password);
+        Map<String, String> map = new HashMap<>();
+        String result = loginService.login(mem_id, mem_pwd).getMem_id();
 
-        if (result.isEmpty()) {
+        if (result == null) {
             System.out.println("로그인이 안됨");
             redirectAttributes.addFlashAttribute("error", "회원 정보를 다시 확인바랍니다.");
-            return "redirect:/login";
-        } else {
-            System.out.println(result.toString());
-            // 로그인 성공 시 세션에 사용자 정보 저장
-            int mem_no = result.get(0).getMem_no();
-            session.setAttribute("member_no", mem_no);
+//            return "redirect:/login";
 
-            return "redirect:/";
+            return map;
+        } else {
+//            System.out.println(result.getFirst().toString());
+            // 로그인 성공 시 세션에 사용자 정보 저장
+            map.put("mem_id", result);
+            map.put("message", "LOGIN SUCCESS");
+            session.setAttribute("mem_id", result);
+            return map;
+
+//            return "redirect:/";
         }
     }
     @GetMapping("/logout")

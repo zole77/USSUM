@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { LabelContext } from "./labelDataContext";
 import Grid from "@mui/material/Grid";
 import "../../styles/Signup_styles.css";
@@ -13,17 +13,22 @@ const SignupType = () => {
 
   useEffect(() => {
     // userInfo 상태에 현재 checkedList를 저장
-    setUserInfo((prevUserInfo) => ({
-      ...prevUserInfo,
-      travelType: checkedList,
-    }));
+    setUserInfo((prevUserInfo) => {
+      if (prevUserInfo.travelType !== checkedList) {
+        return {
+          ...prevUserInfo,
+          travelType: checkedList,
+        };
+      }
+      return prevUserInfo;
+    });
   }, [checkedList, setUserInfo]);
 
-  const checkHandler = (item, isChecked) => {
+  const checkHandler = useCallback((item, isChecked) => {
     setCheckedList((prev) =>
       isChecked ? [...prev, item] : prev.filter((x) => x !== item),
     );
-  };
+  }, []);
 
   return (
     <div>
@@ -69,9 +74,11 @@ const SignupType = () => {
             "포토스팟",
           ].map((item, idx) => (
             <Grid item xs={6} sm={3} key={idx}>
-              <label>
+              <label htmlFor={`travel-type-${idx}`}>
                 <input
                   type="checkbox"
+                  id={`travel-type-${idx}`}
+                  name={`travelType-${item}`}
                   checked={checkedList.includes(item)}
                   onChange={(e) => checkHandler(item, e.target.checked)}
                 />
@@ -84,7 +91,9 @@ const SignupType = () => {
           <div style={{ marginTop: 15, textAlign: "center" }}>
             <button
               type="button"
-              onClick={nextPage}
+              onClick={() => {
+                nextPage();
+              }}
               disabled={checkedList.length === 0}
               className="btn-hover color"
             >

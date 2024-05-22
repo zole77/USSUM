@@ -37,11 +37,14 @@ const SignupNickname = () => {
         setNicknameAvailable(false); // 닉네임 사용 불가능
       }
     } catch (error) {
-      console.error("Error checking duplicate nickname:", error.response ? error.response.data : error.message);
+      console.error(
+        "Error checking duplicate nickname:",
+        error.response ? error.response.data : error.message,
+      );
       console.log("Error details:", error.response ? error.response : error); // 오류 상세 내용을 console.log로 출력
       alert(
-          "중복 확인 중 오류가 발생했습니다: " +
-          (error.response ? error.response.data : error.message)
+        "중복 확인 중 오류가 발생했습니다: " +
+          (error.response ? error.response.data : error.message),
       );
     }
   };
@@ -69,55 +72,59 @@ const SignupNickname = () => {
   };
 
   return (
-      <div className="signup-container">
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={3}>
-            <button
-                type="button"
-                className="signup-back-button"
-                onClick={prevPage}
-            >
-              <ArrowBackIcon />
-            </button>
-          </Grid>
-          <Grid item xs={6}>
-            <h4 className="Signupnickname-heading">회원가입</h4>
-          </Grid>
-          <Grid item xs={3}></Grid>
-          <Grid item xs={9}>
-            <input
-                type="text"
-                className="signup-input"
-                placeholder="닉네임을 입력해주세요"
-                required
-                onChange={handleNicknameChange}
-                value={SignupNickname ? SignupNickname.nickname : ""}
-            />
-          </Grid>
-          <Grid item xs={3}>
-            <button
-                type="button"
-                className="signup-button-confirm"
-                onClick={handleCheckDuplicate}
-                disabled={!SignupNickname.nickname}
-            >
-              확인
-            </button>
-          </Grid>
-          <Grid item xs={12}>
-            <div style={{ marginTop: 15 }}>
-              <button
-                  type="button"
-                  className="btn-hover color"
-                  onClick={handleNextPage}
-                  disabled={!SignupNickname.nickname || !nicknameAvailable || !isDuplicateChecked}
-              >
-                다음
-              </button>
-            </div>
-          </Grid>
+    <div className="signup-container">
+      <Grid container spacing={3} alignItems="center">
+        <Grid item xs={3}>
+          <button
+            type="button"
+            className="signup-back-button"
+            onClick={prevPage}
+          >
+            <ArrowBackIcon />
+          </button>
         </Grid>
-      </div>
+        <Grid item xs={6}>
+          <h4 className="Signupnickname-heading">회원가입</h4>
+        </Grid>
+        <Grid item xs={3}></Grid>
+        <Grid item xs={9}>
+          <input
+            type="text"
+            className="signup-input"
+            placeholder="닉네임을 입력해주세요"
+            required
+            onChange={handleNicknameChange}
+            value={SignupNickname ? SignupNickname.nickname : ""}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <button
+            type="button"
+            className="signup-button-confirm"
+            onClick={handleCheckDuplicate}
+            disabled={!SignupNickname.nickname}
+          >
+            확인
+          </button>
+        </Grid>
+        <Grid item xs={12}>
+          <div style={{ marginTop: 15 }}>
+            <button
+              type="button"
+              className="btn-hover color"
+              onClick={handleNextPage}
+              disabled={
+                !SignupNickname.nickname ||
+                !nicknameAvailable ||
+                !isDuplicateChecked
+              }
+            >
+              다음
+            </button>
+          </div>
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 
