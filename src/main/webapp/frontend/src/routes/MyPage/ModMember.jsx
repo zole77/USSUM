@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/ModMember.css";
 import Profile from "./Profile"; // Profile 컴포넌트 가져오기
+import axios from "axios"; // axios 가져오기
 
 const ModMember = () => {
   const [formData, setFormData] = useState({
@@ -10,14 +11,45 @@ const ModMember = () => {
     mem_birth: "",
     mem_address: "",
     mem_type: "",
+    mem_gender: "",
     mem_nickname: "",
   });
 
   const [view, setView] = useState("edit"); // 'edit' or 'mylog'
+  const [isEditingPwd, setIsEditingPwd] = useState(false);
+  const [confirmPwd, setConfirmPwd] = useState("");
+
+  // 사용자 정보를 받아오는 함수
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("/api/user"); // 실제 사용자 정보를 가져오는 API 엔드포인트로 변경하세요
+      setFormData(response.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handlePwdEditClick = () => {
+    setIsEditingPwd(!isEditingPwd);
+  };
+
+  const handlePwdChangeClick = () => {
+    // 비밀번호 변경 로직을 여기에 추가하세요
+    console.log("Password changed:", formData.mem_pwd, confirmPwd);
+    setConfirmPwd("");
+  };
+
+  const handleConfirmPwdChange = (e) => {
+    setConfirmPwd(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -58,27 +90,60 @@ const ModMember = () => {
                 </tr>
                 <tr>
                   <td className="label-cell">
-                    <label htmlFor="mem_pwd">비밀 번호</label>
+                    <label htmlFor="mem_pwd">비밀번호</label>
                   </td>
                   <td className="input-cell">
                     <input
                       type="password"
                       id="mem_pwd"
+                      name="mem_pwd"
                       value={formData.mem_pwd}
-                      readOnly
+                      readOnly={!isEditingPwd}
+                      onChange={handleChange}
                     />
+                    <button
+                      type="button"
+                      className="edit-pwd-button"
+                      onClick={handlePwdEditClick}
+                    >
+                      {isEditingPwd ? "취소" : "수정"}
+                    </button>
                   </td>
                 </tr>
+                {isEditingPwd && (
+                  <tr>
+                    <td className="label-cell">
+                      <label htmlFor="confirm_mem_pwd">확인</label>
+                    </td>
+                    <td className="input-cell">
+                      <input
+                        type="password"
+                        id="confirm_mem_pwd"
+                        name="confirm_mem_pwd"
+                        value={confirmPwd}
+                        onChange={handleConfirmPwdChange}
+                      />
+                      <button
+                        type="button"
+                        className="change-pwd-button"
+                        onClick={handlePwdChangeClick}
+                      >
+                        변경
+                      </button>
+                    </td>
+                  </tr>
+                )}
                 <tr>
                   <td className="label-cell">
-                    <label htmlFor="confirm_mem_pwd">비밀 번호 확인</label>
+                    <label htmlFor="mem_nickname">닉네임</label>
                   </td>
                   <td className="input-cell">
                     <input
-                      type="password"
-                      id="confirm_mem_pwd"
-                      value={formData.mem_pwd}
-                      readOnly
+                      type="text"
+                      id="mem_name"
+                      name="mem_name"
+                      value={formData.mem_name}
+                      onChange={handleChange}
                     />
                   </td>
                 </tr>
@@ -92,9 +157,9 @@ const ModMember = () => {
                         <input
                           type="radio"
                           id="genderMale"
-                          name="mem_type"
+                          name="mem_gender"
                           value="male"
-                          checked={formData.mem_type === "male"}
+                          checked={formData.mem_gender === "male"}
                           onChange={handleChange}
                         />
                         <label htmlFor="genderMale">남성</label>
@@ -103,9 +168,9 @@ const ModMember = () => {
                         <input
                           type="radio"
                           id="genderFemale"
-                          name="mem_type"
+                          name="mem_gender"
                           value="female"
-                          checked={formData.mem_type === "female"}
+                          checked={formData.mem_gender === "female"}
                           onChange={handleChange}
                         />
                         <label htmlFor="genderFemale">여성</label>
@@ -142,20 +207,7 @@ const ModMember = () => {
                     />
                   </td>
                 </tr>
-                <tr>
-                  <td className="label-cell">
-                    <label htmlFor="mem_nickname">닉네임</label>
-                  </td>
-                  <td className="input-cell">
-                    <input
-                      type="text"
-                      id="mem_name"
-                      name="mem_name"
-                      value={formData.mem_name}
-                      onChange={handleChange}
-                    />
-                  </td>
-                </tr>
+
                 <tr>
                   <td className="label-cell">
                     <label htmlFor="mem_address">주소</label>

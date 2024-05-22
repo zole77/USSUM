@@ -40,7 +40,7 @@ form {
     outline: none;
 }
 .userInput {
-    flex-grow: 0.5;
+    flex-grow: 0.8;
     flex-shrink: 0;
     margin: 0;
 }
