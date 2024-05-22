@@ -3,8 +3,8 @@
 
 <mapper namespace="com.mycom.ussum.login.dao.LoginDAO">
     <select id="findByIdAndPassword"  resultType="com.mycom.ussum.login.vo.LoginVO">
-        SELECT COUNT(*)
+        SELECT MEM_ID
         FROM member_table
-        WHERE "MEM_ID" = #{mem_id} AND "MEM_PWD" = #{mem_pwd}
+        WHERE MEM_ID = #{mem_id} AND MEM_PWD = #{mem_pwd}
     </select>
 </mapper>
