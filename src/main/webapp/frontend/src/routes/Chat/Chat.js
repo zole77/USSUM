@@ -5,10 +5,16 @@ import FriendProfile from "../../components/chat/FrinedProfile";
 
 function Chat(props) {
     return (
-        <div style={{ display: "flex" }}>
-            <ChatList></ChatList>
-            <ChatRoom></ChatRoom>
-            <FriendProfile></FriendProfile>
+        <div style={{ display: "flex", width: "100%" }}>
+            <div style={{ flex: 1, padding: "50px" }}>
+                <ChatList />
+            </div>
+            <div style={{ flex: 3 }}>
+                <ChatRoom />
+            </div>
+            <div style={{ flex: 1, padding: "50px" }}>
+                <FriendProfile />
+            </div>
         </div>
     );
 }

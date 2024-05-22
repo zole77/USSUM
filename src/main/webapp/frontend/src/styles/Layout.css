@@ -12,7 +12,6 @@
 /* Body 컴포넌트 스타일 */
 .body-container {
     flex: 1;
-    padding: 20px;
 }
 
 /* 푸터 컴포넌트 마진 추가 */
