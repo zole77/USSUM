@@ -37,10 +37,10 @@
 
     <insert id="savePost" parameterType="com.mycom.ussum.vo.BoardVO">
         <![CDATA[
-            INSERT INTO BOARD_TABLE (POST_NO, POST_DATE, POST_TITLE, MEM_ID, POST_CONTENT)
+            INSERT INTO BOARD_TABLE (POST_NO, POST_DATE, POST_TITLE, MEM_ID, POST_CONTENT, MEM_NICKNAME)
             VALUES ((SELECT NVL(MAX(POST_NO)+1, 1)
                      FROM BOARD_TABLE),
-                    SYSDATE, #{post_title}, #{mem_id}, #{post_content})
+                    SYSDATE, #{post_title}, #{mem_id}, #{post_content}, #{mem_nickname})
         ]]>
     </insert>
 

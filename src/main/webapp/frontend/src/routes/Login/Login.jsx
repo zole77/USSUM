@@ -56,7 +56,7 @@ const Login = () => {
           }),
         );
         setMsg("");
-        navigate("/");
+        navigate("/main");
       } else {
         handleErrorResponse(response.data);
       }

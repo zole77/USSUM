@@ -1,3 +1,4 @@
+/* Layout.css */
 
 /* 레이아웃 컨테이너 스타일 */
 .layout-container {
@@ -10,8 +11,7 @@
 
 /* Body 컴포넌트 스타일 */
 .body-container {
-    /*height : 100%;*/
-    min-height: 100%;
+    flex: 1;
     position: relative;
 }
 
@@ -23,6 +23,4 @@
     padding: 10px 0;
     bottom: 0;
     width: 100%;
-    /*position : relative;*/
-    /*transform : translateY(-100%);*/
 }
