@@ -1,11 +1,11 @@
 import React from "react";
-import "../styles/Modal.css";
+import '../../styles/Modal.css';
 
 function Modal({ title }) {
     return (
         <div className="modal">
             <h3>{title}</h3>
-            <p>모달 내용</p>
+            <p>안녕하세요</p>
         </div>
     );
 }

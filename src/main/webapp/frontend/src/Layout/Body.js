@@ -7,6 +7,7 @@ import Login from "../routes/Login/Login";
 import SignUp from "../routes/SignUp/SignUp";
 import ModMember from "../routes/MyPage/ModMember";
 import Chat from "../routes/Chat/Chat";
+import Withme from "../routes/Withme/Withme";
 
 function Body() {
     return (
@@ -14,7 +15,7 @@ function Body() {
             <Routes>
                 <Route path="/info" element={<ServiceIntro />} />
                 <Route path="/board" element={<Board />} />
-                <Route path="*" element={<div>404에러</div>} />
+                <Route path="/Withme" element={<Withme />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />

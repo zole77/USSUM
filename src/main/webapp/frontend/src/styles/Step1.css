@@ -1,28 +1,38 @@
 /* Step1.css */
-
 .Step1 {
-    text-align: center;
-    margin: auto;
-    max-width: 400px;
-  }
-  
-  .Step1 h2 {
-    margin-bottom: 20px;
-    font-size: 20px;
-    color: #333;
-  }
-  
-  .Step1 button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .Step1 button:hover {
-    background-color: #0056b3;
-  }
-  
+  text-align: center;
+}
+
+.Step1 h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.calendar-container {
+  display: inline-block; /* 달력 컨테이너를 인라인 블록 요소로 설정 */
+  margin-top: 50px;
+  margin-bottom: 30px; /* 캘린더와 버튼 사이의 간격 설정 */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-container button {
+  margin: 0 10px; /* 버튼 사이의 간격 설정 */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 50px;
+}
+
+.button-container button:hover {
+  background-color: #0056b3;
+}
+
