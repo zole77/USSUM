@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../styles/Step2.css';
 
 
 function Step2({ onNext, onClose }) {

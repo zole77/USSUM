@@ -1,8 +1,9 @@
-writemodal
 import React, { useState } from 'react';
 import Step1 from './Step1'; // 스텝1 컴포넌트 import
 import Step2 from './Step2';
-import '../styles/WriteModal.css';
+import Step3 from './Step3';
+import Step4 from './Step4';
+import '../../styles/WriteModal.css';
 
 
 function WriteModal({ onClose }) {
@@ -21,11 +22,9 @@ function WriteModal({ onClose }) {
       case 2:
         return <Step2 onNext={nextStep} onClose={onClose} />;
       case 3:
-        // Step3 컴포넌트 구현
-        break;
+        return <Step3 onNext={nextStep} onClose={onClose} />;
       case 4:
-        // Step4 컴포넌트 구현
-        break;
+        return <Step4 onNext={nextStep} onClose={onClose} />;
       default:
         return null;
     }
