@@ -78,7 +78,7 @@ function Header() {
           </Link>
         </li>
         <li>
-          <Link to="/services" className="nav-link">
+          <Link to="/Withme" className="nav-link">
             같이 가요!
           </Link>
         </li>

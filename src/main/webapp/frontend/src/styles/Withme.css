@@ -1,0 +1,58 @@
+/* Withme.css */
+
+.Withme {
+    display: flex;
+    flex-direction: row;
+    height: 100%; /* 부모 컨테이너의 높이를 가득 채우도록 설정 */
+  }
+  
+  .left-section,
+  .right-section {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .dropdown-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .dropdown-container {
+    width: calc(50% - 10px);
+  }
+  
+  .dropdown-container select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .divider {
+    border-left: 1px solid #535050aa;
+    height: 100%;
+    margin: 0 20px;
+  }
+  
+  .modal-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .modal-wrapper {
+    width: calc(50% - 10px);
+  }
+  
+  .modal-wrapper a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .modal-wrapper a:hover {
+    opacity: 0.8;
+  }
+  
