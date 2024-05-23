@@ -12,7 +12,7 @@
 /* Body 컴포넌트 스타일 */
 .body-container {
     flex: 1;
-    overflow: auto;
+    position: relative;
 }
 
 /* 푸터 컴포넌트 마진 추가 */
@@ -20,6 +20,7 @@
     background-color: "white-smoke";
     color: #242424;
     text-align: center;
+    margin-top: auto;
     padding: 10px 0;
     bottom: 0;
     width: 100%;

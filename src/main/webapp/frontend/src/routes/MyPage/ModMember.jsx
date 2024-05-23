@@ -1,41 +1,54 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 import "../../styles/ModMember.css";
-import Profile from "./Profile"; // Profile 컴포넌트 가져오기
-import axios from "axios"; // axios 가져오기
+import Profile from "./Profile";
 
 const ModMember = () => {
+  const loginInfo = useSelector((state) => state.user);
+  const userGender = useSelector((state) => state.user.mem_gender); // 성별 정보 가져오기
+  const userMemType = useSelector((state) => state.user.mem_type) || ""; // mem_type 정보 가져오기, undefined일 경우 빈 문자열
+
   const [formData, setFormData] = useState({
     mem_id: "",
     mem_pwd: "",
     mem_phone: "",
     mem_birth: "",
     mem_address: "",
-    mem_type: "",
-    mem_gender: "",
     mem_nickname: "",
+    mem_type: "", // mem_type 초기화
   });
 
-  const [view, setView] = useState("edit"); // 'edit' or 'mylog'
+  const [originalData, setOriginalData] = useState({});
+  const [view, setView] = useState("edit"); // 'edit' 또는 'mylog'
   const [isEditingPwd, setIsEditingPwd] = useState(false);
   const [confirmPwd, setConfirmPwd] = useState("");
-
-  // 사용자 정보를 받아오는 함수
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get("/api/user"); // 실제 사용자 정보를 가져오는 API 엔드포인트로 변경하세요
-      setFormData(response.data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+  const [nicknameAvailable, setNicknameAvailable] = useState(false);
+  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
 
   useEffect(() => {
-    fetchUserData();
-  }, []);
+    setFormData({ ...loginInfo, mem_type: userMemType });
+    setOriginalData({ ...loginInfo, mem_type: userMemType }); // 원본 데이터를 저장
+  }, [loginInfo, userMemType]);
+
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === "Escape") {
+        setFormData(originalData); // ESC 키를 누르면 원본 데이터로 복원
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [originalData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (name === "mem_nickname") {
+      setNicknameAvailable(false);
+      setIsDuplicateChecked(false);
+    }
   };
 
   const handlePwdEditClick = () => {
@@ -43,8 +56,7 @@ const ModMember = () => {
   };
 
   const handlePwdChangeClick = () => {
-    // 비밀번호 변경 로직을 여기에 추가하세요
-    console.log("Password changed:", formData.mem_pwd, confirmPwd);
+    console.log("비밀번호 변경됨:", formData.mem_pwd, confirmPwd);
     setConfirmPwd("");
   };
 
@@ -52,10 +64,53 @@ const ModMember = () => {
     setConfirmPwd(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const checkDuplicate = async () => {
+    if (!formData.mem_nickname) {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/signup/checkNickname", null, {
+        params: { mem_nickname: formData.mem_nickname },
+      });
+
+      setIsDuplicateChecked(true);
+
+      if (response.data === 0) {
+        alert("사용 가능한 닉네임입니다.");
+        setNicknameAvailable(true);
+      } else {
+        alert("이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.");
+        setNicknameAvailable(false);
+      }
+    } catch (error) {
+      console.error(
+        "Error checking duplicate nickname:",
+        error.response ? error.response.data : error.message,
+      );
+      console.log("Error details:", error.response ? error.response : error);
+      alert(
+        "중복 확인 중 오류가 발생했습니다: " +
+          (error.response ? error.response.data : error.message),
+      );
+    }
+  };
+
+  const handleCheckDuplicate = () => checkDuplicate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Submit form data to the backend
-    console.log(formData);
+    try {
+      const response = await axios.post("/api/modify", {
+        ...formData,
+        mem_gender: userGender,
+      });
+      console.log(response.data);
+      // 응답 처리 로직 추가
+    } catch (error) {
+      console.error("사용자 정보 업데이트 중 오류 발생:", error);
+    }
   };
 
   return (
@@ -140,42 +195,32 @@ const ModMember = () => {
                   <td className="input-cell">
                     <input
                       type="text"
-                      id="mem_name"
-                      name="mem_name"
-                      value={formData.mem_name}
+                      id="mem_nickname"
+                      name="mem_nickname"
+                      value={formData.mem_nickname}
                       onChange={handleChange}
                     />
+                    <button
+                      type="button"
+                      className="check-nickname-button"
+                      onClick={handleCheckDuplicate}
+                      disabled={!formData.mem_nickname}
+                    >
+                      확인
+                    </button>
                   </td>
                 </tr>
                 <tr>
                   <td className="label-cell">
-                    <label>성별</label>
+                    <label htmlFor="mem_gender">성별</label>
                   </td>
                   <td className="input-cell">
-                    <div className="gender-options">
-                      <div className="gender-option">
-                        <input
-                          type="radio"
-                          id="genderMale"
-                          name="mem_gender"
-                          value="male"
-                          checked={formData.mem_gender === "male"}
-                          onChange={handleChange}
-                        />
-                        <label htmlFor="genderMale">남성</label>
-                      </div>
-                      <div className="gender-option">
-                        <input
-                          type="radio"
-                          id="genderFemale"
-                          name="mem_gender"
-                          value="female"
-                          checked={formData.mem_gender === "female"}
-                          onChange={handleChange}
-                        />
-                        <label htmlFor="genderFemale">여성</label>
-                      </div>
-                    </div>
+                    <input
+                      type="text"
+                      id="mem_gender"
+                      value={userGender === "male" ? "남성" : "여성"} // 성별을 텍스트로 표시
+                      readOnly
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -207,7 +252,6 @@ const ModMember = () => {
                     />
                   </td>
                 </tr>
-
                 <tr>
                   <td className="label-cell">
                     <label htmlFor="mem_address">주소</label>
@@ -221,14 +265,31 @@ const ModMember = () => {
                     ></textarea>
                   </td>
                 </tr>
+                <tr>
+                  <td className="label-cell">
+                    <label htmlFor="mem_type">여행 취향</label>
+                  </td>
+                  <td className="input-cell">
+                    <input
+                      type="text"
+                      id="mem_type"
+                      name="mem_type"
+                      value={userMemType} // mem_type을 텍스트로 표시
+                      readOnly
+                    />
+                  </td>
+                </tr>
               </tbody>
             </table>
-
             <div className="form-actions">
               <button type="button" className="btn-hover color">
                 취소
               </button>
-              <button type="submit" className="btn-hover color">
+              <button
+                type="submit"
+                className="btn-hover color"
+                disabled={!nicknameAvailable || !isDuplicateChecked}
+              >
                 저장
               </button>
             </div>
