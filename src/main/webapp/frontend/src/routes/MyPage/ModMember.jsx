@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import "../../styles/ModMember.css";
 import Profile from "./Profile";
+import { loginUser } from "../Login/loginSlice"; // 액션 임포트
 
 const ModMember = () => {
+  const dispatch = useDispatch();
   const loginInfo = useSelector((state) => state.user);
-  const userGender = useSelector((state) => state.user.mem_gender); // 성별 정보 가져오기
-  const userMemType = useSelector((state) => state.user.mem_type) || ""; // mem_type 정보 가져오기, undefined일 경우 빈 문자열
+  const userGender = useSelector((state) => state.user.mem_gender);
+  const userMemType = useSelector((state) => state.user.mem_type) || "";
 
   const [formData, setFormData] = useState({
     mem_id: "",
@@ -16,25 +18,25 @@ const ModMember = () => {
     mem_birth: "",
     mem_address: "",
     mem_nickname: "",
-    mem_type: "", // mem_type 초기화
+    mem_type: "",
   });
 
   const [originalData, setOriginalData] = useState({});
-  const [view, setView] = useState("edit"); // 'edit' 또는 'mylog'
+  const [view, setView] = useState("edit");
   const [isEditingPwd, setIsEditingPwd] = useState(false);
   const [confirmPwd, setConfirmPwd] = useState("");
   const [nicknameAvailable, setNicknameAvailable] = useState(false);
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
 
   useEffect(() => {
-    setFormData({ ...loginInfo, mem_type: userMemType });
-    setOriginalData({ ...loginInfo, mem_type: userMemType }); // 원본 데이터를 저장
-  }, [loginInfo, userMemType]);
+    setFormData({ ...loginInfo });
+    setOriginalData({ ...loginInfo });
+  }, [loginInfo]);
 
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
-        setFormData(originalData); // ESC 키를 누르면 원본 데이터로 복원
+        setFormData(originalData);
       }
     };
 
@@ -102,11 +104,14 @@ const ModMember = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/modify", {
+      const response = await axios.post("/member/modify", {
         ...formData,
         mem_gender: userGender,
       });
+
       console.log(response.data);
+      // 업데이트된 회원 정보를 Redux 상태에 반영
+      dispatch(loginUser(response.data));
       // 응답 처리 로직 추가
     } catch (error) {
       console.error("사용자 정보 업데이트 중 오류 발생:", error);
@@ -138,6 +143,7 @@ const ModMember = () => {
                     <input
                       type="text"
                       id="mem_id"
+                      name="mem_id"
                       value={formData.mem_id}
                       readOnly
                     />
@@ -218,7 +224,8 @@ const ModMember = () => {
                     <input
                       type="text"
                       id="mem_gender"
-                      value={userGender === "male" ? "남성" : "여성"} // 성별을 텍스트로 표시
+                      name="mem_gender"
+                      value={userGender === "male" ? "남성" : "여성"}
                       readOnly
                     />
                   </td>
@@ -274,7 +281,7 @@ const ModMember = () => {
                       type="text"
                       id="mem_type"
                       name="mem_type"
-                      value={userMemType} // mem_type을 텍스트로 표시
+                      value={formData.mem_type}
                       readOnly
                     />
                   </td>
