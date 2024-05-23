@@ -29,7 +29,7 @@ function Withme() {
             </select>
           </div>
         </div>
-        <div className="modal-container">
+        <div className="withme-modal-container">
           <div className="modal-wrapper">
             <Link to={`/modal-detail?title=modal1`} onClick={() => handleModalClick("modal1")}>
               <Modal title="안녕" />

@@ -37,8 +37,7 @@
     margin: 0 20px;
   }
   
-  .modal-container {
-    display: flex;
+  .withme-modal-container {
     flex-wrap: wrap;
     gap: 10px;
   }
