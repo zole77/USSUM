@@ -4,7 +4,12 @@ import defaultProfile from "../../img/defaultProfile.png";
 
 function ChatListItem(props) {
     return (
-        <div className="chatListItem-container" onClick={() => {}}>
+        <div
+            className="chatListItem-container"
+            onClick={() => {
+                props.setSelectedRoom(props.chatListItem.roomId); // 클릭했을 때 해당하는 룸 Id를 설정
+            }}
+        >
             <div className="profile-container">
                 <img
                     src={defaultProfile}
