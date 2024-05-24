@@ -28,7 +28,8 @@ const Confirmation = () => {
 
             if (response.status === 200) {
                 console.log("Registration successful:", response.data);
-                window.location.href = "/login";
+                alert("가입이 완료 되었습니다. 다시 로그인 해주세요.");
+                window.location.href = "/";
             } else {
                 throw new Error("Failed to send data to the server");
             }
@@ -160,7 +161,7 @@ const Confirmation = () => {
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <button type="submit" className="btn-hover color">
-                        확인
+                        가입 완료!
                     </button>
                 </Grid>
             </Grid>
