@@ -155,7 +155,7 @@
         <![CDATA[
             SELECT *
             FROM COMMENT_TABLE
-            WHERE POST_NO = #{post_no}
+            WHERE POST_NO = #{post_no}z
         ]]>
     </select>
 

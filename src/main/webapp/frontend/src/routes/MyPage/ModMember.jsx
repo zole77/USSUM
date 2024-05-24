@@ -8,8 +8,8 @@ import { loginUser } from "../Login/loginSlice"; // 액션 임포트
 const ModMember = () => {
   const dispatch = useDispatch();
   const loginInfo = useSelector((state) => state.user);
-  const userGender = useSelector((state) => state.user.mem_gender);
-  const userMemType = useSelector((state) => state.user.mem_type) || "";
+  const userGender = loginInfo.mem_gender || "";
+  const userMemType = loginInfo.mem_type || "";
 
   const [formData, setFormData] = useState({
     mem_id: "",
@@ -18,7 +18,8 @@ const ModMember = () => {
     mem_birth: "",
     mem_address: "",
     mem_nickname: "",
-    mem_type: "",
+    mem_type: userMemType,
+    mem_gender: userGender,
   });
 
   const [originalData, setOriginalData] = useState({});
@@ -29,9 +30,15 @@ const ModMember = () => {
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
 
   useEffect(() => {
-    setFormData({ ...loginInfo });
-    setOriginalData({ ...loginInfo });
-  }, [loginInfo]);
+    const initialData = {
+      ...loginInfo,
+      mem_gender: userGender,
+      mem_type: userMemType,
+    };
+    setFormData(initialData);
+    setOriginalData(initialData);
+    console.log("Initial loginInfo:", initialData);
+  }, [loginInfo, userGender, userMemType]);
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -47,6 +54,7 @@ const ModMember = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log("Form data updated:", { ...formData, [name]: value });
     if (name === "mem_nickname") {
       setNicknameAvailable(false);
       setIsDuplicateChecked(false);
@@ -106,7 +114,6 @@ const ModMember = () => {
     try {
       const response = await axios.post("/member/modify", {
         ...formData,
-        mem_gender: userGender,
       });
 
       console.log(response.data);
@@ -225,7 +232,7 @@ const ModMember = () => {
                       type="text"
                       id="mem_gender"
                       name="mem_gender"
-                      value={userGender === "male" ? "남성" : "여성"}
+                      value={formData.mem_gender === "male" ? "남성" : "여성"}
                       readOnly
                     />
                   </td>
@@ -282,7 +289,7 @@ const ModMember = () => {
                       id="mem_type"
                       name="mem_type"
                       value={formData.mem_type}
-                      readOnly
+                      onChange={handleChange}
                     />
                   </td>
                 </tr>

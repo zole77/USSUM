@@ -51,8 +51,10 @@ const Login = () => {
         localStorage.setItem("token", response.data.token);
         dispatch(
           loginUser({
-            mem_nickname: response.data.member.mem_nickname, // 응답에 닉네임이 포함되어 있다고 가정
-            mem_id: response.data.member.mem_id, // 응답에 ID가 포함되어 있다고 가정
+            mem_nickname: response.data.member.mem_nickname,
+            mem_id: response.data.member.mem_id,
+            mem_gender: response.data.member.mem_gender,
+            mem_type: response.data.member.mem_type, // mem_type 필드 추가
           }),
         );
         setMsg("");
