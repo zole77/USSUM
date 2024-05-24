@@ -25,24 +25,9 @@ public class WithMeServiceImpl implements WithMeService {
         if(image.isEmpty()){
             repo.createWithMe(withMeVO);
         } else {
-            String originalFilename = image.getOriginalFilename();
-            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-            String imageName = uuid + originalFilename.substring(originalFilename.lastIndexOf("."));
-            String fullFilePath = Paths.get(uploadDir, imageName).toAbsolutePath().toString();
-
-            File dir = new File(uploadDir);
-            if(!dir.exists()){
-                dir.mkdirs();
-            }
-
-            try {
-                File uploadFile = new File(fullFilePath);
-                image.transferTo(uploadFile);
-                withMeVO.setWithMe_thumbnail(fullFilePath);
-                repo.createWithMe(withMeVO);
-            } catch (Exception e){
-                throw new IOException(e);
-            }
+            String fullFilePath = saveImage(image);
+            withMeVO.setWithMe_thumbnail(fullFilePath);
+            repo.createWithMe(withMeVO);
         }
     }
 
@@ -54,5 +39,45 @@ public class WithMeServiceImpl implements WithMeService {
     @Override
     public List<WithMeVO> getAllWithMe() {
         return repo.getAllWithMe();
+    }
+
+    @Override
+    public void dropWithMe(int id) {
+        repo.dropWithMe(id);
+    }
+
+    @Override
+    public void updateWithMe(WithMeVO withMeVO, MultipartFile image) throws IOException {
+        if(image.isEmpty()){
+            File deleteFile = new File(repo.getWithMe(Integer.parseInt(withMeVO.getWithMe_id())).getWithMe_thumbnail());
+            boolean deleted = deleteFile.delete();
+        } else {
+            String fullFilePath = saveImage(image);
+            withMeVO.setWithMe_thumbnail(fullFilePath);
+            File deleteFile = new File(repo.getWithMe(Integer.parseInt(withMeVO.getWithMe_id())).getWithMe_thumbnail());
+            boolean isSuccess = deleteFile.delete();
+
+        }
+    }
+
+    private String saveImage(MultipartFile image) throws IOException {
+
+        String originalFilename = image.getOriginalFilename();
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        String imageName = uuid + originalFilename.substring(originalFilename.lastIndexOf("."));
+        String fullFilePath = Paths.get(uploadDir, imageName).toAbsolutePath().toString();
+
+        File dir = new File(uploadDir);
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+
+        try {
+            File uploadFile = new File(fullFilePath);
+            image.transferTo(uploadFile);
+        } catch (Exception e){
+            throw new IOException(e);
+        }
+        return fullFilePath;
     }
 }
