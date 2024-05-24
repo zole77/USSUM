@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // useHistory 대신 useNavigate를 임포트
+import { useNavigate } from "react-router-dom";
 import "../../styles/ModMember.css";
 import Profile from "./Profile";
-import { loginUser, clearUser } from "../Login/loginSlice"; // clearUser 액션 가져오기
+import { loginUser, clearUser } from "../Login/loginSlice";
 
 const ModMember = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // useHistory 대신 useNavigate 훅 사용
+  const navigate = useNavigate();
   const loginInfo = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
@@ -28,6 +28,11 @@ const ModMember = () => {
   const [confirmPwd, setConfirmPwd] = useState("");
   const [nicknameAvailable, setNicknameAvailable] = useState(false);
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
+
+  const travelPreferences = [
+    "즉흥적", "계획적", "여럿이서", "소수로만", "여유롭게", "알차게",
+    "동성친구만", "성별 무관", "맛집", "감성", "액티비티", "포토스팟"
+  ];
 
   useEffect(() => {
     const initialData = {
@@ -54,11 +59,18 @@ const ModMember = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    // console.log("Form data updated:", { ...formData, [name]: value });
     if (name === "mem_nickname") {
       setNicknameAvailable(false);
       setIsDuplicateChecked(false);
     }
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    const updatedTypes = checked
+        ? [...formData.mem_type.split(','), value]
+        : formData.mem_type.split(',').filter((type) => type !== value);
+    setFormData({ ...formData, mem_type: updatedTypes.join(',') });
   };
 
   const handlePwdEditClick = () => {
@@ -95,15 +107,9 @@ const ModMember = () => {
         setNicknameAvailable(false);
       }
     } catch (error) {
-      console.error(
-          "Error checking duplicate nickname:",
-          error.response ? error.response.data : error.message
-      );
+      console.error("Error checking duplicate nickname:", error.response ? error.response.data : error.message);
       console.log("Error details:", error.response ? error.response : error);
-      alert(
-          "중복 확인 중 오류가 발생했습니다: " +
-          (error.response ? error.response.data : error.message)
-      );
+      alert("중복 확인 중 오류가 발생했습니다: " + (error.response ? error.response.data : error.message));
     }
   };
 
@@ -111,22 +117,26 @@ const ModMember = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const updatedData = Object.keys(formData).reduce((acc, key) => {
+      if (formData[key] !== originalData[key]) {
+        acc[key] = formData[key];
+      }
+      return acc;
+    }, {});
+
+    if (Object.keys(updatedData).length === 0) {
+      alert("수정된 내용이 없습니다.");
+      return;
+    }
+
     try {
-      const response = await axios.post("/member/modify", {
-        mem_id: formData.mem_id,
-        mem_pwd: formData.mem_pwd,
-        mem_phone: formData.mem_phone,
-        mem_birth: formData.mem_birth,
-        mem_address: formData.mem_address,
-        mem_nickname: formData.mem_nickname,
-        mem_type: formData.mem_type,
-        mem_gender: formData.mem_gender,
-      });
+      const response = await axios.post("/member/modify", updatedData);
 
       console.log(response.data);
       dispatch(loginUser(response.data));
       alert("회원 정보가 성공적으로 수정되었습니다. 다시 로그인해주세요.");
-      dispatch(clearUser()); // clearUser 액션 호출
+      dispatch(clearUser());
       navigate("/");
     } catch (error) {
       console.error("사용자 정보 업데이트 중 오류 발생:", error);
@@ -137,11 +147,7 @@ const ModMember = () => {
   return (
       <div className="profile-edit-container">
         <form className="profile-edit-form" onSubmit={handleSubmit}>
-          <Profile
-              onEditClick={() => setView("edit")}
-              onMyLogClick={() => setView("mylog")}
-              activeButton={view}
-          />
+          <Profile onEditClick={() => setView("edit")} onMyLogClick={() => setView("mylog")} activeButton={view} />
           {view === "edit" && (
               <>
                 <table className="profile-edit-table">
@@ -156,33 +162,61 @@ const ModMember = () => {
                       <label htmlFor="mem_id">아이디</label>
                     </td>
                     <td className="input-cell">
-                      <input
-                          type="text"
-                          id="mem_id"
-                          name="mem_id"
-                          value={formData.mem_id}
-                          readOnly
-                      />
+                      <input type="text" id="mem_id" name="mem_id" value={formData.mem_id} readOnly />
                     </td>
                   </tr>
+                  <tr>
+                    <td className="label-cell">
+                      <label htmlFor="mem_pwd">비밀번호</label>
+                    </td>
+                    <td className="input-cell">
+                      <input
+                          type="password"
+                          id="mem_pwd"
+                          name="mem_pwd"
+                          value={formData.mem_pwd || ""}
+                          readOnly={!isEditingPwd}
+                          onChange={handleChange}
+                      />
+                      <button
+                          type="button"
+                          className="edit-pwd-button"
+                          onClick={handlePwdEditClick}
+                      >
+                        {isEditingPwd ? "취소" : "수정"}
+                      </button>
+                    </td>
+                  </tr>
+                  {isEditingPwd && (
+                      <tr>
+                        <td className="label-cell">
+                          <label htmlFor="confirm_mem_pwd">확인</label>
+                        </td>
+                        <td className="input-cell">
+                          <input
+                              type="password"
+                              id="confirm_mem_pwd"
+                              name="confirm_mem_pwd"
+                              value={confirmPwd}
+                              onChange={handleConfirmPwdChange}
+                          />
+                          <button
+                              type="button"
+                              className="change-pwd-button"
+                              onClick={handlePwdChangeClick}
+                          >
+                            변경
+                          </button>
+                        </td>
+                      </tr>
+                  )}
                   <tr>
                     <td className="label-cell">
                       <label htmlFor="mem_nickname">닉네임</label>
                     </td>
                     <td className="input-cell">
-                      <input
-                          type="text"
-                          id="mem_nickname"
-                          name="mem_nickname"
-                          value={formData.mem_nickname}
-                          onChange={handleChange}
-                      />
-                      <button
-                          type="button"
-                          className="check-nickname-button"
-                          onClick={handleCheckDuplicate}
-                          disabled={!formData.mem_nickname}
-                      >
+                      <input type="text" id="mem_nickname" name="mem_nickname" value={formData.mem_nickname} onChange={handleChange} />
+                      <button type="button" className="check-nickname-button" onClick={handleCheckDuplicate} disabled={!formData.mem_nickname}>
                         확인
                       </button>
                     </td>
@@ -192,13 +226,7 @@ const ModMember = () => {
                       <label htmlFor="mem_gender">성별</label>
                     </td>
                     <td className="input-cell">
-                      <input
-                          type="text"
-                          id="mem_gender"
-                          name="mem_gender"
-                          value={formData.mem_gender}
-                          readOnly
-                      />
+                      <input type="text" id="mem_gender" name="mem_gender" value={formData.mem_gender} readOnly />
                     </td>
                   </tr>
                   <tr>
@@ -206,13 +234,7 @@ const ModMember = () => {
                       <label htmlFor="mem_birth">생년월일</label>
                     </td>
                     <td className="input-cell">
-                      <input
-                          type="date"
-                          id="mem_birth"
-                          name="mem_birth"
-                          value={formData.mem_birth || ""}
-                          onChange={handleChange}
-                      />
+                      <input type="date" id="mem_birth" name="mem_birth" value={formData.mem_birth || ""} onChange={handleChange} />
                     </td>
                   </tr>
                   <tr>
@@ -220,14 +242,7 @@ const ModMember = () => {
                       <label htmlFor="mem_phone">휴대전화</label>
                     </td>
                     <td className="input-cell">
-                      <input
-                          type="text"
-                          id="mem_phone"
-                          name="mem_phone"
-                          value={formData.mem_phone || ""}
-                          onChange={handleChange}
-                          placeholder="예) 010-1234-5678"
-                      />
+                      <input type="text" id="mem_phone" name="mem_phone" value={formData.mem_phone || ""} onChange={handleChange} placeholder="예) 010-1234-5678" />
                     </td>
                   </tr>
                   <tr>
@@ -235,41 +250,34 @@ const ModMember = () => {
                       <label htmlFor="mem_address">주소</label>
                     </td>
                     <td className="input-cell">
-                    <textarea
-                        id="mem_address"
-                        name="mem_address"
-                        value={formData.mem_address || ""}
-                        onChange={handleChange}
-                    ></textarea>
+                      <textarea id="mem_address" name="mem_address" value={formData.mem_address || ""} onChange={handleChange}></textarea>
                     </td>
                   </tr>
                   <tr>
                     <td className="label-cell">
-                      <label htmlFor="mem_type">여행 취향</label>
+                      <label>여행 취향</label>
                     </td>
                     <td className="input-cell">
-                      <input
-                          type="text"
-                          id="mem_type"
-                          name="mem_type"
-                          value={formData.mem_type || ""}
-                          onChange={handleChange}
-                      />
+                      <div className="checkbox-grid">
+                        {travelPreferences.map((pref) => (
+                            <label key={pref} className="checkbox-item">
+                              <input
+                                  type="checkbox"
+                                  value={pref}
+                                  checked={formData.mem_type.split(',').includes(pref)}
+                                  onChange={handleCheckboxChange}
+                              />
+                              {pref}
+                            </label>
+                        ))}
+                      </div>
                     </td>
                   </tr>
                   </tbody>
                 </table>
                 <div className="form-actions">
-                  <button type="button" className="btn-hover color">
-                    취소
-                  </button>
-                  <button
-                      type="submit"
-                      className="btn-hover color"
-                      disabled={!nicknameAvailable || !isDuplicateChecked}
-                  >
-                    저장
-                  </button>
+                  <button type="button" className="btn-hover color">취소</button>
+                  <button type="submit" className="btn-hover color" disabled={!nicknameAvailable || !isDuplicateChecked}>저장</button>
                 </div>
               </>
           )}
@@ -285,3 +293,4 @@ const ModMember = () => {
 };
 
 export default ModMember;
+
