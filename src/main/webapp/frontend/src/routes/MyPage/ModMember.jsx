@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../../styles/ModMember.css";
 import Profile from "./Profile";
-import { loginUser } from "../Login/loginSlice"; // 액션 임포트
+import { loginUser, logoutUser } from "../Login/loginSlice";
 
 const ModMember = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const loginInfo = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
@@ -16,8 +18,8 @@ const ModMember = () => {
     mem_birth: "",
     mem_address: "",
     mem_nickname: "",
-    mem_type: "", // Initialize properly
-    mem_gender: "", // Initialize properly
+    mem_type: "",
+    mem_gender: "",
   });
 
   const [originalData, setOriginalData] = useState({});
@@ -52,7 +54,6 @@ const ModMember = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log("Form data updated:", { ...formData, [name]: value });
     if (name === "mem_nickname") {
       setNicknameAvailable(false);
       setIsDuplicateChecked(false);
@@ -95,12 +96,12 @@ const ModMember = () => {
     } catch (error) {
       console.error(
           "Error checking duplicate nickname:",
-          error.response ? error.response.data : error.message,
+          error.response ? error.response.data : error.message
       );
       console.log("Error details:", error.response ? error.response : error);
       alert(
           "중복 확인 중 오류가 발생했습니다: " +
-          (error.response ? error.response.data : error.message),
+          (error.response ? error.response.data : error.message)
       );
     }
   };
@@ -111,15 +112,27 @@ const ModMember = () => {
     e.preventDefault();
     try {
       const response = await axios.post("/member/modify", {
-        ...formData,
+        mem_id: formData.mem_id,
+        mem_pwd: formData.mem_pwd,
+        mem_phone: formData.mem_phone,
+        mem_birth: formData.mem_birth,
+        mem_address: formData.mem_address,
+        mem_nickname: formData.mem_nickname,
+        mem_type: formData.mem_type,
+        mem_gender: formData.mem_gender,
       });
 
       console.log(response.data);
-      // 업데이트된 회원 정보를 Redux 상태에 반영
       dispatch(loginUser(response.data));
-      // 응답 처리 로직 추가
+      alert("회원 정보가 성공적으로 수정되었습니다. 다시 로그인해주세요.");
+      dispatch(logoutUser());
+      navigate("/");
     } catch (error) {
       console.error("사용자 정보 업데이트 중 오류 발생:", error);
+      alert(`회원 정보 수정 중 오류가 발생했습니다. 상세 오류: ${error.response.data}`);
+      console.log("서버 응답 데이터:", error.response.data);
+      console.log("서버 응답 상태:", error.response.status);
+      console.log("서버 응답 헤더:", error.response.headers);
     }
   };
 
@@ -154,51 +167,6 @@ const ModMember = () => {
                       />
                     </td>
                   </tr>
-                  <tr>
-                    <td className="label-cell">
-                      <label htmlFor="mem_pwd">비밀번호</label>
-                    </td>
-                    <td className="input-cell">
-                      <input
-                          type="password"
-                          id="mem_pwd"
-                          name="mem_pwd"
-                          value={formData.mem_pwd || ""}
-                          readOnly={!isEditingPwd}
-                          onChange={handleChange}
-                      />
-                      <button
-                          type="button"
-                          className="edit-pwd-button"
-                          onClick={handlePwdEditClick}
-                      >
-                        {isEditingPwd ? "취소" : "수정"}
-                      </button>
-                    </td>
-                  </tr>
-                  {isEditingPwd && (
-                      <tr>
-                        <td className="label-cell">
-                          <label htmlFor="confirm_mem_pwd">확인</label>
-                        </td>
-                        <td className="input-cell">
-                          <input
-                              type="password"
-                              id="confirm_mem_pwd"
-                              name="confirm_mem_pwd"
-                              value={confirmPwd}
-                              onChange={handleConfirmPwdChange}
-                          />
-                          <button
-                              type="button"
-                              className="change-pwd-button"
-                              onClick={handlePwdChangeClick}
-                          >
-                            변경
-                          </button>
-                        </td>
-                      </tr>
-                  )}
                   <tr>
                     <td className="label-cell">
                       <label htmlFor="mem_nickname">닉네임</label>
