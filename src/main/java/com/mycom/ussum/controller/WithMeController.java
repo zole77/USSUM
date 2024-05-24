@@ -42,4 +42,15 @@ public class WithMeController {
     public List<WithMeVO> getAllWithMe() {
         return service.getAllWithMe();
     }
+
+    @GetMapping("/drop/{id}")
+    public void drop(@PathVariable int id) {
+        service.dropWithMe(id);
+    }
+
+    @PostMapping("/modify")
+    public void updateWithMe(@RequestPart(value = "post") WithMeVO withMeVO,
+                             @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
+        service.updateWithMe(withMeVO, image);
+    }
 }
