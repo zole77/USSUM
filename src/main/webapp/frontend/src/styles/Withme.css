@@ -2,8 +2,8 @@
 
 .Withme {
     display: flex;
-    flex-direction: row;
-    height: 100%; /* 부모 컨테이너의 높이를 가득 채우도록 설정 */
+    height: 100%;
+    width: 100%;
   }
   
   .left-section,
@@ -13,6 +13,10 @@
     overflow-y: auto;
   }
   
+  .left-section h3 {
+    text-align: left;
+  }
+
   .dropdown-row {
     display: flex;
     justify-content: space-between;
@@ -44,7 +48,7 @@
   }
   
   .modal-wrapper {
-    width: calc(50% - 10px);
+    width: 100;
   }
   
   .modal-wrapper a {
@@ -54,5 +58,45 @@
   
   .modal-wrapper a:hover {
     opacity: 0.8;
+  }
+  
+  .write-button-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: flex-start; /* 버튼과 텍스트를 왼쪽 정렬 */
+  }
+  
+  .write-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+  .write-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .location-text {
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    align-items: center;
+  }
+  
+  .map-container {
+    width: 85%;
+    height: 70%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   

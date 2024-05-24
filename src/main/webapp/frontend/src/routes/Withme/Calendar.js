@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/Calendar.css';
+import '../../styles/Calendar.css';
 
 function Calendar({ onSelectRange }) {
   const [selectedStartDate, setSelectedStartDate] = useState(null); // 선택된 시작일 상태

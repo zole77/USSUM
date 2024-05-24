@@ -5,8 +5,8 @@ export const loginSlice = createSlice({
   initialState: {
     mem_nickname: "",
     mem_id: "",
-    mem_gender: "",
-    mem_type: "",
+    mem_gender: "", // Ensure this is properly initialized
+    mem_type: "", // Ensure this is properly initialized
     isLoading: false,
     isLogin: false,
   },
@@ -19,7 +19,6 @@ export const loginSlice = createSlice({
       state.mem_type = action.payload.mem_type;
       state.isLoading = false;
       state.isLogin = true;
-      return state;
     },
     // login 실패 시
     clearUser: (state) => {
@@ -29,7 +28,6 @@ export const loginSlice = createSlice({
       state.mem_type = "";
       state.isLoading = false;
       state.isLogin = false;
-      return state;
     },
   },
 });

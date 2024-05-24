@@ -5,20 +5,27 @@ import storage from "redux-persist/lib/storage";
 import userReducer from "./routes/Login/loginSlice";
 
 const persistConfig = {
-    key: "root",
-    storage,
+  key: "root",
+  storage,
+  whitelist: ["user"], // user reducer만 persist
 };
 
 const rootReducer = combineReducers({
-    user: userReducer,
+  user: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-    reducer: persistedReducer,
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST"], // 직렬화 체크를 무시할 액션 타입 추가
+      },
+    }),
 });
 
-const persistor = persistStore(store); // persistor 추가
+const persistor = persistStore(store);
 
-export { store, persistor }; // store 및 persistor를 올바르게 export
+export { store, persistor };

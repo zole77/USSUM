@@ -8,8 +8,6 @@ import { loginUser } from "../Login/loginSlice"; // 액션 임포트
 const ModMember = () => {
   const dispatch = useDispatch();
   const loginInfo = useSelector((state) => state.user);
-  const userGender = loginInfo.mem_gender || "";
-  const userMemType = loginInfo.mem_type || "";
 
   const [formData, setFormData] = useState({
     mem_id: "",
@@ -18,8 +16,8 @@ const ModMember = () => {
     mem_birth: "",
     mem_address: "",
     mem_nickname: "",
-    mem_type: userMemType,
-    mem_gender: userGender,
+    mem_type: "", // Initialize properly
+    mem_gender: "", // Initialize properly
   });
 
   const [originalData, setOriginalData] = useState({});
@@ -32,13 +30,13 @@ const ModMember = () => {
   useEffect(() => {
     const initialData = {
       ...loginInfo,
-      mem_gender: userGender,
-      mem_type: userMemType,
+      mem_gender: loginInfo.mem_gender || "",
+      mem_type: loginInfo.mem_type || "",
     };
     setFormData(initialData);
     setOriginalData(initialData);
     console.log("Initial loginInfo:", initialData);
-  }, [loginInfo, userGender, userMemType]);
+  }, [loginInfo]);
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -165,7 +163,7 @@ const ModMember = () => {
                       type="password"
                       id="mem_pwd"
                       name="mem_pwd"
-                      value={formData.mem_pwd}
+                      value={formData.mem_pwd || ""}
                       readOnly={!isEditingPwd}
                       onChange={handleChange}
                     />
@@ -246,7 +244,7 @@ const ModMember = () => {
                       type="date"
                       id="mem_birth"
                       name="mem_birth"
-                      value={formData.mem_birth}
+                      value={formData.mem_birth || ""}
                       onChange={handleChange}
                     />
                   </td>
@@ -260,7 +258,7 @@ const ModMember = () => {
                       type="text"
                       id="mem_phone"
                       name="mem_phone"
-                      value={formData.mem_phone}
+                      value={formData.mem_phone || ""}
                       onChange={handleChange}
                       placeholder="예) 010-1234-5678"
                     />
@@ -274,7 +272,7 @@ const ModMember = () => {
                     <textarea
                       id="mem_address"
                       name="mem_address"
-                      value={formData.mem_address}
+                      value={formData.mem_address || ""}
                       onChange={handleChange}
                     ></textarea>
                   </td>
@@ -288,7 +286,7 @@ const ModMember = () => {
                       type="text"
                       id="mem_type"
                       name="mem_type"
-                      value={formData.mem_type}
+                      value={formData.mem_type || ""}
                       onChange={handleChange}
                     />
                   </td>

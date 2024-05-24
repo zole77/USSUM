@@ -3,8 +3,8 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
-  width: 280px; /* 모달의 너비를 조정 */
-  height: 100px;
+  width: 400px; /* 모달의 너비를 조정 */
+  height: 280px;
   margin: 10px; /* 모달 간격을 조정 */
   box-sizing: border-box;
 }
