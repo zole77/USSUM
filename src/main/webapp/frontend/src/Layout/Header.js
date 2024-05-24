@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navigation.css";
 import ChatIcon from "../img/Chat.png";
 import AlaramIcon from "../img/Alarm.png";
-import WriteModal from "../components/WriteModal";
 import logo from "../img/logo.png";
 import userIcon from "../img/userIcon.png";
 import { clearUser } from "../routes/Login/loginSlice"; // clearUser 액션 가져오기
@@ -78,7 +77,7 @@ function Header() {
           </Link>
         </li>
         <li>
-          <Link to="/services" className="nav-link">
+          <Link to="/Withme" className="nav-link">
             같이 가요!
           </Link>
         </li>
@@ -120,7 +119,6 @@ function Header() {
           <li>메뉴 항목 3</li>
         </ul>
       )}
-      {writeModalOpen && <WriteModal onClose={handleWriteModalToggle} />}
     </nav>
   );
 }

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +21,15 @@ public class ChatController {
     private final ChatService chatService;
 
     @GetMapping("/chatList")
-    public List<ChatRoom> chatList(){
-        return chatService.findAllRoom();
+    public ResponseEntity<List<ChatRoom>> chatList(){
+        try {
+            List<ChatRoom> chatRooms = chatService.findAllRoom();
+            return ResponseEntity.ok(chatRooms);
+        } catch (Exception e) {
+            // 로그를 기록하고 500 오류를 반환합니다.
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);
+        }
     }
 
     @PostMapping("/createRoom")
@@ -50,6 +58,11 @@ public class ChatController {
     @Operation(description = "사용자가 참여하고 있는 채팅방 목록 호출")
     public List<ChatRoom> getRooms(@RequestParam("memId") String memId){
         return chatService.getRooms(memId);
+    }
+
+    @GetMapping("/{roomId}/members")
+    public boolean isJoined(@PathVariable String roomId, @RequestParam String mem_id) {
+        return chatService.isJoined(roomId, mem_id);
     }
 
 }

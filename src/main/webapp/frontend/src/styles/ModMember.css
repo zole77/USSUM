@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 20px; /* 좌우 패딩 추가 */
 }
 
 .profile-header-content {
@@ -59,14 +58,12 @@
     text-align: center;
     position: relative;
     margin: 0 auto;
-    padding: 30px 20px; /* 좌우 패딩 추가 */
+    padding: 30px 0;
     display: inline-block;
     background: #FFFFFF;
-    max-width: 600px; /* 최대 너비 설정 */
-    width: 100%; /* 부모의 너비를 가득 채우도록 설정 */
+    width: 700px;
     height: auto;
     margin-top: 3%;
-    margin-bottom: 3%;
     border-radius: 22px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -123,7 +120,7 @@ td.input-cell {
 .profile-edit-table input,
 .profile-edit-table select,
 .profile-edit-table textarea {
-    width: 80%; /* 너비 조정 */
+    width: 60%;
     padding: 10px;
     box-sizing: border-box;
     font-size: 15px;
@@ -151,7 +148,7 @@ td.input-cell {
 .form-actions {
     display: flex;
     justify-content: space-between;
-    margin: 20px 20px 0 20px; /* 좌우 마진 조정 */
+    margin: 20px 90px 0 90px;
 }
 
 .form-actions button {
@@ -209,7 +206,7 @@ td.input-cell {
     outline: none;
 }
 
-.edit-pwd-button, .change-edit-button {
+.edit-pwd-button, .change-pwd-button {
     background-color: #5ac7c7;
     color: #fff;
     border: none;

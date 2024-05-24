@@ -15,7 +15,7 @@
 
 .modal-container {
     background-color: #fff;
-    padding: 20px;
+    padding: 40px;
     border-radius: 8px;
     position: relative; /* 부모 요소로부터 상대 위치 설정 */
 }
@@ -31,26 +31,4 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: flex-end;
-    position: absolute;
-    bottom: 10px; /* 하단으로부터 10px 떨어지도록 설정 */
-    right: 20px; /* 우측으로부터 20px 떨어지도록 설정 */
-}
-
-.button-container button {
-    margin-left: 10px;
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.button-container button:hover {
-    background-color: #0056b3;
 }

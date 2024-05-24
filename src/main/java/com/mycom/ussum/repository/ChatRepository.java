@@ -19,4 +19,7 @@ public interface ChatRepository {
     List<String> getRooms(String mem_id);
 
     List<ChatRoom> loadAllRooms();
+
+    boolean isJoined(@Param("room_id") String roomId, @Param("mem_id") String mem_Id);
+
 }

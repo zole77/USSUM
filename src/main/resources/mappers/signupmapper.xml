@@ -3,8 +3,8 @@
 
 <mapper namespace="com.mycom.ussum.signup.dao.SignupDAO">
     <insert id = "signUp" parameterType="com.mycom.ussum.signup.vo.SignupVO">
-        INSERT INTO member_table(mem_id,mem_pwd,mem_gender,mem_type,mem_nickname)
-        VALUES (#{mem_id},#{mem_pwd},#{mem_gender},#{mem_type},#{mem_nickname})
+        INSERT INTO member_table(mem_id,mem_pwd,mem_gender,mem_type,mem_nickname, MEM_REGDATE)
+        VALUES (#{mem_id},#{mem_pwd},#{mem_gender},#{mem_type},#{mem_nickname}, SYSDATE)
     </insert>
 
     <select id="checkById" resultType="int" parameterType="string">

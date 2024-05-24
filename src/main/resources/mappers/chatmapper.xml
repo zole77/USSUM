@@ -39,11 +39,12 @@
 
 <!--    채팅방 입장-->
     <insert id="enterRoom">
-        <![CDATA[
-            INSERT INTO PARTIC_TABLE(MEM_ID, ROOM_ID)
-            VALUES (#{mem_id}, #{room_id})
+    <![CDATA[
+        INSERT INTO PARTIC_TABLE(MEM_ID, ROOM_ID)
+        VALUES (#{mem_id}, #{room_id})
         ]]>
     </insert>
+
 
 <!--    채팅방 퇴장-->
     <delete id="quitRoom">
@@ -68,6 +69,15 @@
         <![CDATA[
             SELECT *
             FROM CHAT_TABLE
+        ]]>
+    </select>
+
+<!--    해당 회원이 그 방에 이미 존재하는지 확인-->
+    <select id="isJoined" resultType="boolean">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM PARTIC_TABLE
+        WHERE MEM_ID = #{mem_id} AND ROOM_ID = #{room_id}
         ]]>
     </select>
 </mapper>

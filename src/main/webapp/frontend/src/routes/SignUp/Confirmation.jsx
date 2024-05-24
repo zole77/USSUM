@@ -27,7 +27,6 @@ const Confirmation = () => {
             const response = await axios.post("/signup/register", formData);
 
             if (response.status === 200) {
-                alert("환영합니다");
                 console.log("Registration successful:", response.data);
                 window.location.href = "/";
             } else {
@@ -168,7 +167,7 @@ const Confirmation = () => {
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <button type="submit" className="btn-hover color">
-                        가입완료!
+                        확인
                     </button>
                 </Grid>
             </Grid>

@@ -1,0 +1,102 @@
+/* Withme.css */
+
+.Withme {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .left-section,
+  .right-section {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .left-section h3 {
+    text-align: left;
+  }
+
+  .dropdown-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .dropdown-container {
+    width: calc(50% - 10px);
+  }
+  
+  .dropdown-container select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .divider {
+    border-left: 1px solid #535050aa;
+    height: 100%;
+    margin: 0 20px;
+  }
+  
+  .withme-modal-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .modal-wrapper {
+    width: 100;
+  }
+  
+  .modal-wrapper a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .modal-wrapper a:hover {
+    opacity: 0.8;
+  }
+  
+  .write-button-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: flex-start; /* 버튼과 텍스트를 왼쪽 정렬 */
+  }
+  
+  .write-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+  .write-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .location-text {
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    align-items: center;
+  }
+  
+  .map-container {
+    width: 85%;
+    height: 70%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  

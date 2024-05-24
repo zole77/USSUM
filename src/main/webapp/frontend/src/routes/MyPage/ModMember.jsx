@@ -1,31 +1,62 @@
-// ModMember.js
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import '../../styles/ModMember.css';
-import Profile from './Profile';
-import { loginUser, clearUser } from '../Login/loginSlice';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import "../../styles/ModMember.css";
+import Profile from "./Profile";
+import { loginUser } from "../Login/loginSlice"; // 액션 임포트
 
 const ModMember = () => {
   const dispatch = useDispatch();
-  const { mem_nickname, mem_id, isLogin } = useSelector((state) => state.user);
+  const loginInfo = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
-    mem_nickname: mem_nickname,
-    mem_id: mem_id,
-    mem_pwd: '',
-    mem_phone: '',
-    mem_birth: '',
-    mem_address: '',
-    mem_gender: '',
+    mem_id: "",
+    mem_pwd: "",
+    mem_phone: "",
+    mem_birth: "",
+    mem_address: "",
+    mem_nickname: "",
+    mem_type: "", // Initialize properly
+    mem_gender: "", // Initialize properly
   });
 
-  const [view, setView] = useState('edit');
+  const [originalData, setOriginalData] = useState({});
+  const [view, setView] = useState("edit");
   const [isEditingPwd, setIsEditingPwd] = useState(false);
-  const [confirmPwd, setConfirmPwd] = useState('');
+  const [confirmPwd, setConfirmPwd] = useState("");
+  const [nicknameAvailable, setNicknameAvailable] = useState(false);
+  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
+
+  useEffect(() => {
+    const initialData = {
+      ...loginInfo,
+      mem_gender: loginInfo.mem_gender || "",
+      mem_type: loginInfo.mem_type || "",
+    };
+    setFormData(initialData);
+    setOriginalData(initialData);
+    console.log("Initial loginInfo:", initialData);
+  }, [loginInfo]);
+
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === "Escape") {
+        setFormData(originalData);
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [originalData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log("Form data updated:", { ...formData, [name]: value });
+    if (name === "mem_nickname") {
+      setNicknameAvailable(false);
+      setIsDuplicateChecked(false);
+    }
   };
 
   const handlePwdEditClick = () => {
@@ -33,38 +64,74 @@ const ModMember = () => {
   };
 
   const handlePwdChangeClick = () => {
-    console.log('Password changed:', formData.mem_pwd, confirmPwd);
-    setConfirmPwd('');
+    console.log("비밀번호 변경됨:", formData.mem_pwd, confirmPwd);
+    setConfirmPwd("");
   };
 
   const handleConfirmPwdChange = (e) => {
     setConfirmPwd(e.target.value);
   };
 
-  const handleNicknameConfirmClick = () => {
-    console.log('Nickname confirmed:', formData.mem_nickname);
+  const checkDuplicate = async () => {
+    if (!formData.mem_nickname) {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/signup/checkNickname", null, {
+        params: { mem_nickname: formData.mem_nickname },
+      });
+
+      setIsDuplicateChecked(true);
+
+      if (response.data === 0) {
+        alert("사용 가능한 닉네임입니다.");
+        setNicknameAvailable(true);
+      } else {
+        alert("이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.");
+        setNicknameAvailable(false);
+      }
+    } catch (error) {
+      console.error(
+          "Error checking duplicate nickname:",
+          error.response ? error.response.data : error.message,
+      );
+      console.log("Error details:", error.response ? error.response : error);
+      alert(
+          "중복 확인 중 오류가 발생했습니다: " +
+          (error.response ? error.response.data : error.message),
+      );
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleCheckDuplicate = () => checkDuplicate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Submit form data to the backend
-    console.log(formData);
-    // You can dispatch loginUser or other actions here if necessary
-  };
+    try {
+      const response = await axios.post("/member/modify", {
+        ...formData,
+      });
 
-  if (!isLogin) {
-    return <div>Please log in to view this page.</div>;
-  }
+      console.log(response.data);
+      // 업데이트된 회원 정보를 Redux 상태에 반영
+      dispatch(loginUser(response.data));
+      // 응답 처리 로직 추가
+    } catch (error) {
+      console.error("사용자 정보 업데이트 중 오류 발생:", error);
+    }
+  };
 
   return (
       <div className="profile-edit-container">
         <form className="profile-edit-form" onSubmit={handleSubmit}>
           <Profile
-              onEditClick={() => setView('edit')}
-              onMyLogClick={() => setView('mylog')}
+              onEditClick={() => setView("edit")}
+              onMyLogClick={() => setView("mylog")}
               activeButton={view}
           />
-          {view === 'edit' && (
+          {view === "edit" && (
               <>
                 <table className="profile-edit-table">
                   <thead>
@@ -78,7 +145,13 @@ const ModMember = () => {
                       <label htmlFor="mem_id">아이디</label>
                     </td>
                     <td className="input-cell">
-                      <input type="text" id="mem_id" value={formData.mem_id} readOnly />
+                      <input
+                          type="text"
+                          id="mem_id"
+                          name="mem_id"
+                          value={formData.mem_id}
+                          readOnly
+                      />
                     </td>
                   </tr>
                   <tr>
@@ -90,19 +163,23 @@ const ModMember = () => {
                           type="password"
                           id="mem_pwd"
                           name="mem_pwd"
-                          value={formData.mem_pwd}
+                          value={formData.mem_pwd || ""}
                           readOnly={!isEditingPwd}
                           onChange={handleChange}
                       />
-                      <button type="button" className="edit-pwd-button" onClick={handlePwdEditClick}>
-                        {isEditingPwd ? '취소' : '수정'}
+                      <button
+                          type="button"
+                          className="edit-pwd-button"
+                          onClick={handlePwdEditClick}
+                      >
+                        {isEditingPwd ? "취소" : "수정"}
                       </button>
                     </td>
                   </tr>
                   {isEditingPwd && (
                       <tr>
                         <td className="label-cell">
-                          <label htmlFor="confirm_mem_pwd">변경</label>
+                          <label htmlFor="confirm_mem_pwd">확인</label>
                         </td>
                         <td className="input-cell">
                           <input
@@ -114,7 +191,7 @@ const ModMember = () => {
                           />
                           <button
                               type="button"
-                              className="change-edit-button"
+                              className="change-pwd-button"
                               onClick={handlePwdChangeClick}
                           >
                             변경
@@ -136,8 +213,9 @@ const ModMember = () => {
                       />
                       <button
                           type="button"
-                          className="change-edit-button"
-                          onClick={handleNicknameConfirmClick}
+                          className="check-nickname-button"
+                          onClick={handleCheckDuplicate}
+                          disabled={!formData.mem_nickname}
                       >
                         확인
                       </button>
@@ -145,33 +223,16 @@ const ModMember = () => {
                   </tr>
                   <tr>
                     <td className="label-cell">
-                      <label>성별</label>
+                      <label htmlFor="mem_gender">성별</label>
                     </td>
                     <td className="input-cell">
-                      <div className="gender-options">
-                        <div className="gender-option">
-                          <input
-                              type="radio"
-                              id="genderMale"
-                              name="mem_gender"
-                              value="male"
-                              checked={formData.mem_gender === 'male'}
-                              onChange={handleChange}
-                          />
-                          <label htmlFor="genderMale">남성</label>
-                        </div>
-                        <div className="gender-option">
-                          <input
-                              type="radio"
-                              id="genderFemale"
-                              name="mem_gender"
-                              value="female"
-                              checked={formData.mem_gender === 'female'}
-                              onChange={handleChange}
-                          />
-                          <label htmlFor="genderFemale">여성</label>
-                        </div>
-                      </div>
+                      <input
+                          type="text"
+                          id="mem_gender"
+                          name="mem_gender"
+                          value={formData.mem_gender === "male" ? "남성" : "여성"}
+                          readOnly
+                      />
                     </td>
                   </tr>
                   <tr>
@@ -183,7 +244,7 @@ const ModMember = () => {
                           type="date"
                           id="mem_birth"
                           name="mem_birth"
-                          value={formData.mem_birth}
+                          value={formData.mem_birth || ""}
                           onChange={handleChange}
                       />
                     </td>
@@ -197,7 +258,7 @@ const ModMember = () => {
                           type="text"
                           id="mem_phone"
                           name="mem_phone"
-                          value={formData.mem_phone}
+                          value={formData.mem_phone || ""}
                           onChange={handleChange}
                           placeholder="예) 010-1234-5678"
                       />
@@ -211,9 +272,23 @@ const ModMember = () => {
                     <textarea
                         id="mem_address"
                         name="mem_address"
-                        value={formData.mem_address}
+                        value={formData.mem_address || ""}
                         onChange={handleChange}
                     ></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="label-cell">
+                      <label htmlFor="mem_type">여행 취향</label>
+                    </td>
+                    <td className="input-cell">
+                      <input
+                          type="text"
+                          id="mem_type"
+                          name="mem_type"
+                          value={formData.mem_type || ""}
+                          onChange={handleChange}
+                      />
                     </td>
                   </tr>
                   </tbody>
@@ -222,13 +297,17 @@ const ModMember = () => {
                   <button type="button" className="btn-hover color">
                     취소
                   </button>
-                  <button type="submit" className="btn-hover color">
+                  <button
+                      type="submit"
+                      className="btn-hover color"
+                      disabled={!nicknameAvailable || !isDuplicateChecked}
+                  >
                     저장
                   </button>
                 </div>
               </>
           )}
-          {view === 'mylog' && (
+          {view === "mylog" && (
               <div className="mylog-container">
                 <h2>마이 로그</h2>
                 {/* 여기에 마이 로그 내용을 추가하세요 */}
