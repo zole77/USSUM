@@ -1,37 +1,27 @@
-import React, { useEffect, useState } from "react";
-import "../../styles/ModMember.css";
-import Profile from "./Profile"; // Profile 컴포넌트 가져오기
-import axios from "axios"; // axios 가져오기
+// ModMember.js
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import '../../styles/ModMember.css';
+import Profile from './Profile';
+import { loginUser, clearUser } from '../Login/loginSlice';
 
 const ModMember = () => {
+  const dispatch = useDispatch();
+  const { mem_nickname, mem_id, isLogin } = useSelector((state) => state.user);
+
   const [formData, setFormData] = useState({
-    mem_id: "",
-    mem_pwd: "",
-    mem_phone: "",
-    mem_birth: "",
-    mem_address: "",
-    mem_type: "",
-    mem_gender: "",
-    mem_nickname: "",
+    mem_nickname: mem_nickname,
+    mem_id: mem_id,
+    mem_pwd: '',
+    mem_phone: '',
+    mem_birth: '',
+    mem_address: '',
+    mem_gender: '',
   });
 
-  const [view, setView] = useState("edit"); // 'edit' or 'mylog'
+  const [view, setView] = useState('edit');
   const [isEditingPwd, setIsEditingPwd] = useState(false);
-  const [confirmPwd, setConfirmPwd] = useState("");
-
-  // 사용자 정보를 받아오는 함수
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get("/api/user"); // 실제 사용자 정보를 가져오는 API 엔드포인트로 변경하세요
-      setFormData(response.data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  const [confirmPwd, setConfirmPwd] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,9 +33,8 @@ const ModMember = () => {
   };
 
   const handlePwdChangeClick = () => {
-    // 비밀번호 변경 로직을 여기에 추가하세요
-    console.log("Password changed:", formData.mem_pwd, confirmPwd);
-    setConfirmPwd("");
+    console.log('Password changed:', formData.mem_pwd, confirmPwd);
+    setConfirmPwd('');
   };
 
   const handleConfirmPwdChange = (e) => {
@@ -53,25 +42,29 @@ const ModMember = () => {
   };
 
   const handleNicknameConfirmClick = () => {
-    // 닉네임 확인 로직을 여기에 추가하세요
-    console.log("Nickname confirmed:", formData.mem_nickname);
+    console.log('Nickname confirmed:', formData.mem_nickname);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Submit form data to the backend
     console.log(formData);
+    // You can dispatch loginUser or other actions here if necessary
   };
+
+  if (!isLogin) {
+    return <div>Please log in to view this page.</div>;
+  }
 
   return (
       <div className="profile-edit-container">
         <form className="profile-edit-form" onSubmit={handleSubmit}>
           <Profile
-              onEditClick={() => setView("edit")}
-              onMyLogClick={() => setView("mylog")}
+              onEditClick={() => setView('edit')}
+              onMyLogClick={() => setView('mylog')}
               activeButton={view}
           />
-          {view === "edit" && (
+          {view === 'edit' && (
               <>
                 <table className="profile-edit-table">
                   <thead>
@@ -85,12 +78,7 @@ const ModMember = () => {
                       <label htmlFor="mem_id">아이디</label>
                     </td>
                     <td className="input-cell">
-                      <input
-                          type="text"
-                          id="mem_id"
-                          value={formData.mem_id}
-                          readOnly
-                      />
+                      <input type="text" id="mem_id" value={formData.mem_id} readOnly />
                     </td>
                   </tr>
                   <tr>
@@ -106,19 +94,15 @@ const ModMember = () => {
                           readOnly={!isEditingPwd}
                           onChange={handleChange}
                       />
-                      <button
-                          type="button"
-                          className="edit-pwd-button"
-                          onClick={handlePwdEditClick}
-                      >
-                        {isEditingPwd ? "취소" : "수정"}
+                      <button type="button" className="edit-pwd-button" onClick={handlePwdEditClick}>
+                        {isEditingPwd ? '취소' : '수정'}
                       </button>
                     </td>
                   </tr>
                   {isEditingPwd && (
                       <tr>
                         <td className="label-cell">
-                          <label htmlFor="confirm_mem_pwd">확인</label>
+                          <label htmlFor="confirm_mem_pwd">변경</label>
                         </td>
                         <td className="input-cell">
                           <input
@@ -171,7 +155,7 @@ const ModMember = () => {
                               id="genderMale"
                               name="mem_gender"
                               value="male"
-                              checked={formData.mem_gender === "male"}
+                              checked={formData.mem_gender === 'male'}
                               onChange={handleChange}
                           />
                           <label htmlFor="genderMale">남성</label>
@@ -182,7 +166,7 @@ const ModMember = () => {
                               id="genderFemale"
                               name="mem_gender"
                               value="female"
-                              checked={formData.mem_gender === "female"}
+                              checked={formData.mem_gender === 'female'}
                               onChange={handleChange}
                           />
                           <label htmlFor="genderFemale">여성</label>
@@ -219,7 +203,6 @@ const ModMember = () => {
                       />
                     </td>
                   </tr>
-
                   <tr>
                     <td className="label-cell">
                       <label htmlFor="mem_address">주소</label>
@@ -235,7 +218,6 @@ const ModMember = () => {
                   </tr>
                   </tbody>
                 </table>
-
                 <div className="form-actions">
                   <button type="button" className="btn-hover color">
                     취소
@@ -246,7 +228,7 @@ const ModMember = () => {
                 </div>
               </>
           )}
-          {view === "mylog" && (
+          {view === 'mylog' && (
               <div className="mylog-container">
                 <h2>마이 로그</h2>
                 {/* 여기에 마이 로그 내용을 추가하세요 */}
