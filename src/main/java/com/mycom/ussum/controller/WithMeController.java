@@ -21,9 +21,13 @@ public class WithMeController {
     private final WithMeService service;
 
     @PostMapping("/new")
-    @Operation(summary = "같이 가요 추가", description = "post라는 이름으로 json 형태의 입력값을 받는다.\nimage라는 이름으로 이미지 파일을 받는다." +
-            "\n이후 데이터베이스에 저장한다.")
-    public void createWithMe(@RequestPart(value = "post", required = true) WithMeVO withMeVO,
+    @Operation(summary = "같이 가요 추가", description = """
+            post라는 이름으로 json 형태의 입력값을 받는다. image라는 이름으로 이미지 파일을 받는다.\
+
+            이후 데이터베이스에 저장한다.\
+
+            이미지는 C:/withmeimage 폴더에 저장된다.""")
+    public void createWithMe(@RequestPart(value = "post") WithMeVO withMeVO,
                              @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
         service.createWithMe(withMeVO, image);
     }
