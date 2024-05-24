@@ -23,19 +23,21 @@ const Confirmation = () => {
                 mem_gender: userInfo.gender,
                 mem_type: (userInfo.travelType || []).join(", "),
             };
-            console.log(formData);
+            console.log(formData)
             const response = await axios.post("/signup/register", formData);
 
             if (response.status === 200) {
                 console.log("Registration successful:", response.data);
-                alert("가입이 완료 되었습니다. 다시 로그인 해주세요.");
                 window.location.href = "/";
             } else {
                 throw new Error("Failed to send data to the server");
             }
         } catch (error) {
             console.error("Error:", error.message);
-            console.log("Error response:", error.response ? error.response.data : error.message);
+            console.log(
+                "Error response:",
+                error.response ? error.response.data : error.message,
+            );
             alert("Registration failed: " + error.message);
         }
     };
@@ -54,7 +56,11 @@ const Confirmation = () => {
                 justifyContent="center"
             >
                 <Grid item xs={3}>
-                    <button type="button" className="signup-back-button" onClick={prevPage}>
+                    <button
+                        type="button"
+                        className="signup-back-button"
+                        onClick={prevPage}
+                    >
                         <ArrowBackIcon />
                     </button>
                 </Grid>
@@ -161,7 +167,7 @@ const Confirmation = () => {
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <button type="submit" className="btn-hover color">
-                        가입 완료!
+                        확인
                     </button>
                 </Grid>
             </Grid>

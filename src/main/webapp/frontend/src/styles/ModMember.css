@@ -206,7 +206,7 @@ td.input-cell {
     outline: none;
 }
 
-.edit-pwd-button, .change-pwd-button, .check-nickname-button {
+.edit-pwd-button, .change-pwd-button {
     background-color: #5ac7c7;
     color: #fff;
     border: none;
