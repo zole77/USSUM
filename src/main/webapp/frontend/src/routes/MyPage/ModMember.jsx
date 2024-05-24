@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // useHistory 대신 useNavigate를 임포트
 import "../../styles/ModMember.css";
 import Profile from "./Profile";
-import { loginUser, logoutUser } from "../Login/loginSlice";
+import { loginUser, clearUser } from "../Login/loginSlice"; // clearUser 액션 가져오기
 
 const ModMember = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // useHistory 대신 useNavigate 훅 사용
   const loginInfo = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
@@ -54,6 +54,7 @@ const ModMember = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    // console.log("Form data updated:", { ...formData, [name]: value });
     if (name === "mem_nickname") {
       setNicknameAvailable(false);
       setIsDuplicateChecked(false);
@@ -125,14 +126,11 @@ const ModMember = () => {
       console.log(response.data);
       dispatch(loginUser(response.data));
       alert("회원 정보가 성공적으로 수정되었습니다. 다시 로그인해주세요.");
-      dispatch(logoutUser());
+      dispatch(clearUser()); // clearUser 액션 호출
       navigate("/");
     } catch (error) {
       console.error("사용자 정보 업데이트 중 오류 발생:", error);
-      alert(`회원 정보 수정 중 오류가 발생했습니다. 상세 오류: ${error.response.data}`);
-      console.log("서버 응답 데이터:", error.response.data);
-      console.log("서버 응답 상태:", error.response.status);
-      console.log("서버 응답 헤더:", error.response.headers);
+      alert("회원 정보 수정 중 오류가 발생했습니다.");
     }
   };
 
@@ -198,7 +196,7 @@ const ModMember = () => {
                           type="text"
                           id="mem_gender"
                           name="mem_gender"
-                          value={formData.mem_gender === "male" ? "남성" : "여성"}
+                          value={formData.mem_gender}
                           readOnly
                       />
                     </td>

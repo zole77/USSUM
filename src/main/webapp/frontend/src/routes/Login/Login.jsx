@@ -53,18 +53,23 @@ const Login = () => {
         if (member) {
           dispatch(
               loginUser({
-                mem_nickname: member.mem_nickname,
                 mem_id: member.mem_id,
+                mem_pwd: member.mem_pwd,
                 mem_gender: member.mem_gender,
-                mem_type: member.mem_type, // mem_type 필드 추가
-              }),
+                mem_phone: member.mem_phone,
+                mem_address: member.mem_address,
+                mem_birth: member.mem_birth,
+                mem_type: member.mem_type,
+                mem_nickname: member.mem_nickname,
+                mem_name: member.mem_name,
+              })
           );
         } else {
           console.error("Member data is missing in the response.");
           alert("로그인 중 문제가 발생했습니다.");
         }
         setMsg("");
-        navigate("/");
+        navigate("/"); // 로그인 성공 후 이동할 경로
       } else {
         handleErrorResponse(response.data);
       }
