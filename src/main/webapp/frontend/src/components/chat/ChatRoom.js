@@ -2,60 +2,42 @@ import React, { useState, useRef, useEffect } from "react";
 import "../../styles/ChatRoom.css";
 import axios from "axios";
 
-function ChatRoom({ roomId, username }) {
+function ChatRoom({ roomId, username, socket }) {
     const [messages, setMessages] = useState([]);
+    const [message, setMessage] = useState("");
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(true);
-    const ws = useRef(null);
 
-    const connectWebSocket = () => {
-        const currentWs = new WebSocket(`ws://localhost:8080/ws/chat`);
-        ws.current = currentWs;
+    useEffect(() => {
+        if (socket) {
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.roomId === roomId) {
+                    setMessages((prevMessages) => [...prevMessages, data]);
+                }
+            };
+            setIsLoading(false);
+        }
 
-        currentWs.onopen = () => {
-            console.log("WebSocket connected");
-            currentWs.send(
-                JSON.stringify({
-                    type: "ENTER",
-                    roomId: roomId,
-                    mem_id: "rabbit@naver.com",
-                    sender: username,
-                    message: `${username}님이 입장했습니다.`,
-                })
-            );
-        };
-
-        currentWs.onmessage = (event) => {
-            try {
-                const message = JSON.parse(event.data);
-                setMessages((prevMessages) => [...prevMessages, message]);
-            } catch (error) {
-                console.error("Error parsing message:", error);
+        return () => {
+            if (socket) {
+                socket.close();
             }
         };
+    }, [socket, roomId]);
 
-        // currentWs.onclose = () => {
-        //     console.log("WebSocket disconnected");
-        // };
-
-        // currentWs.onerror = (error) => {
-        //     console.error("WebSocket error:", error);
-        //     currentWs.close();
-        // };
-    };
-
-    const handleBeforeUnload = () => {
-        if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-            ws.current.send(
-                JSON.stringify({
-                    type: "QUIT",
-                    roomId: roomId,
-                    mem_id: "rabbit@naver.com",
-                    sender: username,
-                    message: `${username}님이 퇴장했습니다.`,
-                })
-            );
-            ws.current.close();
+    const sendMessage = () => {
+        if (socket && message.trim()) {
+            const chatMessage = {
+                type: "TALK",
+                roomId: roomId,
+                mem_id: username,
+                sender: username,
+                message: message,
+            };
+            console.log(chatMessage);
+            socket.send(JSON.stringify(chatMessage));
+            setMessage("");
         }
     };
 
@@ -77,58 +59,6 @@ function ChatRoom({ roomId, username }) {
         }
     };
 
-    useEffect(() => {
-        const initChatRoom = async () => {
-            const isJoined = await isJoinedRoom();
-            if (isJoined) {
-                connectWebSocket();
-                setIsLoading(false);
-
-                window.addEventListener("beforeunload", handleBeforeUnload);
-
-                return () => {
-                    window.removeEventListener("beforeunload", handleBeforeUnload);
-                    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-                        ws.current.send(
-                            JSON.stringify({
-                                type: "QUIT",
-                                roomId: roomId,
-                                mem_id: "rabbit@naver.com",
-                                sender: username,
-                                message: `${username}님이 퇴장했습니다.`,
-                            })
-                        );
-                        ws.current.close();
-                    }
-                };
-            } else {
-                console.log("User is not a member of this room.");
-                setIsLoading(false);
-            }
-        };
-
-        initChatRoom();
-    }, [roomId, username]);
-
-    const sendMessage = () => {
-        if (input.trim() !== "") {
-            // WebSocket이 연결되어 있을 때만 메시지를 보냄
-            if (ws.current.readyState === WebSocket.OPEN) {
-                const message = {
-                    type: "TALK",
-                    roomId: roomId,
-                    mem_id: "rabbit@naver.com",
-                    sender: username,
-                    message: input,
-                };
-                ws.current.send(JSON.stringify(message));
-                setInput("");
-            } else {
-                console.error("WebSocket is not in OPEN state.");
-            }
-        }
-    };
-
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -143,14 +73,7 @@ function ChatRoom({ roomId, username }) {
                 ))}
             </div>
             <div className="input-container">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={(e) => {
-                        if (e.key === "Enter") sendMessage();
-                    }}
-                />
+                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
                 <button className="send-button" onClick={sendMessage}>
                     전송
                 </button>
