@@ -20,6 +20,8 @@ function Chat(props) {
     const [userId, setUserId] = useState(user.mem_id);
     const [userNickName, setUserNickName] = useState(user.mem_nickname);
 
+    const [isJoined, setIsJoined] = useState(false);
+
     const socket = useRef(); // useRef로 socket을 생성
 
     const fetchRooms = async () => {
@@ -32,6 +34,24 @@ function Chat(props) {
         }
     };
 
+    const isJoinedRoom = async (roomId) => {
+        try {
+            const response = await axios.get(`/chat/${roomId}/members`, {
+                params: {
+                    mem_id: userId,
+                },
+            });
+            if (response.data) {
+                console.log(`${userId}가 이미 참여 중임`);
+                return true;
+            }
+            return false; // true 또는 false
+        } catch (error) {
+            console.error("Error checking member in room:", error);
+            return false;
+        }
+    };
+
     const createRoom = async () => {
         // 채팅방 만들기
         if (newRoomName.trim()) {
@@ -40,13 +60,8 @@ function Chat(props) {
                     params: { name: newRoomName },
                 });
 
-                if (socket.current) {
-                    socket.current.close();
-                }
-
                 // 채팅방을 만들면 만든 사람은 만듦과 동시에 입장시키는 게 자연스러움.
                 const roomId = response.data.room.roomId;
-                enterRoom(roomId);
 
                 setNewRoomName("");
                 fetchRooms();
@@ -58,34 +73,41 @@ function Chat(props) {
     };
 
     const enterRoom = async (roomId) => {
-        // 기존에 열린 WebSocket이 있다면 닫습니다.
-        if (socket.current) {
-            socket.current.close();
-        }
-
-        console.log(`enterRoom: ${roomId}`);
-
-        // WebSocket을 엽니다.
         socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
 
-        // WebSocket이 열리면 서버에 입장 메시지를 보냅니다.
-        socket.current.onopen = () => {
-            console.log("WebSocket Connected");
-            socket.current.send(
-                JSON.stringify({
-                    type: "ENTER",
-                    roomId: roomId,
-                    mem_id: userId,
-                    sender: userNickName,
-                })
-            );
-        };
+        // 선택된 방을 변경합니다.
+        setSelectedRoom(roomId);
+
+        console.log(`방 입장: ${roomId}`);
+        console.log(socket.current);
+
+        const response = await axios.get(`/chat/${roomId}/members`, {
+            // 해당 유저가 이미 그 방에 있는지 확인
+            params: {
+                mem_id: userId,
+            },
+        });
+        if (!response.data) {
+            // 유저가 그 방에 없으면 DB에 추가
+            socket.current.onopen = () => {
+                console.log("WebSocket Connected");
+                socket.current.send(
+                    JSON.stringify({
+                        type: "ENTER",
+                        roomId: roomId,
+                        mem_id: userId,
+                        sender: userNickName,
+                    })
+                );
+            };
+        }
 
         // 서버에서 메시지를 받으면 콘솔에 출력합니다.
         socket.current.onmessage = (event) => {
             const data = JSON.parse(event.data);
             // Handle incoming messages here
-            console.log("Received message:", data);
+
+            console.log("받은 메세지:", data);
         };
 
         // WebSocket이 닫히면 콘솔에 출력합니다.
@@ -100,23 +122,11 @@ function Chat(props) {
         socket.current.onerror = (error) => {
             console.error("WebSocket Error:", error);
         };
-
-        // 선택된 방을 변경합니다.
-        setSelectedRoom(roomId);
     };
 
     const quitRoom = () => {
-        // 기존에 열린 WebSocket이 있다면 닫습니다.
-        if (socket.current) {
-            socket.current.close();
-        }
-
-        // WebSocket을 엽니다.
-        socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
-
-        // WebSocket이 열리면 서버에 입장 메시지를 보냅니다.
-        socket.current.onopen = () => {
-            console.log("WebSocket Connected");
+        // WebSocket이 열려 있을 경우에만 메시지를 보냅니다.
+        if (socket.current && socket.current.readyState === WebSocket.OPEN) {
             socket.current.send(
                 JSON.stringify({
                     type: "QUIT",
@@ -127,36 +137,28 @@ function Chat(props) {
             );
 
             console.log(`quitRoom: ${selectedRoom}`);
+        }
+
+        // WebSocket을 닫습니다.
+        if (socket.current) {
             socket.current.close();
-            setSelectedRoom(null);
-        };
+        }
 
-        // // WebSocket이 열려 있다면 메시지를 보내고 연결을 닫습니다.
-        // if (socket.current && socket.current.readyState === WebSocket.OPEN) {
-        //     socket.current.send(
-        //         JSON.stringify({
-        //             type: "QUIT",
-        //             roomId: selectedRoom,
-        //             mem_id: "rabbit@naver.com",
-        //             sender: username,
-        //         })
-        //     );
-
-        //     console.log(`quitRoom: ${roomId}`);
-        //     socket.current.close();
-        //     setSelectedRoom(null);
-        // }
+        setSelectedRoom(null);
     };
 
     useEffect(() => {
         // Chat.js를 실행시켰을 때 최초로 채팅방 목록을 불러옴
         fetchRooms();
 
-        return () => {
-            if (socket.current) {
-                socket.current.close();
-            }
-        };
+        // WebSocket을 엽니다.
+        socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
+
+        // return () => {
+        //     if (socket.current) {
+        //         socket.current.close();
+        //     }
+        // };
     }, []);
 
     return (
@@ -183,7 +185,7 @@ function Chat(props) {
                             roomId={selectedRoom}
                             userId={userId}
                             userNickName={userNickName}
-                            socket={socket}
+                            socket={socket.current}
                         />
                         <button onClick={quitRoom}>Leave Room</button>
                     </>
