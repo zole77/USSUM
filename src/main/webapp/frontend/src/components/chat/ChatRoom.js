@@ -8,41 +8,35 @@ function ChatRoom({ roomId, username, socket }) {
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchInitialMessages = async () => {
-            try {
-                const response = await axios.get(`/chat/getMessages/${roomId}`);
-                setMessages(response.data);
-                console.log(messages);
-                setIsLoading(false);
-            } catch (error) {
-                console.error("getMessages 오류: ", error);
-            }
-        };
-
-        fetchInitialMessages();
-
-        return () => {};
-    }, [roomId]);
-
-    useEffect(() => {
-        setMessages((prevMessages) => prevMessages.filter((msg) => msg.roomId === roomId));
-        if (socket) {
-            socket.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                console.log(data);
-                if (data.roomId === roomId) {
-                    setMessages((prevMessages) => [...prevMessages, data]);
-                }
-            };
+    const fetchInitialMessages = async () => {
+        try {
+            const response = await axios.get(`/chat/getMessages/${roomId}`);
+            setMessages(response.data);
+            console.log(response.data);
             setIsLoading(false);
+        } catch (error) {
+            console.error("getMessages 오류: ", error);
         }
+    };
 
-        return () => {
-            if (socket) {
-                socket.close();
-            }
-        };
+    useEffect(() => {
+        fetchInitialMessages();
+        // if (socket) {
+        //     socket.onmessage = (event) => {
+        //         const data = JSON.parse(event.data);
+        //         console.log(data);
+        //         if (data.roomId === roomId) {
+        //             setMessages((prevMessages) => [...prevMessages, data]);
+        //         }
+        //     };
+        //     setIsLoading(false);
+        // }
+
+        // return () => {
+        //     if (socket) {
+        //         socket.close();
+        //     }
+        // };
     }, [socket, roomId]);
 
     const sendMessage = () => {
@@ -66,6 +60,8 @@ function ChatRoom({ roomId, username, socket }) {
                         message: message,
                     })
                 );
+
+                fetchInitialMessages();
                 setMessage("");
             }
         };
@@ -98,7 +94,7 @@ function ChatRoom({ roomId, username, socket }) {
             <div className="chat-messages-container">
                 {messages.map((msg, index) => (
                     <div key={index}>
-                        <strong>{msg.sender}</strong>: {msg.message}
+                        <strong>{msg.mem_nickname}</strong>: {msg.message}
                     </div>
                 ))}
             </div>

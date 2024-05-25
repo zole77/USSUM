@@ -12,6 +12,7 @@ public class ChatMessage {
     private MessageType type;
     private String roomId;
     private String mem_id;
+    private String mem_nickname;
     private String sender;
     private String message;
 }
