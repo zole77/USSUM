@@ -33,9 +33,20 @@ const ModMember = () => {
     "동성친구만", "성별 무관", "맛집", "감성", "액티비티", "포토스팟"
   ];
 
+  // 날짜 형식을 변환하는 유틸리티 함수
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   useEffect(() => {
     const initialData = {
       ...loginInfo,
+      mem_birth: formatDate(loginInfo.mem_birth),
       mem_gender: loginInfo.mem_gender || "",
       mem_type: loginInfo.mem_type || "",
     };
@@ -105,7 +116,7 @@ const ModMember = () => {
     } catch (error) {
       console.error("Error checking duplicate nickname:", error.response ? error.response.data : error.message);
       console.log("Error details:", error.response ? error.response : error);
-      alert("중복 확인 중 오류가 발생했습니다: " + (error.response ? error.response.data : error.message));
+      alert("중복 확인 오류: " + (error.response ? error.response.data : error.message));
     }
   };
 
@@ -114,16 +125,24 @@ const ModMember = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check if any field is empty
+    const requiredFields = ["mem_id", "mem_pwd", "mem_phone", "mem_birth", "mem_address", "mem_nickname", "mem_gender"];
+    for (let field of requiredFields) {
+      if (!formData[field]) {
+        alert("모든 정보를 입력해주세요.");
+        return;
+      }
+    }
+
     const updatedData = Object.keys(formData).reduce((acc, key) => {
-      if (formData[key] !== originalData[key]) {
+      if (formData[key]) { // Only include fields that have a value
         acc[key] = formData[key];
       }
       return acc;
     }, {});
 
-    if (Object.keys(updatedData).length === 0) {
-      alert("수정된 내용이 없습니다.");
-      return;
+    if (updatedData.mem_birth) {
+      updatedData.mem_birth = formatDate(updatedData.mem_birth);
     }
 
     console.log("전송 데이터:", updatedData); // 변경된 데이터를 출력합니다
@@ -132,13 +151,12 @@ const ModMember = () => {
       const response = await axios.post("/member/modify", updatedData);
 
       console.log(response.data);
-      dispatch(loginUser(response.data));
-      alert("회원 정보가 성공적으로 수정되었습니다. 다시 로그인해주세요.");
+      alert("회원 정보가 수정되었습니다. 다시 로그인해주세요.");
       dispatch(clearUser());
-      navigate("/");
+      window.location.reload(); // Force logout by reloading the page
     } catch (error) {
-      console.error("사용자 정보 업데이트 중 오류 발생:", error);
-      alert("회원 정보 수정 중 오류가 발생했습니다.");
+      console.error("회원 정보 수정 오류:", error);
+      alert("회원 정보 수정 오류");
     }
   };
 
