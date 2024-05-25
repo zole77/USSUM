@@ -4,19 +4,20 @@
 <mapper namespace="com.mycom.ussum.repository.WithMeRepository">
     <insert id="createWithMe" parameterType="com.mycom.ussum.vo.WithMeVO">
         <![CDATA[
-            UPDATE WITHME_TABLE
-            SET WITHME_TITLE = #{withMe_title},
-                WITHME_CONTENT = #{withMe_content},
-                MEM_ID = #{mem_id},
-                WITHME_X = #{withMe_x},
-                WITHME_Y = #{withMe_y},
-                WITHME_PNUM = #{withMe_pnum},
-                WITHME_GENDER = #{withMe_gender},
-                WITHME_THUMBNAIL = #{withMe_thumbnail},
-                WITHME_SDATE = #{wihtMe_sdate},
-                WITHME_EDATE = #{withMe_edate},
-                WITHME_ID = (SELECT Max(WITHME_ID) + 1
-                             FROM WITHME_TABLE)
+            INSERT INTO WITHME_TABLE(WITHME_TITLE, WITHME_CONTENT, MEM_ID, withme_x, WITHME_Y, WITHME_PNUM, WITHME_GENDER, WITHME_THUMBNAIL,
+                                     WITHME_SDATE, WITHME_EDATE, WITHME_ID)
+            VALUES (#{withMe_title},
+                #{withMe_content},
+                #{mem_id},
+                #{withMe_x},
+                #{withMe_y},
+                #{withMe_pnum},
+                #{withMe_gender},
+                #{withMe_thumbnail},
+                #{wihtMe_sdate},
+                #{withMe_edate},
+                (SELECT Max(WITHME_ID) + 1
+                             FROM WITHME_TABLE))
         ]]>
     </insert>
 
@@ -34,4 +35,17 @@
             FROM WITHME_TABLE
         ]]>
     </select>
+
+    <delete id="dropWithMe">
+        <![CDATA[
+            DELETE FROM WITHME_TABLE
+            WHERE WITHME_ID = #{id}
+        ]]>
+    </delete>
+
+    <update id="updateWithMe" parameterType="com.mycom.ussum.vo.WithMeVO">
+        <![CDATA[
+
+        ]]>
+    </update>
 </mapper>

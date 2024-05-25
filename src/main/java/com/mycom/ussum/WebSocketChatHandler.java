@@ -68,7 +68,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         } else {
             sendToEachSocket(sessions, message);
         }
-        chatService.saveMsg(message.toString(), room.getRoomId(), chatMessage.getMem_id(),
+        chatService.saveMsg(chatMessage.getMessage(), room.getRoomId(), chatMessage.getMem_id(),
                 chatMessage.getSender(), chatMessage.getType().toString());
     }
 
@@ -98,7 +98,12 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus status) {
-        // 클라이언트가 세션을 닫으면 해당 세션을 방의 세션 목록에서 제거합니다.
+
+        log.info("WebSocket Connection Closed: {}", status.toString());
+        if (status.getCode() >= 1000 && status.getCode() <= 2999) {
+            log.error("WebSocket Connection Closed with Error: {}", status.getCode());
+            // 클라이언트와의 연결이 오류로 인해 종료된 경우, 적절히 처리합니다.
+        }
         chatService.removeSessionFromRooms(session);
     }
 }

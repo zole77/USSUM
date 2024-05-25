@@ -14,7 +14,9 @@ function ChatList(props) {
                     <>
                         <ChatListItem
                             chatListItem={chatListItem}
+                            selectedRoom={props.selectedRoom}
                             setSelectedRoom={props.setSelectedRoom}
+                            enterRoom={props.enterRoom}
                         />
                     </>
                 );

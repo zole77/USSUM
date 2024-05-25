@@ -10,4 +10,5 @@ public interface WithMeRepository {
     void createWithMe(WithMeVO withMeVO);
     WithMeVO getWithMe(int id);
     List<WithMeVO> getAllWithMe();
+    void dropWithMe(int id);
 }

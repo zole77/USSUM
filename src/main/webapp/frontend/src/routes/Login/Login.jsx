@@ -52,26 +52,31 @@ const Login = () => {
         const member = response.data.member;
         if (member) {
           dispatch(
-            loginUser({
-              mem_nickname: member.mem_nickname,
-              mem_id: member.mem_id,
-              mem_gender: member.mem_gender,
-              mem_type: member.mem_type, // mem_type 필드 추가
-            }),
+              loginUser({
+                mem_id: member.mem_id,
+                mem_pwd: member.mem_pwd,
+                mem_gender: member.mem_gender,
+                mem_phone: member.mem_phone,
+                mem_address: member.mem_address,
+                mem_birth: member.mem_birth,
+                mem_type: member.mem_type,
+                mem_nickname: member.mem_nickname,
+                mem_name: member.mem_name,
+              })
           );
         } else {
           console.error("Member data is missing in the response.");
           alert("로그인 중 문제가 발생했습니다.");
         }
         setMsg("");
-        navigate("/");
+        navigate("/"); // 로그인 성공 후 이동할 경로
       } else {
         handleErrorResponse(response.data);
       }
     } catch (error) {
       console.error(
-        "로그인 중 에러 발생:",
-        error.response ? error.response.data : error.message,
+          "로그인 중 에러 발생:",
+          error.response ? error.response.data : error.message,
       );
       alert("로그인 중 문제가 발생했습니다.");
       setLoading(false);
@@ -97,47 +102,47 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <div className="userFrame">
-        <h4 className="login_title">
-          <img
-            src={logo}
-            alt="US:SUM"
-            style={{ width: "200px", height: "auto" }}
-          />
-        </h4>
-        <form onSubmit={handleSubmit}>
-          <div className="text_area">
-            <input
-              className="userInput"
-              type="email"
-              placeholder="이메일"
-              value={userInfo.mem_id}
-              name="mem_id"
-              onChange={handleInputChange}
+      <div className="login">
+        <div className="userFrame">
+          <h4 className="login_title">
+            <img
+                src={logo}
+                alt="US:SUM"
+                style={{ width: "200px", height: "auto" }}
             />
-          </div>
-          <div className="text_area">
-            <input
-              className="userInput"
-              type="password"
-              placeholder="비밀번호"
-              value={userInfo.mem_pwd}
-              name="mem_pwd"
-              onChange={handleInputChange}
-              minLength={8}
-            />
-          </div>
-          <button className="btn-hover color" type="submit" disabled={loading}>
-            로그인
-          </button>
-          <Link to="/signup" className="link">
-            회원 가입
-          </Link>
-        </form>
-        <div className="msg">{msg}</div>
+          </h4>
+          <form onSubmit={handleSubmit}>
+            <div className="text_area">
+              <input
+                  className="userInput"
+                  type="email"
+                  placeholder="이메일"
+                  value={userInfo.mem_id}
+                  name="mem_id"
+                  onChange={handleInputChange}
+              />
+            </div>
+            <div className="text_area">
+              <input
+                  className="userInput"
+                  type="password"
+                  placeholder="비밀번호"
+                  value={userInfo.mem_pwd}
+                  name="mem_pwd"
+                  onChange={handleInputChange}
+                  minLength={8}
+              />
+            </div>
+            <button className="btn-hover color" type="submit" disabled={loading}>
+              로그인
+            </button>
+            <Link to="/signup" className="link">
+              회원 가입
+            </Link>
+          </form>
+          <div className="msg">{msg}</div>
+        </div>
       </div>
-    </div>
   );
 };
 
