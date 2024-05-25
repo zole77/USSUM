@@ -7,7 +7,7 @@ function ChatListItem(props) {
         <div
             className="chatListItem-container"
             onClick={() => {
-                props.setSelectedRoom(props.chatListItem.roomId); // 클릭했을 때 해당하는 룸 Id를 설정
+                props.enterRoom(props.chatListItem.roomId); // 클릭했을 때 해당하는 룸으로 입장
             }}
         >
             <div className="profile-container">
