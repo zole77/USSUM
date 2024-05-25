@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "../../styles/ChatRoom.css";
 import axios from "axios";
 
-function ChatRoom({ roomId, username, socket }) {
+function ChatRoom({ roomId, username, socket, userId, userNickName }) {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const [input, setInput] = useState("");
@@ -21,22 +21,41 @@ function ChatRoom({ roomId, username, socket }) {
 
     useEffect(() => {
         fetchInitialMessages();
-        // if (socket) {
-        //     socket.onmessage = (event) => {
-        //         const data = JSON.parse(event.data);
-        //         console.log(data);
-        //         if (data.roomId === roomId) {
-        //             setMessages((prevMessages) => [...prevMessages, data]);
-        //         }
-        //     };
-        //     setIsLoading(false);
-        // }
-
-        // return () => {
-        //     if (socket) {
-        //         socket.close();
-        //     }
+        // socket.onmessage = (event) => {
+        //     console.log("방금 도착한 메세지:", message);
+        //     fetchInitialMessages();
         // };
+
+        if (socket.current) {
+            socket.current.close();
+        }
+
+        // WebSocket을 엽니다.
+        socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
+        console.log("useEffect 실행");
+
+        // 웹소켓 이벤트 핸들러 설정
+        socket.current.onopen = () => {
+            socket.current.send(
+                JSON.stringify({
+                    type: "TALK",
+                    roomId: roomId,
+                    mem_id: userId,
+                    sender: userNickName,
+                    message: "으아아아아아아악!!!!!!!!!",
+                })
+            );
+        };
+        socket.current.onmessage = (event) => {
+            console.log("방금 도착한 메세지:", event);
+            fetchInitialMessages();
+        };
+
+        return () => {
+            if (socket) {
+                socket.current.close();
+            }
+        };
     }, [socket, roomId]);
 
     const sendMessage = () => {
@@ -55,8 +74,8 @@ function ChatRoom({ roomId, username, socket }) {
                     JSON.stringify({
                         type: "TALK",
                         roomId: roomId,
-                        mem_id: "rabbit@naver.com",
-                        sender: username,
+                        mem_id: userId,
+                        sender: userNickName,
                         message: message,
                     })
                 );

@@ -3,8 +3,10 @@ import ChatList from "../../components/chat/ChatList";
 import ChatRoom from "../../components/chat/ChatRoom";
 import FriendProfile from "../../components/chat/FriendProfile";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 function Chat(props) {
+    const user = useSelector((state) => state.user);
     const [selectedRoom, setSelectedRoom] = useState(null); // 현재 선택된 방을 관리하는 state
     const [chatRooms, setChatRooms] = useState([]); // 채팅방 목록
     const [newRoomName, setNewRoomName] = useState(""); // 채팅방 이름 저장할 state
@@ -14,6 +16,9 @@ function Chat(props) {
     const [message, setMessage] = useState("");
     const [username, setUsername] = useState("토끼");
     const [roomId, setRoomId] = useState("");
+
+    const [userId, setUserId] = useState(user.mem_id);
+    const [userNickName, setUserNickName] = useState(user.mem_nickname);
 
     const socket = useRef(); // useRef로 socket을 생성
 
@@ -63,8 +68,6 @@ function Chat(props) {
         // WebSocket을 엽니다.
         socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
 
-        console.log(socket.current);
-
         // WebSocket이 열리면 서버에 입장 메시지를 보냅니다.
         socket.current.onopen = () => {
             console.log("WebSocket Connected");
@@ -72,8 +75,8 @@ function Chat(props) {
                 JSON.stringify({
                     type: "ENTER",
                     roomId: roomId,
-                    mem_id: "rabbit@naver.com",
-                    sender: username,
+                    mem_id: userId,
+                    sender: userNickName,
                 })
             );
         };
@@ -88,6 +91,9 @@ function Chat(props) {
         // WebSocket이 닫히면 콘솔에 출력합니다.
         socket.current.onclose = (event) => {
             console.log("WebSocket Connection Closed", event);
+            if (event.code === 1006) {
+                console.error("Connection closed abnormally");
+            }
         };
 
         // WebSocket 에러가 발생하면 콘솔에 출력합니다.
@@ -115,8 +121,8 @@ function Chat(props) {
                 JSON.stringify({
                     type: "QUIT",
                     roomId: selectedRoom,
-                    mem_id: "rabbit@naver.com",
-                    sender: username,
+                    mem_id: userId,
+                    sender: userNickName,
                 })
             );
 
@@ -175,8 +181,9 @@ function Chat(props) {
                     <>
                         <ChatRoom
                             roomId={selectedRoom}
-                            username={username}
-                            socket={socket.current}
+                            userId={userId}
+                            userNickName={userNickName}
+                            socket={socket}
                         />
                         <button onClick={quitRoom}>Leave Room</button>
                     </>
