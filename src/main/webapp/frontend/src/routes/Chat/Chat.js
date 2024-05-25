@@ -9,13 +9,13 @@ function Chat(props) {
     const [chatRooms, setChatRooms] = useState([]); // 채팅방 목록
     const [newRoomName, setNewRoomName] = useState(""); // 채팅방 이름 저장할 state
     const [rooms, setRooms] = useState([]);
-    const ws = useRef(null);
 
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const [username, setUsername] = useState("토끼");
     const [roomId, setRoomId] = useState("");
-    const socket = useRef(null);
+
+    const socket = useRef(); // useRef로 socket을 생성
 
     const fetchRooms = async () => {
         // 채팅방 목록을 불러오는 메소드, 단 지금은 사용자가 아닌 모든 채팅방 목록을 불러오고 있다는 점을 인지해야 함
@@ -63,6 +63,8 @@ function Chat(props) {
         // WebSocket을 엽니다.
         socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
 
+        console.log(socket.current);
+
         // WebSocket이 열리면 서버에 입장 메시지를 보냅니다.
         socket.current.onopen = () => {
             console.log("WebSocket Connected");
@@ -85,7 +87,7 @@ function Chat(props) {
 
         // WebSocket이 닫히면 콘솔에 출력합니다.
         socket.current.onclose = (event) => {
-            console.log("WebSocket Disconnected", event);
+            console.log("WebSocket Connection Closed", event);
         };
 
         // WebSocket 에러가 발생하면 콘솔에 출력합니다.
@@ -98,8 +100,17 @@ function Chat(props) {
     };
 
     const quitRoom = () => {
-        // WebSocket이 열려 있다면 메시지를 보내고 연결을 닫습니다.
-        if (socket.current && socket.current.readyState === WebSocket.OPEN) {
+        // 기존에 열린 WebSocket이 있다면 닫습니다.
+        if (socket.current) {
+            socket.current.close();
+        }
+
+        // WebSocket을 엽니다.
+        socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
+
+        // WebSocket이 열리면 서버에 입장 메시지를 보냅니다.
+        socket.current.onopen = () => {
+            console.log("WebSocket Connected");
             socket.current.send(
                 JSON.stringify({
                     type: "QUIT",
@@ -108,9 +119,27 @@ function Chat(props) {
                     sender: username,
                 })
             );
+
+            console.log(`quitRoom: ${selectedRoom}`);
             socket.current.close();
             setSelectedRoom(null);
-        }
+        };
+
+        // // WebSocket이 열려 있다면 메시지를 보내고 연결을 닫습니다.
+        // if (socket.current && socket.current.readyState === WebSocket.OPEN) {
+        //     socket.current.send(
+        //         JSON.stringify({
+        //             type: "QUIT",
+        //             roomId: selectedRoom,
+        //             mem_id: "rabbit@naver.com",
+        //             sender: username,
+        //         })
+        //     );
+
+        //     console.log(`quitRoom: ${roomId}`);
+        //     socket.current.close();
+        //     setSelectedRoom(null);
+        // }
     };
 
     useEffect(() => {
