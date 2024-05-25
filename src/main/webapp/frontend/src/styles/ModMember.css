@@ -93,7 +93,6 @@ td.label-cell {
 }
 
 td.input-cell {
-    text-align: left;
     padding-left: 10px;
     position: relative;
 }
@@ -111,6 +110,7 @@ td.input-cell {
 .profile-edit-table td {
     padding: 13px;
     vertical-align: middle;
+    margin-left: 50px;
 }
 
 .profile-edit-table label {
@@ -120,7 +120,7 @@ td.input-cell {
 .profile-edit-table input,
 .profile-edit-table select,
 .profile-edit-table textarea {
-    width: 60%;
+    width: 65%;
     padding: 10px;
     box-sizing: border-box;
     font-size: 15px;
@@ -216,7 +216,9 @@ td.input-cell {
     font-size: 16px;
     transition: all 0.4s ease-in-out;
     position: absolute;
-    margin : 5px;
+    top: 50%;
+    transform: translateY(-110%);
+    right: 30px;
 }
 
 .edit-pwd-button:hover, .change-pwd-button:hover {
@@ -226,18 +228,46 @@ td.input-cell {
 .edit-pwd-button:focus, .change-pwd-button:focus {
     outline: none;
 }
-.checkbox-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+
+.checkbox-cell {
+    width: 33%;
 }
 
 .checkbox-item {
     display: flex;
     align-items: center;
+    justify-content: left;
+    text-align: left;
+    padding: 5px;
 }
 
 .checkbox-input {
-    width: 16px;
-    height: 16px;
-    margin: 0 5px 0 0}
+    justify-content: left;
+}
+
+.password-cell {
+    width: 65%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.toggle-visibility {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 20%;
+    bottom: 2px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #5ac7c7;
+}
+
+.toggle-visibility:focus {
+    outline: none;
+}
+
+::placeholder {
+    font-size: 12px;
+    color: #888;
+}
