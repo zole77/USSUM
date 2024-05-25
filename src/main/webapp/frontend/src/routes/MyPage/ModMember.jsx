@@ -27,7 +27,6 @@ const ModMember = () => {
   const [isEditingPwd, setIsEditingPwd] = useState(false);
   const [confirmPwd, setConfirmPwd] = useState("");
   const [nicknameAvailable, setNicknameAvailable] = useState(false);
-  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
 
   const travelPreferences = [
     "즉흥적", "계획적", "여럿이서", "소수로만", "여유롭게", "알차게",
@@ -61,7 +60,6 @@ const ModMember = () => {
     setFormData({ ...formData, [name]: value });
     if (name === "mem_nickname") {
       setNicknameAvailable(false);
-      setIsDuplicateChecked(false);
     }
   };
 
@@ -97,8 +95,6 @@ const ModMember = () => {
         params: { mem_nickname: formData.mem_nickname },
       });
 
-      setIsDuplicateChecked(true);
-
       if (response.data === 0) {
         alert("사용 가능한 닉네임입니다.");
         setNicknameAvailable(true);
@@ -129,6 +125,8 @@ const ModMember = () => {
       alert("수정된 내용이 없습니다.");
       return;
     }
+
+    console.log("전송 데이터:", updatedData); // 변경된 데이터를 출력합니다
 
     try {
       const response = await axios.post("/member/modify", updatedData);
@@ -276,8 +274,8 @@ const ModMember = () => {
                   </tbody>
                 </table>
                 <div className="form-actions">
-                  <button type="button" className="btn-hover color">취소</button>
-                  <button type="submit" className="btn-hover color" disabled={!nicknameAvailable || !isDuplicateChecked}>저장</button>
+                  <button type="button" className="btn-hover color" onClick={() => setFormData(originalData)}>취소</button>
+                  <button type="submit" className="btn-hover color">저장</button>
                 </div>
               </>
           )}
@@ -293,4 +291,3 @@ const ModMember = () => {
 };
 
 export default ModMember;
-
