@@ -21,13 +21,11 @@
     <![CDATA[
         UPDATE MEMBER_TABLE
         SET MEM_PWD = #{mem_pwd},
-            MEM_GENDER = #{mem_gender},
             MEM_PHONE = #{mem_phone},
             MEM_BIRTH = #{mem_birth},
             MEM_ADDRESS = #{mem_address},
             MEM_TYPE = #{mem_type},
-            MEM_NICKNAME = #{mem_nickname},
-            MEM_NAME = #{mem_name}
+            MEM_NICKNAME = #{mem_nickname}
         WHERE MEM_ID = #{mem_id}
         ]]>
 </update>

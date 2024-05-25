@@ -68,7 +68,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         } else {
             sendToEachSocket(sessions, message);
         }
-        chatService.saveMsg(message.toString(), room.getRoomId(), chatMessage.getMem_id(),
+        chatService.saveMsg(chatMessage.getMessage(), room.getRoomId(), chatMessage.getMem_id(),
                 chatMessage.getSender(), chatMessage.getType().toString());
     }
 
