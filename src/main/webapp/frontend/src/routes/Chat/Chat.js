@@ -21,7 +21,7 @@ function Chat(props) {
         // 채팅방 목록을 불러오는 메소드, 단 지금은 사용자가 아닌 모든 채팅방 목록을 불러오고 있다는 점을 인지해야 함
         try {
             const response = await axios.get("/chat/chatList");
-            setRooms([...response.data]);
+            setRooms(response.data);
         } catch (error) {
             console.error("채팅방 로딩 에러", error);
         }
@@ -45,20 +45,25 @@ function Chat(props) {
 
                 setNewRoomName("");
                 fetchRooms();
+                enterRoom(roomId);
             } catch (error) {
                 console.error("Error creating room:", error);
             }
         }
     };
 
-    const enterRoom = (roomId) => {
+    const enterRoom = async (roomId) => {
+        // 기존에 열린 WebSocket이 있다면 닫습니다.
         if (socket.current) {
             socket.current.close();
         }
+
         console.log(`enterRoom: ${roomId}`);
 
+        // WebSocket을 엽니다.
         socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
 
+        // WebSocket이 열리면 서버에 입장 메시지를 보냅니다.
         socket.current.onopen = () => {
             console.log("WebSocket Connected");
             socket.current.send(
@@ -71,35 +76,40 @@ function Chat(props) {
             );
         };
 
+        // 서버에서 메시지를 받으면 콘솔에 출력합니다.
         socket.current.onmessage = (event) => {
             const data = JSON.parse(event.data);
             // Handle incoming messages here
             console.log("Received message:", data);
         };
 
-        socket.current.onclose = () => {
-            console.log("WebSocket Disconnected");
+        // WebSocket이 닫히면 콘솔에 출력합니다.
+        socket.current.onclose = (event) => {
+            console.log("WebSocket Disconnected", event);
         };
 
+        // WebSocket 에러가 발생하면 콘솔에 출력합니다.
         socket.current.onerror = (error) => {
             console.error("WebSocket Error:", error);
         };
 
+        // 선택된 방을 변경합니다.
         setSelectedRoom(roomId);
     };
 
     const quitRoom = () => {
-        if (socket.current) {
+        // WebSocket이 열려 있다면 메시지를 보내고 연결을 닫습니다.
+        if (socket.current && socket.current.readyState === WebSocket.OPEN) {
             socket.current.send(
                 JSON.stringify({
                     type: "QUIT",
                     roomId: selectedRoom,
-                    mem_id: username,
+                    mem_id: "rabbit@naver.com",
                     sender: username,
                 })
             );
             socket.current.close();
-            setSelectedRoom("");
+            setSelectedRoom(null);
         }
     };
 
