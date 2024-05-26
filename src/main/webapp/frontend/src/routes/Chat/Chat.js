@@ -9,32 +9,23 @@ import { GiConsoleController } from "react-icons/gi";
 function Chat(props) {
     const user = useSelector((state) => state.user);
     const [selectedRoom, setSelectedRoom] = useState(null); // 현재 선택된 방을 관리하는 state
-    const [chatRooms, setChatRooms] = useState([]); // 채팅방 목록
     const [newRoomName, setNewRoomName] = useState(""); // 채팅방 이름 저장할 state
-    const [rooms, setRooms] = useState([]);
-
-    const [messages, setMessages] = useState([]);
-    const [message, setMessage] = useState("");
-    const [username, setUsername] = useState("토끼");
-    const [roomId, setRoomId] = useState("");
+    const [rooms, setRooms] = useState([]); // 사용자가 참여한 채팅방 목록
+    const [lastMessage, setLastMessage] = useState(""); // 채팅방의 가장 최근 메세지를 저장할 state
 
     const [userId, setUserId] = useState(user.mem_id);
     const [userNickName, setUserNickName] = useState(user.mem_nickname);
 
-    const [isJoined, setIsJoined] = useState(false);
-
     const socket = useRef(); // useRef로 socket을 생성
 
     const fetchRooms = async () => {
-        // 채팅방 목록을 불러오는 메소드, 단 지금은 사용자가 아닌 모든 채팅방 목록을 불러오고 있다는 점을 인지해야 함
+        // 사용자가 참여한 채팅방 목록을 불러옴, roomId와, roomName을 받음
         try {
-            console.log(userId);
             const response = await axios.get("/chat/getRooms", {
                 params: {
                     memId: userId,
                 },
             });
-            console.log(response);
             setRooms(response.data);
         } catch (error) {
             console.error("채팅방 로딩 에러", error);

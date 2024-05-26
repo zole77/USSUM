@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/ChatListItem.css";
 import defaultProfile from "../../img/defaultProfile.png";
+import axios from "axios";
 
 function ChatListItem(props) {
+    const [lastMessage, setLastMessage] = useState("");
+
+    const fetchLastMessages = async () => {
+        const response = await axios.get(`/chat/getMessages/${props.chatListItem.roomId}`);
+        setLastMessage(
+            response.data.length > 0 ? response.data[response.data.length - 1].message : null
+        );
+    };
+
+    useEffect(() => {
+        fetchLastMessages();
+    }, [fetchLastMessages]);
+
     return (
         <div
             className="chatListItem-container"
@@ -14,12 +28,12 @@ function ChatListItem(props) {
                 <img
                     src={defaultProfile}
                     alt="profile"
-                    style={{ marginTop: "10px", width: "50px", height: "50px" }}
+                    style={{ margin: "5px", width: "50px", height: "50px" }}
                 ></img>
             </div>
             <div className="chatListItem-info">
                 <div className="chatListItem-name">{props.chatListItem.name}</div>
-                <div className="recent-message">최근 메세지</div>
+                <div className="recent-message">{lastMessage}</div>
             </div>
         </div>
     );
