@@ -35,6 +35,12 @@ public class MemberController {
     @Operation(summary = "회원정보 수정")
     public ResponseEntity<String> updateMember(@RequestBody MemberVO member) {
         try {
+            System.out.println("Updating member: " + member);
+            System.out.println(member.getMem_address());
+            System.out.println(member.getMem_name());
+            System.out.println(member.getMem_id());
+            System.out.println(member.getMem_birth());
+            System.out.println(member.getMem_birth().getClass().getName());
             memberService.updateMember(member);
             return ResponseEntity.ok("회원 정보가 성공적으로 수정되었습니다.");
         } catch (Exception e) {

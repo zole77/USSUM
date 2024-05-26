@@ -54,7 +54,7 @@ public class ChatController {
         return chatService.getMsg(roomId);
     }
 
-    @PostMapping("/getRooms")
+    @GetMapping("/getRooms")
     @Operation(description = "사용자가 참여하고 있는 채팅방 목록 호출")
     public List<ChatRoom> getRooms(@RequestParam("memId") String memId){
         return chatService.getRooms(memId);

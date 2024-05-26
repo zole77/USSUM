@@ -10,7 +10,6 @@ import { clearUser } from "../routes/Login/loginSlice"; // clearUser 액션 가�
 
 function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [writeModalOpen, setWriteModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // isLoggedIn 상태 추가
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,15 +20,12 @@ function Header() {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const handleWriteModalToggle = () => {
-    setWriteModalOpen(!writeModalOpen);
-  };
-
   const handleLogout = () => {
     dispatch(clearUser());
     localStorage.removeItem("token");
     setIsLoggedIn(false); // 로그아웃 시 isLoggedIn 상태 업데이트
-    navigate("/login");
+    alert("로그아웃되었습니다.");
+    navigate("/"); // "/"로 리디렉션
   };
 
   useEffect(() => {
@@ -39,7 +35,7 @@ function Header() {
     } else {
       setIsLoggedIn(false);
     }
-  }, []);
+  }, [loginState]);
 
   const handleLogoClick = () => {
     navigate("/");
