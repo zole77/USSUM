@@ -14,7 +14,7 @@
 }
 
 .chat-layout {
-    margin: 0 20px 100px 20px;
+    margin: 3% 10%;
     flex: 1;
 }
 
@@ -44,6 +44,6 @@
     background-color: #f7fafe;
 }
 
-.chat-friendprofile-container {
-    flex: 3;
-}
+/*.chat-friendprofile-container {*/
+/*    flex: 3;*/
+/*}*/
