@@ -8,7 +8,7 @@ function ChatList(props) {
 
     return (
         <div className="chatList-container">
-            <h2>채팅</h2>
+            <div style={{ textAlign: "left" }}>채팅 목록 ▼</div>
             {props.rooms.map((chatListItem) => {
                 return (
                     <ChatListItem

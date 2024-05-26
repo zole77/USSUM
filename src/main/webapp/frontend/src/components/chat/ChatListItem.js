@@ -8,8 +8,13 @@ function ChatListItem(props) {
 
     const fetchLastMessage = useCallback(async () => {
         const response = await axios.get(`/chat/getMessages/${props.chatListItem.roomId}`);
+        console.log(response);
         setLastMessage(
-            response.data.length > 0 ? response.data[response.data.length - 1].message : null
+            response.data.length > 0
+                ? response.data[response.data.length - 1].mem_nickname +
+                      ": " +
+                      response.data[response.data.length - 1].message
+                : null
         );
     }, [props.chatListItem.roomId]);
 
@@ -44,7 +49,9 @@ function ChatListItem(props) {
             </div>
             <div className="chatListItem-info">
                 <div className="chatListItem-name">{props.chatListItem.name}</div>
-                <div className="recent-message">{lastMessage}</div>
+                <div className="recent-message">
+                    {} {lastMessage}
+                </div>
             </div>
         </div>
     );
