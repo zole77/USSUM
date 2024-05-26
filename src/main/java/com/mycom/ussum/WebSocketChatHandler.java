@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycom.ussum.service.ChatService;
 import com.mycom.ussum.vo.ChatMessage;
 import com.mycom.ussum.vo.ChatRoom;
+import jakarta.websocket.OnMessage;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +15,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,16 +23,19 @@ import java.util.Set;
 public class WebSocketChatHandler extends TextWebSocketHandler {
     private final ObjectMapper objectMapper;
     private final ChatService chatService;
+    private final List<WebSocketSession> sessions = new ArrayList<>();
 
     @Override
-    public void afterConnectionEstablished(@NonNull WebSocketSession session) {
-        // 연결이 수립된 후의 로직을 여기에 추가할 수 있습니다.
+    public void afterConnectionEstablished(@NonNull WebSocketSession session) throws IOException {
+        sessions.add(session);
     }
 
+    @OnMessage
     @Override
     protected void handleTextMessage(@NonNull WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
         ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
+
 
         if (chatMessage.getMem_id() == null || chatMessage.getMem_id().isEmpty()) {
             log.error("Invalid mem_id: {}", chatMessage.getMem_id());
@@ -54,20 +57,32 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
             return;
         }
 
-        Set<WebSocketSession> sessions = room.getSessions();
+        Set<WebSocketSession> roomSessions = room.getSessions();
+
         if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
-            sessions.add(session);
+            // TYPE: ENTER
+            roomSessions.add(session);
             chatMessage.setMessage(chatMessage.getSender() + "님이 입장했습니다.");
-            sendToEachSocket(sessions, new TextMessage(objectMapper.writeValueAsString(chatMessage)));
+            sendToEachSocket(roomSessions, new TextMessage(objectMapper.writeValueAsString(chatMessage)));
             chatService.enterRoom(room.getRoomId(), chatMessage.getMem_id());
         } else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
-            sessions.remove(session);
+            // TYPE: QUIT
+            roomSessions.remove(session);
             chatMessage.setMessage(chatMessage.getSender() + "님이 퇴장했습니다.");
-            sendToEachSocket(sessions, new TextMessage(objectMapper.writeValueAsString(chatMessage)));
+            sendToEachSocket(roomSessions, new TextMessage(objectMapper.writeValueAsString(chatMessage)));
             chatService.quitRoom(room.getRoomId(), chatMessage.getMem_id());
         } else {
-            sendToEachSocket(sessions, message);
+            // TYPE: TALK
+            sendToEachSocket(roomSessions, message);
         }
+
+        // 예: 모든 클라이언트에게 메시지 브로드캐스트
+        for (WebSocketSession s : sessions) {
+            if (s.isOpen()) { // 세션이 열려 있는 경우에만 메시지 전송
+                s.sendMessage(message);
+            }
+        }
+
         chatService.saveMsg(chatMessage.getMessage(), room.getRoomId(), chatMessage.getMem_id(),
                 chatMessage.getSender(), chatMessage.getType().toString());
     }

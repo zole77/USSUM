@@ -45,16 +45,16 @@ function ChatRoom({ roomId, username, socket, userId, userNickName }) {
         //         })
         //     );
         // };
+    }, [roomId]);
+
+    useEffect(() => {
         socket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            // Handle incoming messages here
-            console.log("받은 메세지:", data);
+            // 서버에서 메시지를 수신하면 동작함
+            fetchInitialMessages();
         };
-    }, [socket, roomId]);
+    }, [socket, fetchInitialMessages]);
 
     const sendMessage = () => {
-        console.log(socket);
-        console.log(socket.current);
         if (message.trim()) {
             socket.send(
                 JSON.stringify({

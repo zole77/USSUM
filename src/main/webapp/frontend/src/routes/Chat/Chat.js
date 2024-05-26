@@ -27,7 +27,8 @@ function Chat(props) {
     const fetchRooms = async () => {
         // 채팅방 목록을 불러오는 메소드, 단 지금은 사용자가 아닌 모든 채팅방 목록을 불러오고 있다는 점을 인지해야 함
         try {
-            const response = await axios.get("/chat/chatList");
+            const response = await axios.post("/chat/getRooms", userId);
+            console.log(response);
             setRooms(response.data);
         } catch (error) {
             console.error("채팅방 로딩 에러", error);
@@ -73,8 +74,6 @@ function Chat(props) {
     };
 
     const enterRoom = async (roomId) => {
-        socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
-
         // 선택된 방을 변경합니다.
         setSelectedRoom(roomId);
 
@@ -89,39 +88,15 @@ function Chat(props) {
         });
         if (!response.data) {
             // 유저가 그 방에 없으면 DB에 추가
-            socket.current.onopen = () => {
-                console.log("WebSocket Connected");
-                socket.current.send(
-                    JSON.stringify({
-                        type: "ENTER",
-                        roomId: roomId,
-                        mem_id: userId,
-                        sender: userNickName,
-                    })
-                );
-            };
+            socket.current.send(
+                JSON.stringify({
+                    type: "ENTER",
+                    roomId: roomId,
+                    mem_id: userId,
+                    sender: userNickName,
+                })
+            );
         }
-
-        // 서버에서 메시지를 받으면 콘솔에 출력합니다.
-        socket.current.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            // Handle incoming messages here
-
-            console.log("받은 메세지:", data);
-        };
-
-        // WebSocket이 닫히면 콘솔에 출력합니다.
-        socket.current.onclose = (event) => {
-            console.log("WebSocket Connection Closed", event);
-            if (event.code === 1006) {
-                console.error("Connection closed abnormally");
-            }
-        };
-
-        // WebSocket 에러가 발생하면 콘솔에 출력합니다.
-        socket.current.onerror = (error) => {
-            console.error("WebSocket Error:", error);
-        };
     };
 
     const quitRoom = () => {
@@ -149,17 +124,33 @@ function Chat(props) {
 
     useEffect(() => {
         // Chat.js를 실행시켰을 때 최초로 채팅방 목록을 불러옴
+        // 웹소켓 연결을 한 번 종료했더라도, 새로 방이 선택됐을 때 웹소켓 연결이 되야하므로 selectedRoom state값을 의존성으로 넘김
         fetchRooms();
 
-        // WebSocket을 엽니다.
+        // WebSocket 연결
         socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
 
-        // return () => {
-        //     if (socket.current) {
-        //         socket.current.close();
-        //     }
-        // };
-    }, []);
+        socket.current.onopen = (event) => {
+            console.log("웹소켓 연결됨 good");
+        };
+
+        // WebSocket 닫혔을 때
+        socket.current.onclose = (event) => {
+            console.log("WebSocket Connection Closed", event);
+            if (event.code === 1006) {
+                console.error("Connection closed abnormally");
+            }
+        };
+
+        // WebSocket 에러 발생
+        socket.current.onerror = (error) => {
+            console.error("WebSocket Error:", error);
+        };
+
+        return () => {
+            socket.current.close();
+        };
+    }, [selectedRoom]);
 
     return (
         <div style={{ display: "flex", width: "100%", height: "100%" }}>
