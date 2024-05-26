@@ -5,6 +5,7 @@ import FriendProfile from "../../components/chat/FriendProfile";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { GiConsoleController } from "react-icons/gi";
+import "../../styles/Chat.css";
 
 function Chat(props) {
     const user = useSelector((state) => state.user);
@@ -150,38 +151,41 @@ function Chat(props) {
     }, [selectedRoom]);
 
     return (
-        <div style={{ display: "flex", width: "100%", height: "100%" }}>
-            <div style={{ flex: 1, padding: "50px", background: "white" }}>
-                <ChatList
-                    rooms={rooms}
-                    selectedRoom={selectedRoom}
-                    setSelectedRoom={setSelectedRoom}
-                    enterRoom={enterRoom}
-                    socket={socket.current}
-                />
-                <input
-                    type="text"
-                    value={newRoomName}
-                    onChange={(e) => setNewRoomName(e.target.value)}
-                    placeholder="New Room Name"
-                />
-                <button onClick={createRoom}>Create Room</button>
-            </div>
-            <div style={{ flex: 3, background: "white" }}>
-                {selectedRoom && (
-                    <>
-                        <ChatRoom
-                            roomId={selectedRoom}
-                            userId={userId}
-                            userNickName={userNickName}
-                            socket={socket.current}
-                        />
-                        <button onClick={quitRoom}>Leave Room</button>
-                    </>
-                )}
-            </div>
-            <div style={{ flex: 1, padding: "50px", background: "white" }}>
-                <FriendProfile />
+        <div className="chat-layout">
+            <div className="function-name">채팅</div>
+            <div className="chat-container">
+                <div className="chat-list-container">
+                    <ChatList
+                        rooms={rooms}
+                        selectedRoom={selectedRoom}
+                        setSelectedRoom={setSelectedRoom}
+                        enterRoom={enterRoom}
+                        socket={socket.current}
+                    />
+                    <input
+                        type="text"
+                        value={newRoomName}
+                        onChange={(e) => setNewRoomName(e.target.value)}
+                        placeholder="New Room Name"
+                    />
+                    <button onClick={createRoom}>Create Room</button>
+                </div>
+                <div className="chat-room-container">
+                    {selectedRoom && (
+                        <>
+                            <ChatRoom
+                                roomId={selectedRoom}
+                                userId={userId}
+                                userNickName={userNickName}
+                                socket={socket.current}
+                            />
+                            <button onClick={quitRoom}>Leave Room</button>
+                        </>
+                    )}
+                </div>
+                <div className="chat-friendprofile-container">
+                    <FriendProfile />
+                </div>
             </div>
         </div>
     );
