@@ -11,14 +11,14 @@ function ChatList(props) {
             <h2>채팅</h2>
             {props.rooms.map((chatListItem) => {
                 return (
-                    <>
-                        <ChatListItem
-                            chatListItem={chatListItem}
-                            selectedRoom={props.selectedRoom}
-                            setSelectedRoom={props.setSelectedRoom}
-                            enterRoom={props.enterRoom}
-                        />
-                    </>
+                    <ChatListItem
+                        key={chatListItem.roomId}
+                        chatListItem={chatListItem}
+                        selectedRoom={props.selectedRoom}
+                        setSelectedRoom={props.setSelectedRoom}
+                        enterRoom={props.enterRoom}
+                        socket={props.socket}
+                    />
                 );
             })}
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "../../styles/ChatListItem.css";
 import defaultProfile from "../../img/defaultProfile.png";
 import axios from "axios";
@@ -6,16 +6,27 @@ import axios from "axios";
 function ChatListItem(props) {
     const [lastMessage, setLastMessage] = useState("");
 
-    const fetchLastMessages = async () => {
+    const fetchLastMessage = useCallback(async () => {
         const response = await axios.get(`/chat/getMessages/${props.chatListItem.roomId}`);
         setLastMessage(
             response.data.length > 0 ? response.data[response.data.length - 1].message : null
         );
-    };
+    }, [props.chatListItem.roomId]);
 
     useEffect(() => {
-        fetchLastMessages();
-    }, [fetchLastMessages]);
+        fetchLastMessage();
+
+        const socketListener = (event) => {
+            // 서버에서 메시지를 수신하면 동작함
+            fetchLastMessage();
+        };
+
+        props.socket.addEventListener("message", socketListener);
+
+        return () => {
+            props.socket.removeEventListener("message", socketListener);
+        };
+    }, [props.socket, fetchLastMessage]);
 
     return (
         <div

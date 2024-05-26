@@ -157,6 +157,7 @@ function Chat(props) {
                     selectedRoom={selectedRoom}
                     setSelectedRoom={setSelectedRoom}
                     enterRoom={enterRoom}
+                    socket={socket.current}
                 />
                 <input
                     type="text"
