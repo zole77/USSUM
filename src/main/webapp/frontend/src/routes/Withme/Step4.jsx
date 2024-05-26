@@ -22,7 +22,7 @@ function Step4({ onSubmit, onClose }) {
   // 글 제출 이벤트 핸들러
   const handleSubmit = () => {
     // 제목, 내용, 이미지를 가지고 onSubmit 콜백 함수 호출
-    onSubmit({ title, content, image });
+    onSubmit({ withMe_title: title, withMe_content: content, image });
   };
 
   return (
