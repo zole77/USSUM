@@ -4,6 +4,7 @@ import ChatRoom from "../../components/chat/ChatRoom";
 import FriendProfile from "../../components/chat/FriendProfile";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { GiConsoleController } from "react-icons/gi";
 
 function Chat(props) {
     const user = useSelector((state) => state.user);
@@ -27,7 +28,12 @@ function Chat(props) {
     const fetchRooms = async () => {
         // 채팅방 목록을 불러오는 메소드, 단 지금은 사용자가 아닌 모든 채팅방 목록을 불러오고 있다는 점을 인지해야 함
         try {
-            const response = await axios.post("/chat/getRooms", userId);
+            console.log(userId);
+            const response = await axios.get("/chat/getRooms", {
+                params: {
+                    memId: userId,
+                },
+            });
             console.log(response);
             setRooms(response.data);
         } catch (error) {
