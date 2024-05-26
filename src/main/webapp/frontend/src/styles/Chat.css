@@ -41,6 +41,7 @@
 
 .chat-room-container {
     flex: 5;
+    background-color: #f7fafe;
 }
 
 .chat-friendprofile-container {
