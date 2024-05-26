@@ -11,3 +11,4 @@ function Modal({ title }) {
 }
 
 export default Modal;
+

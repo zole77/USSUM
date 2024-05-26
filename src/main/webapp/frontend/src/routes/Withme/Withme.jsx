@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import WriteModal from './WriteModal'; // WriteModal 컴포넌트 import
 import '../../styles/Withme.css';
 
+
 function Withme() {
   const [selectedModal, setSelectedModal] = useState(null);
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false); // WriteModal 열림 상태를 관리하는 상태
