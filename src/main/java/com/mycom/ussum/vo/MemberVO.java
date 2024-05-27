@@ -19,4 +19,5 @@ public class MemberVO {
     private String mem_hot;
     private String mem_nickname;
     private String mem_name;
+    private String mem_image;
 }

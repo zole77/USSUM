@@ -14,6 +14,7 @@ public interface Repository {
     MemberVO selectOneMember(String mem_id);
     void updateMember(MemberVO member);
     void deleteMember(String mem_id);
+    String getMemImage(String mem_id);
 
     //Post
     void savePost(BoardVO boardVO);
