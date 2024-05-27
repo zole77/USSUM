@@ -1,5 +1,6 @@
 .aboutPage {
     text-align: center;
+    font-family: Arial, sans-serif;
 }
 
 .header {
@@ -7,7 +8,8 @@
     width: 100%;
     height: 300px;
     overflow: hidden;
-  }
+    background-color: black; /* Set a background color to enhance the parallax effect */
+}
 
 .header-image {
     width: 100%;
@@ -32,7 +34,6 @@
 }
 
 .main-content {
-    margin-top: 500px;
     padding: 20px;
 }
 

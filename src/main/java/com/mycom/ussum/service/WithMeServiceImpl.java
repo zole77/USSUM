@@ -22,7 +22,7 @@ public class WithMeServiceImpl implements WithMeService {
 
     @Override
     public void createWithMe(WithMeVO withMeVO, MultipartFile image) throws IOException {
-        if(image.isEmpty()){
+        if(image == null){
             repo.createWithMe(withMeVO);
         } else {
             String fullFilePath = saveImage(image);
@@ -48,7 +48,7 @@ public class WithMeServiceImpl implements WithMeService {
 
     @Override
     public void updateWithMe(WithMeVO withMeVO, MultipartFile image) throws IOException {
-        if(image.isEmpty()){
+        if(image == null){
             File deleteFile = new File(repo.getWithMe(Integer.parseInt(withMeVO.getWithMe_id())).getWithMe_thumbnail());
             boolean deleted = deleteFile.delete();
         } else {

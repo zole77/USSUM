@@ -1,29 +1,41 @@
-import React from "react";
-import RellaxWrapper from "react-rellax-wrapper";
+import React, { useEffect, useState } from "react";
 import "../styles/AboutUSSUM.css";
-import travelimg1 from "../img/travelimg1.png";
+import travelimg2 from "../img/travelimg2.png";
 import userIcon from "../img/userIcon.png";
 
 function AboutUSSUM() {
+  const [offsetY, setOffsetY] = useState(0);
+
+  const handleScroll = () => {
+    setOffsetY(window.pageYOffset);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div className="aboutPage">
-      <header className="header">
-        <RellaxWrapper speed={-1}>
-          <img src={travelimg1} alt="aboutImg" className="aboutImg" />
-        </RellaxWrapper>
-        <div className="header-text">
-          WE ARE NEW ZEALAND OWNED AND OPERATED STORE
-        </div>
+      <header
+        className="header"
+        style={{ transform: `translateY(${offsetY * 0.5}px)` }}
+      >
+        <img
+          src={travelimg2}
+          alt="Header"
+          className="header-image"
+          style={{ transform: `translateY(${offsetY * 0.3}px)` }} // Adjust image scroll speed
+        />
+        <div className="header-text">너와 나, 우리를 잇다. US:SUM</div>
       </header>
       <main className="main-content">
         <section className="description">
           <h2>THE JOURNEY OF AN ARTIST</h2>
-          <p>
-            Kommigraphics always works closely with you at every step of a
-            well-structured procedure of brand design, so that your views are
-            always heard and considered. Kommigraphics ensures a collaborative
-            process to create designs that truly reflect your vision.
-          </p>
+          <p>소개 간단히</p>
         </section>
         <section className="services">
           <div className="service">

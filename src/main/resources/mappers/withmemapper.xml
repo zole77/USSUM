@@ -4,9 +4,9 @@
 <mapper namespace="com.mycom.ussum.repository.WithMeRepository">
     <insert id="createWithMe" parameterType="com.mycom.ussum.vo.WithMeVO">
         <![CDATA[
-            INSERT INTO WITHME_TABLE(WITHME_TITLE, WITHME_CONTENT, MEM_ID, withme_x, WITHME_Y, WITHME_PNUM, WITHME_GENDER, WITHME_THUMBNAIL,
-                                     WITHME_SDATE, WITHME_EDATE, WITHME_ID)
-            VALUES (#{withMe_title},
+        INSERT INTO WITHME_TABLE(WITHME_TITLE, WITHME_CONTENT, MEM_ID, WITHME_X, WITHME_Y, WITHME_PNUM, WITHME_GENDER, WITHME_THUMBNAIL,
+                                 WITHME_SDATE, WITHME_EDATE, WITHME_ID, ROOM_ID)
+        VALUES (#{withMe_title},
                 #{withMe_content},
                 #{mem_id},
                 #{withMe_x},
@@ -14,10 +14,11 @@
                 #{withMe_pnum},
                 #{withMe_gender},
                 #{withMe_thumbnail},
-                #{wihtMe_sdate},
+                #{withMe_sdate},
                 #{withMe_edate},
-                (SELECT Max(WITHME_ID) + 1
-                             FROM WITHME_TABLE))
+                (SELECT COALESCE(MAX(WITHME_ID) + 1, 1)
+                 FROM WITHME_TABLE),
+                #{room_id})
         ]]>
     </insert>
 
