@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/Login_styles.css";
 import logo from "../../img/logo.png";
-import { loginUser } from "./loginSlice"; // 변경된 slice에서 loginUser 가져오기
+import { loginUser } from "./loginSlice";
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState({ mem_id: "", mem_pwd: "" });
@@ -12,6 +12,13 @@ const Login = () => {
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.user.isLogin);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -76,7 +83,7 @@ const Login = () => {
     } catch (error) {
       console.error(
           "로그인 중 에러 발생:",
-          error.response ? error.response.data : error.message,
+          error.response ? error.response.data : error.message
       );
       alert("로그인 중 문제가 발생했습니다.");
       setLoading(false);

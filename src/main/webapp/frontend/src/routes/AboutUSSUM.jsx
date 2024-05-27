@@ -50,15 +50,15 @@ function AboutUSSUM() {
   }, []);
 
   const handleSignupClick = () => {
-    window.location.href = '/signup'; // 회원가입 페이지 주소로 이동
+    window.location.href = '/Login';
   };
 
   const handleWithMeClick = () => {
-    window.location.href = '/Withme'; // 같이 가요 페이지 주소로 이동
+    window.location.href = '/Withme';
   };
 
   const handleCommunityClick = () => {
-    window.location.href = '/board'; // 커뮤니티 페이지 주소로 이동
+    window.location.href = '/board';
   };
 
   return (

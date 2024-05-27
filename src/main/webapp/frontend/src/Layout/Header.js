@@ -46,71 +46,72 @@ function Header() {
   };
 
   return (
-    <nav className="navigation">
-      <div
-        className="logo"
-        onClick={handleLogoClick}
-        role="button"
-        tabIndex={0}
-        onKeyPress={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            handleLogoClick();
-          }
-        }}
-        style={{ cursor: "pointer" }}
-      >
-        <img src={logo} alt="logo" style={{ width: "150px", height: "auto" }} />
-      </div>
-      <ul className="nav-links">
-        <li>
-          <Link to="/info" className="nav-link">
-            서비스 소개
-          </Link>
-        </li>
-
-        <li>
-          <Link to="/Withme" className="nav-link">
-            같이 가요!
-          </Link>
-        </li>
-        <li>
-          <Link to="/board" className="nav-link">
-            US:SUM 커뮤니티
-          </Link>
-        </li>
-      </ul>
-      <div className="icons-container">
-        <div className="dropdown-toggle" onClick={handleDropdownToggle}>
-          <img src={ChatIcon} alt="Dropdown" />
+      <nav className="navigation">
+        <div
+            className="logo"
+            onClick={handleLogoClick}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleLogoClick();
+              }
+            }}
+            style={{ cursor: "pointer" }}
+        >
+          <img src={logo} alt="logo" style={{ width: "150px", height: "auto" }} />
         </div>
-        <div className="dropdown-toggle" onClick={handleDropdownToggle}>
-          <img src={AlaramIcon} alt="Dropdown" />
-        </div>
-        {isLoggedIn && (
-          <div className="user-icon" onClick={handleUserIconClick}>
-            <img
-              src={userIcon}
-              alt="User Icon"
-              style={{ width: "23px", height: "auto", cursor: "pointer" }}
-            />
-          </div>
-        )}
-
-        {/* 로그인/로그아웃 버튼 컨테이너 */}
-        <div className="login-button-container">
-          {isLoggedIn ? (
-            <button className="login-button" onClick={handleLogout}>
-              로그아웃
-            </button>
-          ) : (
-            <Link to="/login">
-              <button className="login-button">로그인</button>
+        <ul className="nav-links">
+          <li>
+            <Link to="/info" className="nav-link">
+              서비스 소개
             </Link>
-          )}
-        </div>
-      </div>
+          </li>
 
-    </nav>
+          <li>
+            <Link to="/Withme" className="nav-link">
+              같이 가요!
+            </Link>
+          </li>
+          <li>
+            <Link to="/board" className="nav-link">
+              US:SUM 커뮤니티
+            </Link>
+          </li>
+        </ul>
+        <div className="icons-container">
+          {isLoggedIn && (
+              <>
+                <div className="dropdown-toggle" onClick={handleDropdownToggle}>
+                  <img src={ChatIcon} alt="Dropdown" />
+                </div>
+                <div className="dropdown-toggle" onClick={handleDropdownToggle}>
+                  <img src={AlaramIcon} alt="Dropdown" />
+                </div>
+                <div className="user-icon" onClick={handleUserIconClick}>
+                  <img
+                      src={userIcon}
+                      alt="User Icon"
+                      style={{ width: "23px", height: "auto", cursor: "pointer" }}
+                  />
+                </div>
+              </>
+          )}
+
+          {/* 로그인/로그아웃 버튼 컨테이너 */}
+          <div className="login-button-container">
+            {isLoggedIn ? (
+                <button className="login-button" onClick={handleLogout}>
+                  로그아웃
+                </button>
+            ) : (
+                <Link to="/login">
+                  <button className="login-button">로그인</button>
+                </Link>
+            )}
+          </div>
+        </div>
+      </nav>
   );
 }
 
