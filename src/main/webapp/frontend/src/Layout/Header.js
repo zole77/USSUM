@@ -67,14 +67,15 @@ function Header() {
             서비스 소개
           </Link>
         </li>
-        <li>
-          <Link to="/board" className="nav-link">
-            여행 커뮤니티
-          </Link>
-        </li>
+
         <li>
           <Link to="/Withme" className="nav-link">
             같이 가요!
+          </Link>
+        </li>
+        <li>
+          <Link to="/board" className="nav-link">
+            모두 추억
           </Link>
         </li>
       </ul>
