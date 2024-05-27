@@ -5,7 +5,6 @@ import Step3 from "./Step3";
 import Step4 from "./Step4";
 import "../../styles/WriteModal.css";
 import axios from "axios";
-import defaultProfile from "../../img/defaultProfile.png";
 import { useSelector } from "react-redux";
 
 function WriteModal({ onClose }) {

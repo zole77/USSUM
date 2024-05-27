@@ -30,7 +30,7 @@
 <!--    채팅방 메세지 가져오기-->
     <select id="getMsg" resultType="com.mycom.ussum.vo.ChatMessage">
         <![CDATA[
-            SELECT MESSAGE, MEM_NICKNAME, TYPE, CREATED_TIME
+            SELECT MEM_ID, MESSAGE, MEM_NICKNAME, TYPE, CREATED_TIME
             FROM MESSAGE_TABLE
             WHERE ROOM_ID = #{room_id}
             ORDER BY CHAT_NO
