@@ -22,7 +22,7 @@ public class WithMeServiceImpl implements WithMeService {
 
     @Override
     public void createWithMe(WithMeVO withMeVO, MultipartFile image) throws IOException {
-        if(image.isEmpty()){
+        if(image == null){
             repo.createWithMe(withMeVO);
         } else {
             String fullFilePath = saveImage(image);
