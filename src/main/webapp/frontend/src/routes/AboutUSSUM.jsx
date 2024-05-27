@@ -86,7 +86,7 @@ function AboutUSSUM() {
           <section ref={image2Ref} className="image-section reverse">
             <img src={friend4} alt="AboutInfoImg" className="friendImg"/>
             <div className="AboutInfoText">
-              <h2>너와 나, 우리의 : 모두 추억</h2>
+              <h2>너와 나, 우리의 : US:SUM 커뮤니티</h2>
               <p>여행 가기 전의 설렘, 나 혼자만 간직하기 아쉬운 멋진 추억, 모두에게 도움이 될 많은 정보, 소소하게 이야기를 나눌 친구가 필요할 때. 모든 우리의 추억을 함께 나눌 공간을 US:SUM 커뮤니티에서 즐겨보세요!</p>
               <button className="custom-btn btn-1" onClick={handleCommunityClick}>→ US:SUM 커뮤니티 바로 가기</button>
             </div>

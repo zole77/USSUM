@@ -33,6 +33,7 @@ body, .aboutPage {
 }
 
 .main-content {
+    margin : 0 5%;
     padding: 20px;
 }
 

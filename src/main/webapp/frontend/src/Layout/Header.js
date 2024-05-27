@@ -75,7 +75,7 @@ function Header() {
         </li>
         <li>
           <Link to="/board" className="nav-link">
-            모두 추억
+            US:SUM 커뮤니티
           </Link>
         </li>
       </ul>
