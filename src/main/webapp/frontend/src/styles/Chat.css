@@ -44,6 +44,6 @@
     background-color: #f7fafe;
 }
 
-/*.chat-friendprofile-container {*/
-/*    flex: 3;*/
-/*}*/
+.chat-friendprofile-container {
+    flex: 3;
+}
