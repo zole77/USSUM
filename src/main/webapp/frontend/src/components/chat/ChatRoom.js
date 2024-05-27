@@ -9,6 +9,9 @@ function ChatRoom({ roomId, username, socket, userId, userNickName, setOtherUser
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
+    const chatContainerRef = useRef(null);
+    const inputRef = useRef(null);
+
     const fetchInitialMessages = async () => {
         try {
             const response = await axios.get(`/chat/getMessages/${roomId}`);
@@ -53,6 +56,12 @@ function ChatRoom({ roomId, username, socket, userId, userNickName, setOtherUser
             // 서버에서 메시지를 수신하면 동작함
             fetchInitialMessages();
         };
+
+        if (chatContainerRef.current) {
+            if (!inputRef.current.contains(document.activeElement)) {
+                chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+            }
+        }
     }, [socket, fetchInitialMessages]);
 
     const sendMessage = () => {
@@ -78,7 +87,7 @@ function ChatRoom({ roomId, username, socket, userId, userNickName, setOtherUser
 
     return (
         <div className="chat-room-div">
-            <div className="chat-messages-container">
+            <div className="chat-messages-container" ref={chatContainerRef}>
                 {messages.map((msg, index) => (
                     <div
                         key={index}
@@ -107,7 +116,12 @@ function ChatRoom({ roomId, username, socket, userId, userNickName, setOtherUser
                 ))}
             </div>
             <div className="input-container">
-                <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} />
+                <input
+                    ref={inputRef}
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                />
                 <button className="send-button" onClick={sendMessage}>
                     전송
                 </button>

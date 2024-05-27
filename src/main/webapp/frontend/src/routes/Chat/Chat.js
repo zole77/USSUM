@@ -17,7 +17,7 @@ function Chat(props) {
     const [userId, setUserId] = useState(user.mem_id);
     const [userNickName, setUserNickName] = useState(user.mem_nickname);
 
-    const [otherUserId, setOtherUserId] = useState("");
+    const [otherUserId, setOtherUserId] = useState(null);
 
     const socket = useRef(); // useRef로 socket을 생성
 
@@ -179,7 +179,7 @@ function Chat(props) {
                     )}
                 </div>
                 <div className="chat-friendprofile-container">
-                    <FriendProfile quitRoom={quitRoom} />
+                    <FriendProfile quitRoom={quitRoom} otherUserId={otherUserId} />
                 </div>
             </div>
         </div>
