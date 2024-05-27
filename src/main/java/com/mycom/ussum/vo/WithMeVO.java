@@ -20,4 +20,5 @@ public class WithMeVO {
     private Date withMe_sdate;
     private Date withMe_edate;
     private String withMe_thumbnail;
+    private String room_id;
 }

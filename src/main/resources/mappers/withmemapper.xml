@@ -5,7 +5,7 @@
     <insert id="createWithMe" parameterType="com.mycom.ussum.vo.WithMeVO">
         <![CDATA[
         INSERT INTO WITHME_TABLE(WITHME_TITLE, WITHME_CONTENT, MEM_ID, WITHME_X, WITHME_Y, WITHME_PNUM, WITHME_GENDER, WITHME_THUMBNAIL,
-                                 WITHME_SDATE, WITHME_EDATE, WITHME_ID)
+                                 WITHME_SDATE, WITHME_EDATE, WITHME_ID, ROOM_ID)
         VALUES (#{withMe_title},
                 #{withMe_content},
                 #{mem_id},
@@ -17,7 +17,8 @@
                 #{withMe_sdate},
                 #{withMe_edate},
                 (SELECT COALESCE(MAX(WITHME_ID) + 1, 1)
-                 FROM WITHME_TABLE))
+                 FROM WITHME_TABLE),
+                #{room_id})
         ]]>
     </insert>
 
