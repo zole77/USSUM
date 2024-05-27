@@ -8,7 +8,6 @@ function Boardwrite(props) {
     const modalBackground = useRef();
     const editorRef = useRef(null);
     const [title, setTitle] = useState("");
-
     const savePost = async (post) => {
         try {
             const response = await axios.post("http://localhost:3000/board/save", post);
