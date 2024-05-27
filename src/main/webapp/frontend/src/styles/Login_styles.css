@@ -5,12 +5,25 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'ELAND_Choice_B';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 전체 페이지에 폰트를 적용 */
+body, .aboutPage, .login, form, .text_area, .text_area input, .userInput, .btn, .btn-hover, .link, .transparent-btn {
+    font-family: "ELAND_Choice_B", sans-serif;
+}
+
 .login_title {
     font-size: 35px;
     margin-top: 3rem;
     margin-bottom: 3rem;
     color: #45C4B1;
 }
+
 /* 로그인 폼 */
 form {
     display: inline-block;
@@ -82,14 +95,13 @@ form {
 /* 로그인 컨테이너 */
 .login {
     text-align: center;
-    position: relative; /* fixed에서 relative로 변경 */
-    margin: 0 auto;
+    position: relative;
+    margin: 10% auto;
     padding: 10px;
     display: inline-block;
     background: #FFFFFF;
     width: 700px;
     height: 500px;
-    margin-top: 10%;
     border-radius: 22px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: hidden;

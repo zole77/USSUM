@@ -26,14 +26,20 @@ body, .aboutPage {
 
 .header-image {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+}
+
+.header .button-container {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .main-content {
-    margin : 0 5%;
+    margin: 0 5%;
     padding: 20px;
 }
 
@@ -45,11 +51,13 @@ body, .aboutPage {
     transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* 트랜지션 효과 */
     text-align: center;
 }
+
 .description h2 {
     font-size: 24px;
     margin-bottom: 20px;
     text-shadow: 2px 2px 5px #cccccc;
 }
+
 .image-section {
     display: flex;
     align-items: center;
@@ -99,15 +107,8 @@ body, .aboutPage {
     margin-bottom: 20px;
 }
 
-.button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 80px;
-}
-
 /* 호버 버튼 */
-.aboutPage .btn-hover{
+.aboutPage .btn-hover {
     font-family: "ELAND_Choice_B", sans-serif;
     width: 200px;
     font-size: 16px;
@@ -132,10 +133,9 @@ body, .aboutPage {
 
 .btn-hover.color {
     background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
-    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.7);
 }
 
-/* 커스텀 버튼 */
 .custom-btn {
     font-family: "ELAND_Choice_B", sans-serif;
     font-size: 20px;
@@ -162,4 +162,3 @@ body, .aboutPage {
             7px 7px 20px 0px #0002,
             4px 4px 5px 0px #0001;
 }
-

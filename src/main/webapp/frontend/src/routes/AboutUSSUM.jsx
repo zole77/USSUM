@@ -69,6 +69,9 @@ function AboutUSSUM() {
               alt="Header"
               className="header-image"
           />
+          <div className="button-container">
+            <button className="btn-hover color" onClick={handleSignupClick}>US:SUM과 함께하기</button>
+          </div>
         </header>
         <main className="main-content">
           <section ref={descriptionRef} className="description">
@@ -91,9 +94,6 @@ function AboutUSSUM() {
               <button className="custom-btn btn-1" onClick={handleCommunityClick}>→ US:SUM 커뮤니티 바로 가기</button>
             </div>
           </section>
-          <div className="button-container">
-            <button className="btn-hover color" onClick={handleSignupClick}>US:SUM과 함께하기</button>
-          </div>
         </main>
       </div>
   );

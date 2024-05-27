@@ -109,13 +109,7 @@ function Header() {
           )}
         </div>
       </div>
-      {dropdownOpen && (
-        <ul className="dropdown-menu">
-          <li>메뉴 항목 1</li>
-          <li>메뉴 항목 2</li>
-          <li>메뉴 항목 3</li>
-        </ul>
-      )}
+
     </nav>
   );
 }
