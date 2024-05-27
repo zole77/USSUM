@@ -162,13 +162,6 @@ function Chat(props) {
                         enterRoom={enterRoom}
                         socket={socket.current}
                     />
-                    <input
-                        type="text"
-                        value={newRoomName}
-                        onChange={(e) => setNewRoomName(e.target.value)}
-                        placeholder="New Room Name"
-                    />
-                    <button onClick={createRoom}>Create Room</button>
                 </div>
                 <div className="chat-room-container">
                     {selectedRoom && (
@@ -179,12 +172,11 @@ function Chat(props) {
                                 userNickName={userNickName}
                                 socket={socket.current}
                             />
-                            <button onClick={quitRoom}>Leave Room</button>
                         </>
                     )}
                 </div>
                 <div className="chat-friendprofile-container">
-                    <FriendProfile />
+                    <FriendProfile quitRoom={quitRoom} />
                 </div>
             </div>
         </div>
