@@ -4,8 +4,6 @@ import "../../styles/ChatList.css";
 import axios from "axios";
 
 function ChatList(props) {
-    const [friends, setFriends] = useState([]);
-
     return (
         <div className="chatList-container">
             <div style={{ textAlign: "left" }}>채팅 목록 ▼</div>

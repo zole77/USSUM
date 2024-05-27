@@ -33,11 +33,14 @@ function ChatListItem(props) {
         };
     }, [props.socket, fetchLastMessage]);
 
+    const isSelected = props.selectedRoom === props.chatListItem.roomId;
+
     return (
         <div
-            className="chatListItem-container"
+            className={`chatListItem-container ${isSelected ? "selected" : ""}`}
             onClick={() => {
                 props.enterRoom(props.chatListItem.roomId); // 클릭했을 때 해당하는 룸으로 입장
+                props.setSelectedRoom(props.chatListItem.roomId);
             }}
         >
             <div className="profile-container">
