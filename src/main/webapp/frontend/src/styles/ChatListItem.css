@@ -15,6 +15,16 @@
     margin: 10px 0;
 }
 
+.chatListItem-container.selected {
+    background-color: #45c4b1;
+    color: #fff;
+}
+
+.chatListItem-container:hover {
+    border-color: #45c4b1;
+    cursor: pointer;
+}
+
 .profile-container {
     justify-content: center;
     align-items: center;
