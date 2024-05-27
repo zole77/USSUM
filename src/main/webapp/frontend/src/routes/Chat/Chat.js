@@ -17,6 +17,8 @@ function Chat(props) {
     const [userId, setUserId] = useState(user.mem_id);
     const [userNickName, setUserNickName] = useState(user.mem_nickname);
 
+    const [otherUserId, setOtherUserId] = useState("");
+
     const socket = useRef(); // useRef로 socket을 생성
 
     const fetchRooms = async () => {
@@ -171,6 +173,7 @@ function Chat(props) {
                                 userId={userId}
                                 userNickName={userNickName}
                                 socket={socket.current}
+                                setOtherUserId={setOtherUserId}
                             />
                         </>
                     )}

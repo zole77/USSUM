@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../../styles/ChatRoom.css";
+import defaultProfile from "../../img/defaultProfile.png";
 import axios from "axios";
 
-function ChatRoom({ roomId, username, socket, userId, userNickName }) {
+function ChatRoom({ roomId, username, socket, userId, userNickName, setOtherUserId }) {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const [input, setInput] = useState("");
@@ -76,11 +77,32 @@ function ChatRoom({ roomId, username, socket, userId, userNickName }) {
     }
 
     return (
-        <div className="chat-room-container">
+        <div className="chat-room-div">
             <div className="chat-messages-container">
                 {messages.map((msg, index) => (
-                    <div key={index}>
-                        <strong>{msg.mem_nickname}</strong>: {msg.message}
+                    <div
+                        key={index}
+                        className={`chat-message ${msg.mem_id === userId ? "my-message" : ""}`}
+                    >
+                        {msg.mem_id !== userId ? (
+                            <div className="other-message">
+                                <div
+                                    className="profile-pic"
+                                    onClick={() => {
+                                        setOtherUserId(msg.mem_id);
+                                    }}
+                                >
+                                    <img src={defaultProfile} alt="profile" />
+                                </div>
+
+                                <div className="other-message-container">
+                                    <div className="other-message-sender">{msg.mem_nickname}</div>
+                                    <div className="other-message-content">{msg.message}</div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="chat-message-content">{msg.message}</div>
+                        )}
                     </div>
                 ))}
             </div>
