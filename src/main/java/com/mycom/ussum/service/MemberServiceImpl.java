@@ -4,6 +4,7 @@ import com.mycom.ussum.repository.Repository;
 import com.mycom.ussum.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateMember(MultipartFile image, MemberVO member) {
+    public ResponseEntity<String> updateMember(MultipartFile image, MemberVO member) {
         if (image != null) {
             String originalFilename = image.getOriginalFilename();
             String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -45,14 +46,16 @@ public class MemberServiceImpl implements MemberService {
                 if (isSuccess) {
                     log.info("새 디렉토리 생성 완료");
                 }
+
             }
             try {
                 File file = new File(filePath);
                 image.transferTo(file);
                 member.setMem_image(filePath);
+//                System.out.println(filePath);
             } catch (IOException e) {
-                log.error("파일 저장 중 오류 발생");
-                log.error(e.getMessage());
+                log.error("파일 저장 중 오류 발생", e);
+                return ResponseEntity.status(500).body("파일 저장 중 오류가 발생했습니다." + e);
             }
 
         } else {
@@ -64,16 +67,23 @@ public class MemberServiceImpl implements MemberService {
                     log.info("성공적으로 파일 삭제됨");
                 }
             }
-            member.setMem_image("없음");
         }
 
         try {
+//            System.out.println(member.getMem_pwd());
+//            System.out.println(member.getMem_phone());
+//            System.out.println(member.getMem_birth());
+//            System.out.println(member.getMem_address());
+//            System.out.println(member.getMem_id());
+//            System.out.println(member.getMem_type());
+//            System.out.println(member.getMem_nickname());
+//            System.out.println(member.getMem_image());
             repository.updateMember(member);
         } catch (Exception e) {
-            log.error("DB 저장 중 오류 발생");
-            log.error(e.getMessage());
+            log.error("DB 저장 중 오류 발생", e);
+            return ResponseEntity.status(500).body("DB에 저장 중 오류가 발생했습니다." + e);
         }
-
+        return ResponseEntity.ok("회원정보가 성공적으로 수정되었습니다.");
     }
 
     @Override

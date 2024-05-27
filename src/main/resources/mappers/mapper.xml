@@ -26,7 +26,7 @@
             MEM_ADDRESS = #{mem_address},
             MEM_TYPE = #{mem_type},
             MEM_NICKNAME = #{mem_nickname},
-            MEM_IMAGE = #{mem_image}
+            MEM_IMAGE = NVL(#{mem_image}, '없음')
         WHERE MEM_ID = #{mem_id}
         ]]>
     </update>

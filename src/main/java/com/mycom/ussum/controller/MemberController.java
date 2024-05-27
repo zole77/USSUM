@@ -38,15 +38,7 @@ public class MemberController {
     @Operation(summary = "회원정보 수정")
     public ResponseEntity<String> updateMember(@RequestPart(value = "image", required = false) MultipartFile image,
                                                @RequestPart("data") MemberVO member) {
-        try {
-            System.out.println("Updating member: " + member);
-            memberService.updateMember(image, member);
-            return ResponseEntity.ok("회원 정보가 성공적으로 수정되었습니다.");
-        } catch (Exception e) {
-            // 디버깅 정보를 콘솔에 출력
-            log.error(e.getMessage());
-            return ResponseEntity.status(500).body("회원 정보 수정 중 오류가 발생했습니다. 상세 오류: " + e.getMessage());
-        }
+        return memberService.updateMember(image, member);
     }
 
     @PostMapping("/drop")
@@ -57,7 +49,7 @@ public class MemberController {
             return ResponseEntity.ok("회원 탈퇴가 성공적으로 완료되었습니다.");
         } catch (Exception e) {
             // 디버깅 정보를 콘솔에 출력
-            log.error(e.getMessage());
+            log.error("오류가 발생하였습니다.",e);
             return ResponseEntity.status(500).body("회원 탈퇴 중 오류가 발생했습니다. 상세 오류: " + e.getMessage());
         }
     }
