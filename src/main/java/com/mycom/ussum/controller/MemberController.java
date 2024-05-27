@@ -6,8 +6,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Member API", description = "Member API입니다.")
 @RequestMapping("/member")
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -33,19 +36,15 @@ public class MemberController {
 
     @PostMapping("/modify")
     @Operation(summary = "회원정보 수정")
-    public ResponseEntity<String> updateMember(@RequestBody MemberVO member) {
+    public ResponseEntity<String> updateMember(@RequestPart(value = "image", required = false) MultipartFile image,
+                                               @RequestPart("data") MemberVO member) {
         try {
             System.out.println("Updating member: " + member);
-            System.out.println(member.getMem_address());
-            System.out.println(member.getMem_name());
-            System.out.println(member.getMem_id());
-            System.out.println(member.getMem_birth());
-            System.out.println(member.getMem_birth().getClass().getName());
-            memberService.updateMember(member);
+            memberService.updateMember(image, member);
             return ResponseEntity.ok("회원 정보가 성공적으로 수정되었습니다.");
         } catch (Exception e) {
             // 디버깅 정보를 콘솔에 출력
-            e.printStackTrace();
+            log.error(e.getMessage());
             return ResponseEntity.status(500).body("회원 정보 수정 중 오류가 발생했습니다. 상세 오류: " + e.getMessage());
         }
     }
@@ -58,7 +57,7 @@ public class MemberController {
             return ResponseEntity.ok("회원 탈퇴가 성공적으로 완료되었습니다.");
         } catch (Exception e) {
             // 디버깅 정보를 콘솔에 출력
-            e.printStackTrace();
+            log.error(e.getMessage());
             return ResponseEntity.status(500).body("회원 탈퇴 중 오류가 발생했습니다. 상세 오류: " + e.getMessage());
         }
     }
