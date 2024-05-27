@@ -12,22 +12,22 @@ import ErrorPage from "../routes/ErrorPage";
 import AboutUSSUM from "../routes/AboutUSSUM";
 
 function Body() {
-  return (
-    <div>
-      <Routes>
-        {/*<Route path="/info" element={<ServiceIntro />} />*/}
-        <Route path="/info" element={<AboutUSSUM />} />
-        <Route path="/board" element={<Board />} />
-        <Route path="/Withme" element={<Withme />} />
-        <Route path="/" element={<Main />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mypage" element={<ModMember />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/*" element={<ErrorPage />} />
-      </Routes>
-    </div>
-  );
+    return (
+        <div>
+            <Routes>
+                {/*<Route path="/info" element={<ServiceIntro />} />*/}
+                <Route path="/info" element={<AboutUSSUM />} />
+                <Route path="/board" element={<Board />} />
+                <Route path="/Withme" element={<Withme />} />
+                <Route path="/" element={<Main />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/mypage" element={<ModMember />} />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/*" element={<ErrorPage />} />
+            </Routes>
+        </div>
+    );
 }
 
 export default Body;

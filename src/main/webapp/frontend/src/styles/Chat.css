@@ -32,18 +32,24 @@
     margin: 30px;
     border-radius: 1rem;
     border: 1px solid #ccc;
+    height: 700px;
+    max-height: 100vh;
 }
 
 .chat-list-container {
     flex: 3;
     padding: 3rem;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .chat-room-container {
     flex: 5;
     background-color: #f7fafe;
+    max-height: 100vh;
 }
 
 .chat-friendprofile-container {
     flex: 3;
+    max-height: 100vh;
 }

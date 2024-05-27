@@ -25,10 +25,19 @@
             MEM_BIRTH = #{mem_birth},
             MEM_ADDRESS = #{mem_address},
             MEM_TYPE = #{mem_type},
-            MEM_NICKNAME = #{mem_nickname}
+            MEM_NICKNAME = #{mem_nickname},
+            MEM_IMAGE = #{mem_image}
         WHERE MEM_ID = #{mem_id}
         ]]>
-</update>
+    </update>
+
+    <select id="getMemImage">
+        <![CDATA[
+            SELECT MEM_IMAGE
+            FROM MEMBER_TABLE
+            WHERE MEM_ID = #{mem_id}
+        ]]>
+    </select>
 
 
 
