@@ -23,8 +23,6 @@ button {
     margin: 20px;
 }
 
-
-
 .category-container {
     margin-top: 2rem;
     margin-bottom: 1rem;
@@ -80,16 +78,6 @@ button {
     margin-right: 10rem;
     position: relative;
 }
-
-.boardLayout {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    margin: 0 20px 100px 20px;
-    flex: 1;
-}
-
-
 
 .floatingBox {
     position: fixed;
@@ -175,21 +163,21 @@ button {
     margin-left: auto;
 }
 
-.modal-container {
+.board-modal-container {
     font-family: "LINESeedKR-Bd";
+    position: fixed;
     width: 100%; /* 뷰포트 전체 너비를 차지하도록 설정 */
     height: 100%;
-    position: fixed;
     top: 0;
     left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1); /* 투명도를 0.1로 설정 */
+    background: rgba(255, 255, 255, 0.5); /* 투명도를 0.1로 설정 */
     z-index: 1000;
 }
 
-.modal-content {
+.board-modal-content {
     border-radius: 10px;
     padding: 15px;
     width: 70%; /* modal-container의 너비에 상대적으로 설정 */
