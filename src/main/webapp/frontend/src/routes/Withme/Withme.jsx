@@ -5,11 +5,13 @@ import WriteModal from "./WriteModal"; // WriteModal 컴포넌트 import
 import ReadModal from "./ReadModal";
 import "../../styles/Withme.css";
 import axios from "axios";
+import KakaoMap from './KakaoMap';
 
 function Withme() {
     const [selectedModal, setSelectedModal] = useState(null);
     const [isWriteModalOpen, setIsWriteModalOpen] = useState(false); // WriteModal 열림 상태를 관리하는 상태
     const [selectedCity, setSelectedCity] = useState(""); // 선택된 광역시 상태를 관리하는 상태
+    const [selectedDistrict, setSelectedDistrict] = useState("");
     const [withMePost, setWithMePost] = useState();
 
     const [readModalOpen, setReadModalOpen] = useState(false);
@@ -47,7 +49,16 @@ function Withme() {
     };
 
     const handleCitySelect = (event) => {
-        setSelectedCity(event.target.value);
+        const selectedCity = event.target.value;
+        setSelectedCity(selectedCity);
+        setSelectedDistrict(""); // 시 변경될 때 구 초기화
+        console.log("Selected City: ", selectedCity);
+    };
+
+    const handleDistrictSelect = (event) => {
+        const selectedDistrict = event.target.value;
+        setSelectedDistrict(selectedDistrict);
+        console.log("Selected District: ", selectedDistrict);
     };
 
     // WriteModal을 닫는 함수
@@ -74,14 +85,11 @@ function Withme() {
                         </select>
                     </div>
                     <div className={`dropdown-container ${selectedCity ? "active" : ""}`}>
-                        <select>
+                        <select onChange={handleDistrictSelect} disabled={!selectedCity}>
                             <option value="">구 선택</option>
-                            {selectedCity &&
-                                dropdownOptions[selectedCity].map((option, index) => (
-                                    <option key={index} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
+                            {selectedCity && dropdownOptions[selectedCity].map((option, index) => (
+                                <option key={index} value={option}>{option}</option>
+                            ))}
                         </select>
                     </div>
                 </div>
@@ -112,14 +120,13 @@ function Withme() {
             <div className="divider"></div>
             <section className="right-section">
                 <div className="location-text">
-                    같이 갈 위치 : 부산 해운대
+                    같이 갈 위치 : {selectedCity} {selectedDistrict}
                     <button className="write-button" onClick={handleButtonClick}>
                         글쓰기
                     </button>
                 </div>
                 <div className="map-container">
-                    {/* 지도 컴포넌트 또는 지도 API 코드 추가 */}
-                    <p>여기에 지도가 표시됩니다.</p>
+                    <KakaoMap selectedCity={selectedCity} selectedDistrict={selectedDistrict} />
                 </div>
             </section>
             {/* WriteModal이 열려있는 경우에만 렌더링 */}
