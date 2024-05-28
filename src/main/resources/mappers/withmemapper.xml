@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycom.ussum.repository.WithMeRepository">
+    <insert id="createWithMe" parameterType="com.mycom.ussum.vo.WithMeVO">
+        <![CDATA[
+        INSERT INTO WITHME_TABLE(WITHME_TITLE, WITHME_CONTENT, MEM_ID, WITHME_X, WITHME_Y, WITHME_PNUM, WITHME_GENDER, WITHME_THUMBNAIL,
+                                 WITHME_SDATE, WITHME_EDATE, WITHME_ID, ROOM_ID)
+        VALUES (#{withMe_title},
+                #{withMe_content},
+                #{mem_id},
+                #{withMe_x},
+                #{withMe_y},
+                #{withMe_pnum},
+                #{withMe_gender},
+                #{withMe_thumbnail},
+                #{withMe_sdate},
+                #{withMe_edate},
+                (SELECT COALESCE(MAX(WITHME_ID) + 1, 1)
+                 FROM WITHME_TABLE),
+                #{room_id})
+        ]]>
+    </insert>
+
+    <select id="getWithMe" resultType="com.mycom.ussum.vo.WithMeVO">
+        <![CDATA[
+            SELECT *
+            FROM WITHME_TABLE
+            WHERE WITHME_ID = #{id}
+        ]]>
+    </select>
+
+    <select id="getAllWithMe" resultType="com.mycom.ussum.vo.WithMeVO">
+        <![CDATA[
+            SELECT *
+            FROM WITHME_TABLE
+        ]]>
+    </select>
+
+    <delete id="dropWithMe">
+        <![CDATA[
+            DELETE FROM WITHME_TABLE
+            WHERE WITHME_ID = #{id}
+        ]]>
+    </delete>
+
+    <update id="updateWithMe" parameterType="com.mycom.ussum.vo.WithMeVO">
+        <![CDATA[
+
+        ]]>
+    </update>
+</mapper>

@@ -1,36 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const userSlice = createSlice({
-    name: "user",
-    initialState: {
-        mem_nickname: "",
+export const loginSlice = createSlice({
+  name: "user",
+  initialState: {
+    mem_id: "",
+    mem_pwd: "",
+    mem_gender: "",
+    mem_phone: "",
+    mem_address: "",
+    mem_birth: null,
+    mem_type: "",
+    mem_nickname: "",
+    mem_name: "",
+    isLogin: false,
+  },
+  reducers: {
+    // login 성공 시
+    loginUser: (state, action) => {
+      return { ...state, ...action.payload, isLogin: true };
+    },
+    // login 실패 시
+    clearUser: (state) => {
+      return {
         mem_id: "",
-        isLoading: false, // optional
+        mem_pwd: "",
+        mem_gender: "",
+        mem_phone: "",
+        mem_address: "",
+        mem_birth: null,
+        mem_type: "",
+        mem_nickname: "",
+        mem_name: "",
         isLogin: false,
+      };
     },
-    reducers: {
-        // login 성공 시
-        loginUser: (state, action) => {
-            // mem_nickname, mem_id에 API 값 받아오기
-            state.mem_nickname = action.payload.mem_nickname;
-            state.mem_id = action.payload.mem_id;
-            state.isLoading = false;
-            state.isLogin = true;
-            // state 변화를 알림
-            return state;
-        },
-        // login 실패 시
-        clearUser: (state) => {
-            // mem_nickname, mem_id 값을 비워줌.
-            state.mem_nickname = "";
-            state.mem_id = "";
-            // state 변화를 알림
-            state.isLoading = false;
-            state.isLogin = false;
-            return state;
-        },
-    },
+  },
 });
 
-export const { loginUser, clearUser } = userSlice.actions;
-export default userSlice.reducer;
+export const { loginUser, clearUser } = loginSlice.actions;
+export default loginSlice.reducer;

@@ -1,50 +1,128 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../../styles/ChatRoom.css";
+import defaultProfile from "../../img/defaultProfile.png";
+import axios from "axios";
 
-function ChatRoom(props) {
+function ChatRoom({ roomId, username, socket, userId, userNickName, setOtherUserId }) {
     const [messages, setMessages] = useState([]);
-    const [inputMessage, setInputMessage] = useState("");
-    const messagesEndRef = useRef(null);
+    const [message, setMessage] = useState("");
+    const [input, setInput] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
-    // 가장 최신 메시지가 화면 하단으로 스크롤되도록 설정
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
+    const chatContainerRef = useRef(null);
+    const inputRef = useRef(null);
 
-    useEffect(scrollToBottom, [messages]);
-
-    const handleSendMessage = () => {
-        if (inputMessage.trim() !== "") {
-            const newMessage = {
-                text: inputMessage,
-                isMe: true, // 내 채팅인지 여부를 나타내는 플래그
-            };
-            setMessages([...messages, newMessage]);
-            setInputMessage("");
+    const fetchInitialMessages = async () => {
+        try {
+            const response = await axios.get(`/chat/getMessages/${roomId}`);
+            setMessages(response.data);
+            setIsLoading(false);
+        } catch (error) {
+            console.error("getMessages 오류: ", error);
         }
     };
 
+    useEffect(() => {
+        fetchInitialMessages();
+        // // socket.onmessage = (event) => {
+        // //     console.log("방금 도착한 메세지:", message);
+        // //     fetchInitialMessages();
+        // // };
+
+        // if (socket) {
+        //     socket.close();
+        // }
+
+        // // WebSocket을 엽니다.
+        // socket = new WebSocket(`ws://localhost:8080/ws/chat`);
+        // console.log("useEffect 실행");
+
+        // // 웹소켓 이벤트 핸들러 설정
+        // socket.onopen = () => {
+        //     socket.send(
+        //         JSON.stringify({
+        //             type: "TALK",
+        //             roomId: roomId,
+        //             mem_id: userId,
+        //             sender: userNickName,
+        //             message: "으아아아아아아악!!!!!!!!!",
+        //         })
+        //     );
+        // };
+    }, [roomId]);
+
+    useEffect(() => {
+        socket.onmessage = (event) => {
+            // 서버에서 메시지를 수신하면 동작함
+            fetchInitialMessages();
+        };
+
+        if (chatContainerRef.current) {
+            if (!inputRef.current.contains(document.activeElement)) {
+                chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+            }
+        }
+    }, [socket, fetchInitialMessages]);
+
+    const sendMessage = () => {
+        if (message.trim()) {
+            socket.send(
+                JSON.stringify({
+                    type: "TALK",
+                    roomId: roomId,
+                    mem_id: userId,
+                    sender: userNickName,
+                    message: message,
+                })
+            );
+
+            fetchInitialMessages();
+            setMessage("");
+        }
+    };
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <div className="chat-room-container">
-            <div className="chat-messages-container">
-                {messages.map((message, index) => (
+        <div className="chat-room-div">
+            <div className="chat-messages-container" ref={chatContainerRef}>
+                {messages.map((msg, index) => (
                     <div
                         key={index}
-                        className={`message ${message.isMe ? "my-message" : "other-message"}`}
+                        className={`chat-message ${msg.mem_id === userId ? "my-message" : ""}`}
                     >
-                        {message.text}
+                        {msg.mem_id !== userId ? (
+                            <div className="other-message">
+                                <div
+                                    className="profile-pic"
+                                    onClick={() => {
+                                        setOtherUserId(msg.mem_id);
+                                    }}
+                                >
+                                    <img src={defaultProfile} alt="profile" />
+                                </div>
+
+                                <div className="other-message-container">
+                                    <div className="other-message-sender">{msg.mem_nickname}</div>
+                                    <div className="other-message-content">{msg.message}</div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="chat-message-content">{msg.message}</div>
+                        )}
                     </div>
                 ))}
-                <div ref={messagesEndRef} />
             </div>
             <div className="input-container">
                 <input
+                    ref={inputRef}
                     type="text"
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    placeholder="메시지를 입력하세요..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                 />
-                <button className="send-button" onClick={handleSendMessage}>
+                <button className="send-button" onClick={sendMessage}>
                     전송
                 </button>
             </div>

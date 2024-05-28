@@ -11,8 +11,18 @@
 .chatListItem-container {
     display: flex;
     border: 1px solid #ccc;
+    border-radius: 10px;
     margin: 10px 0;
-    background: rgb(255, 255, 255);
+}
+
+.chatListItem-container.selected {
+    background-color: #45c4b1;
+    color: #fff;
+}
+
+.chatListItem-container:hover {
+    border-color: #45c4b1;
+    cursor: pointer;
 }
 
 .profile-container {
@@ -33,10 +43,12 @@
     font-family: "LINESeedKR-Bd";
     font-size: 16px;
     font-weight: bold;
+    padding-left: 12px;
 }
 
 .recent-message {
     font-family: "LINESeedKR-Bd";
     font-size: 12px;
     font-weight: 100;
+    padding-left: 12px;
 }

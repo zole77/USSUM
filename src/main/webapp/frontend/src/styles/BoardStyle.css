@@ -23,12 +23,7 @@ button {
     margin: 20px;
 }
 
-.boardLayout {
-    font-family: "LINESeedKR-Bd";
-    display: flex;
-    justify-content: space-between;
-    background-color: #fff;
-}
+
 
 .category-container {
     margin-top: 2rem;
@@ -71,7 +66,6 @@ button {
 
 .intro {
     width: 300px;
-    font-family: "Gisangchung Dalcomgihu";
     padding: 20px;
     background-color: #fff;
     border: 2px solid #ccc;
@@ -86,6 +80,16 @@ button {
     margin-right: 10rem;
     position: relative;
 }
+
+.boardLayout {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    margin: 0 20px 100px 20px;
+    flex: 1;
+}
+
+
 
 .floatingBox {
     position: fixed;

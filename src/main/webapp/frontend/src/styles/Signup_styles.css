@@ -29,12 +29,12 @@ h4, h5 {
 .Signup {
   text-align: center;
   position: relative;
-  margin: 0 auto;
+  margin: 10% auto;
   padding: 10px;
   background: #ffffff;
   width: 700px;
   height: 500px;
-  margin-top: 10%;
+
   border-radius: 22px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

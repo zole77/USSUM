@@ -18,15 +18,28 @@
     </select>
 
     <update id="updateMember" parameterType="com.mycom.ussum.vo.MemberVO">
-        <![CDATA[
-            UPDATE MEMBER_TABLE
-            SET MEM_PWD = #{mem_pwd} and MEM_GENDER = #{mem_gender}
-            and MEM_PHONE = #{mem_phone} , MEM_BIRTH = #{mem_birth} ,
-                          MEM_ADDRESS = #{mem_address} , MEM_TYPE = #{mem_type} ,
-                          MEM_NICKNAME = #{mem_nickname} , MEM_NAME = #{mem_name}
-            WHERE MEM_ID = #{mem_id}
+    <![CDATA[
+        UPDATE MEMBER_TABLE
+        SET MEM_PWD = #{mem_pwd},
+            MEM_PHONE = #{mem_phone},
+            MEM_BIRTH = #{mem_birth},
+            MEM_ADDRESS = #{mem_address},
+            MEM_TYPE = #{mem_type},
+            MEM_NICKNAME = #{mem_nickname},
+            MEM_IMAGE = NVL(#{mem_image}, '없음')
+        WHERE MEM_ID = #{mem_id}
         ]]>
     </update>
+
+    <select id="getMemImage">
+        <![CDATA[
+            SELECT MEM_IMAGE
+            FROM MEMBER_TABLE
+            WHERE MEM_ID = #{mem_id}
+        ]]>
+    </select>
+
+
 
     <delete id="deleteMember">
         <![CDATA[

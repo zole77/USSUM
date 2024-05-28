@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "LINESeedKR-Bd";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2")
+        format("woff2");
+    font-weight: 700;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.chat-layout {
+    margin: 3% 10%;
+    flex: 1;
+}
+
+.function-name {
+    font-family: "LINESeedKR-Bd";
+    font-size: 30px;
+    text-align: left;
+    margin-left: 3rem;
+    margin-top: 3rem;
+}
+
+.chat-container {
+    display: flex;
+    flex: 1;
+    margin: 30px;
+    border-radius: 1rem;
+    border: 1px solid #ccc;
+    height: 700px;
+    max-height: 100vh;
+}
+
+.chat-list-container {
+    flex: 3;
+    padding: 3rem;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.chat-room-container {
+    flex: 5;
+    background-color: #f7fafe;
+    max-height: 100vh;
+}
+
+.chat-friendprofile-container {
+    flex: 3;
+    max-height: 100vh;
+}
