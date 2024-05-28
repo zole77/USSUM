@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { Editor, Viewer } from "@toast-ui/react-editor";
 import "@toast-ui/editor/toastui-editor.css";
 import { IoIosClose } from "react-icons/io";
+import "../../styles/BoardReadModal.css";
+import "../../styles/BoardStyle.css";
 import axios from "axios";
 
 function Boardwrite(props) {
@@ -50,7 +52,7 @@ function Boardwrite(props) {
         <div>
             {props.modalOpen ? (
                 <div
-                    className="modal-container"
+                    className="board-modal-container"
                     ref={modalBackground}
                     onClick={(e) => {
                         if (e.target === modalBackground.current) {
@@ -68,7 +70,7 @@ function Boardwrite(props) {
                         }
                     }}
                 >
-                    <div className="modal-content">
+                    <div className="board-modal-content">
                         <p className="modal-header">
                             USSUM 여행 커뮤니티
                             <IoIosClose

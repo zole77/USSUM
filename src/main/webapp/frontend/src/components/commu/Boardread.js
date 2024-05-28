@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { PiHandsClapping, PiHandsClappingBold } from "react-icons/pi";
 import { IoIosClose } from "react-icons/io";
 import "../../styles/BoardReadModal.css";
+import "../../styles/BoardStyle.css";
 import defaultProfile from "../../img/defaultProfile.png";
 import axios from "axios";
+import ReactDOM from "react-dom";
 
 function Boardread(props) {
     let find = props.boardList.find((x) => x.post_no === props.postId);
@@ -64,9 +66,9 @@ function Boardread(props) {
     // find는 boardList에서 게시글 고유 id와 일치하는 게시글의 JSON 값을 가지고 있음
     document.body.style.overflow = "hidden";
     return (
-        <div>
+        <div className="board-modal-overlay">
             <div
-                className="modal-container"
+                className="board-modal-container"
                 ref={modalBackground}
                 onClick={(e) => {
                     if (e.target === modalBackground.current) {
@@ -78,7 +80,7 @@ function Boardread(props) {
                 }}
             >
                 <div
-                    className="modal-content"
+                    className="board-modal-content"
                     style={{ backgroundColor: "#fff", borderRadius: "10px" }}
                 >
                     <p className="modal-header">
@@ -142,8 +144,9 @@ function Boardread(props) {
                         <button
                             onClick={() => {
                                 props.setReadModalOpen(false);
+                                props.setPostId(postNo);
+                                console.log(props.postId);
                                 props.setUpdateModalOpen(true);
-                                props.setPostId(props.postId);
                             }}
                         >
                             글 수정
