@@ -25,12 +25,31 @@ function FriendProfile(props) {
     return (
         <div className="friendprofile-container">
             {friendInfo === null ? (
-                <div>친구의 정보를 불러와요!</div>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        minWidth: "100%",
+                        minHeight: "100%",
+                        padding: "15px",
+                    }}
+                >
+                    <div>친구의 정보를 불러와요!</div>
+                    <div
+                        className="room-quit"
+                        onClick={() => {
+                            props.quitRoom();
+                        }}
+                    >
+                        채팅방 나가기
+                    </div>
+                </div>
             ) : (
                 <div
                     style={{
                         display: "flex",
                         flexDirection: "column",
+                        minWidth: "100%",
                         minHeight: "100%",
                         padding: "15px",
                     }}
@@ -56,7 +75,7 @@ function FriendProfile(props) {
                             props.quitRoom();
                         }}
                     >
-                        나가기
+                        채팅방 나가기
                     </div>
                 </div>
             )}
