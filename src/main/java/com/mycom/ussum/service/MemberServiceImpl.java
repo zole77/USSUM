@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
             try {
                 File file = new File(filePath);
                 image.transferTo(file);
-                member.setMem_image(filePath);
+                member.setMem_image(fileName);
 //                System.out.println(filePath);
             } catch (IOException e) {
                 log.error("파일 저장 중 오류 발생", e);

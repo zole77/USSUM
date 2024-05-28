@@ -45,8 +45,6 @@
     </delete>
 
     <update id="updateWithMe" parameterType="com.mycom.ussum.vo.WithMeVO">
-        <![CDATA[
 
-        ]]>
     </update>
 </mapper>
