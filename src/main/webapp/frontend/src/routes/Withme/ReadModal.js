@@ -15,14 +15,11 @@ function ReadModal(props) {
     const modalBackground = useRef();
     const socket = useRef(); // useRef로 socket을 생성
     const navigate = useNavigate();
-    console.log(props.selectedPost);
 
     const [userId, setUserId] = useState(user.mem_id);
     const [userNickName, setUserNickName] = useState(user.mem_nickname);
 
     const enterRoom = async (roomId) => {
-        console.log(`방 입장: ${roomId}`);
-
         const response = await axios.get(`/chat/${roomId}/members`, {
             // 해당 유저가 이미 그 방에 있는지 확인
             params: {
@@ -30,7 +27,6 @@ function ReadModal(props) {
             },
         });
         if (!response.data) {
-            console.log("보낼게");
             // 유저가 그 방에 없으면 DB에 추가
             socket.current.send(
                 JSON.stringify({
@@ -47,13 +43,10 @@ function ReadModal(props) {
         // WebSocket 연결
         socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
 
-        socket.current.onopen = (event) => {
-            console.log("웹소켓 연결됨 good");
-        };
+        socket.current.onopen = (event) => {};
 
         // WebSocket 닫혔을 때
         socket.current.onclose = (event) => {
-            console.log("WebSocket Connection Closed", event);
             if (event.code === 1006) {
                 console.error("Connection closed abnormally");
             }
@@ -155,7 +148,7 @@ function ReadModal(props) {
                         className="room-enter"
                         onClick={() => {
                             enterRoom(props.selectedPost.room_id);
-                            navigate("/chat");
+                            navigate("/chat", { state: { roomId: props.selectedPost.room_id } });
                         }}
                     >
                         같이 가요!
