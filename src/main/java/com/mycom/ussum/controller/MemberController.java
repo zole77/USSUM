@@ -8,6 +8,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,18 +65,25 @@ public class MemberController {
         }
     }
 
-    @GetMapping(value = "/loadImage/{imageName}", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
-    public byte[] loadImage(@PathVariable String imageName) throws IOException {
-        String fullFilePath = Paths.get("C:", "profileimage", imageName).toFile().getAbsolutePath();
-        File uploadedFile = new File(fullFilePath);
-        if (!uploadedFile.exists()) {
-            throw new RuntimeException();
-        }
+//    @GetMapping(value = "/loadImage/{imageName}", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+//    public byte[] loadImage(@PathVariable String imageName){
+//        String fullFilePath = Paths.get("C:", "profileimage", imageName).toFile().getAbsolutePath();
+//        File uploadedFile = new File(fullFilePath);
+//        if (!uploadedFile.exists()) {
+//            throw new RuntimeException();
+//        }
+//
+//        try {
+//            return Files.readAllBytes(uploadedFile.toPath());
+//        } catch (IOException e) {
+//            throw new RuntimeException();
+//        }
+//    }
 
-        try {
-            return Files.readAllBytes(uploadedFile.toPath());
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
+    @GetMapping("/image/{image}")
+    public ResponseEntity<?> returnImage(@PathVariable String image) {
+        String fullFilePath = Paths.get("C:", "profileimage", image).toFile().getAbsolutePath();
+        Resource resource = new FileSystemResource(fullFilePath);
+        return new ResponseEntity<>(resource, HttpStatus.OK) ;
     }
 }
