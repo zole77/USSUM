@@ -12,6 +12,7 @@ export const loginSlice = createSlice({
     mem_type: "",
     mem_nickname: "",
     mem_name: "",
+    mem_image: "",
     isLogin: false,
   },
   reducers: {
@@ -31,6 +32,7 @@ export const loginSlice = createSlice({
         mem_type: "",
         mem_nickname: "",
         mem_name: "",
+        mem_image: "",
         isLogin: false,
       };
     },

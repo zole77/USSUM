@@ -67,13 +67,18 @@ const ModMember = () => {
       mem_birth: formatDate(loginInfo.mem_birth),
       mem_gender: loginInfo.mem_gender || "",
       mem_type: loginInfo.mem_type || "",
-      mem_image: loginInfo.mem_image
-        ? `http://localhost:8080/member/image/${loginInfo.mem_image}`
-        : defaultProfile,
+      mem_image: loginInfo.mem_image,
     };
     setFormData(initialData);
     setOriginalData(initialData);
-    setProfileImage(initialData.mem_image);
+
+    if (loginInfo.mem_image) {
+      setProfileImage(
+        `http://localhost:8080/member/image/${loginInfo.mem_image}`,
+      );
+    } else {
+      setProfileImage(defaultProfile);
+    }
 
     // 비밀번호를 제외한 데이터를 로그로 출력
     const { mem_pwd, ...logData } = initialData;
@@ -234,7 +239,7 @@ const ModMember = () => {
       <form className="profile-edit-form" onSubmit={handleSubmit}>
         <div className="profile-header-content">
           <img
-            src={profileImage || defaultProfile}
+            src={profileImage}
             alt="Profile"
             className="profile-image"
             onClick={handleImageClick}
