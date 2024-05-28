@@ -3,6 +3,8 @@ import Modal from './Modal';
 import { Link } from 'react-router-dom';
 import WriteModal from './WriteModal'; // WriteModal 컴포넌트 import
 import '../../styles/Withme.css';
+import Map from './Map';
+
 
 function Withme() {
   const [selectedModal, setSelectedModal] = useState(null);
@@ -94,8 +96,7 @@ function Withme() {
           <button className="write-button" onClick={handleButtonClick}>글쓰기</button>
         </div>
         <div className="map-container">
-          {/* 지도 컴포넌트 또는 지도 API 코드 추가 */}
-          <p>여기에 지도가 표시됩니다.</p>
+          <Map/>
         </div>
       </section>
       {/* WriteModal이 열려있는 경우에만 렌더링 */}
