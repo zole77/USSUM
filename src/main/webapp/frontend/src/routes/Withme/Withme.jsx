@@ -5,7 +5,7 @@ import WriteModal from "./WriteModal"; // WriteModal 컴포넌트 import
 import ReadModal from "./ReadModal";
 import "../../styles/Withme.css";
 import axios from "axios";
-import KakaoMap from './KakaoMap';
+import KakaoMap from "./KakaoMap";
 
 function Withme() {
     const [selectedModal, setSelectedModal] = useState(null);
@@ -22,7 +22,7 @@ function Withme() {
     const fetchWithMePost = async () => {
         try {
             const response = await axios.get("withme/getall");
-            setWithMePost(response.data);
+            setWithMePost(response.data.slice().sort((a, b) => b.withMe_id - a.withMe_id));
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -87,9 +87,12 @@ function Withme() {
                     <div className={`dropdown-container ${selectedCity ? "active" : ""}`}>
                         <select onChange={handleDistrictSelect} disabled={!selectedCity}>
                             <option value="">구 선택</option>
-                            {selectedCity && dropdownOptions[selectedCity].map((option, index) => (
-                                <option key={index} value={option}>{option}</option>
-                            ))}
+                            {selectedCity &&
+                                dropdownOptions[selectedCity].map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
                         </select>
                     </div>
                 </div>
