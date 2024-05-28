@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../styles/ModMember.css";
-import { clearUser } from "../Login/loginSlice"; // clearUser 액션 가져오기
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // 아이콘 추가
+import { clearUser } from "../Login/loginSlice";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import defaultProfile from "../../img/defaultProfile.png";
 
 const ModMember = () => {
@@ -28,9 +28,9 @@ const ModMember = () => {
   const [isEditingPwd, setIsEditingPwd] = useState(false);
   const [confirmPwd, setConfirmPwd] = useState("");
   const [nicknameAvailable, setNicknameAvailable] = useState(false);
-  const [showPwd, setShowPwd] = useState(false); // 비밀번호 가시성 상태 추가
-  const [showConfirmPwd, setShowConfirmPwd] = useState(false); // 확인 비밀번호 가시성 상태 추가
-  const [isSaveDisabled, setIsSaveDisabled] = useState(false); // 저장 버튼 비활성화 상태 추가
+  const [showPwd, setShowPwd] = useState(false);
+  const [showConfirmPwd, setShowConfirmPwd] = useState(false);
+  const [isSaveDisabled, setIsSaveDisabled] = useState(false);
   const [profileImage, setProfileImage] = useState(defaultProfile);
   const [imageFile, setImageFile] = useState(null);
 
@@ -51,7 +51,6 @@ const ModMember = () => {
 
   const passwordRegex = /^(?=.*[a-z])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$/;
 
-  // 날짜 형식을 변환하는 유틸리티 함수
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -67,13 +66,14 @@ const ModMember = () => {
       mem_birth: formatDate(loginInfo.mem_birth),
       mem_gender: loginInfo.mem_gender || "",
       mem_type: loginInfo.mem_type || "",
-      mem_image: loginInfo.mem_image ? loginInfo.mem_image : defaultProfile,
+      mem_image: loginInfo.mem_image
+        ? `/member/loadImage/${loginInfo.mem_image}`
+        : defaultProfile,
     };
     setFormData(initialData);
     setOriginalData(initialData);
     setProfileImage(initialData.mem_image);
 
-    // 비밀번호를 제외한 데이터를 로그로 출력
     const { mem_pwd, ...logData } = initialData;
     console.log("Initial loginInfo:", logData);
   }, [loginInfo]);
@@ -175,7 +175,6 @@ const ModMember = () => {
       return;
     }
 
-    // 비밀번호를 제외한 데이터를 로그로 출력
     const { mem_pwd, ...logData } = updatedData;
     console.log("전송 데이터:", logData);
 
@@ -195,16 +194,14 @@ const ModMember = () => {
         },
       });
 
-      if (response.data.mem_image) {
-        setProfileImage(
-          `http://localhost:3000/profileimage/${response.data.mem_image}`,
-        );
+      if (response.data) {
+        setProfileImage(`/member/loadImage/${response.data}`);
       }
 
       console.log(response.data);
       alert("회원 정보가 수정되었습니다. 다시 로그인해주세요.");
-      dispatch(clearUser()); // 로그아웃 처리
-      localStorage.removeItem("token"); // 토큰 제거
+      dispatch(clearUser());
+      localStorage.removeItem("token");
       navigate("/");
     } catch (error) {
       console.error("사용자 정보 수정 중 오류 발생:", error);
