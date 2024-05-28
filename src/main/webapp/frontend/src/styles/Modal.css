@@ -1,14 +1,70 @@
-.modal {
-  background-color: #f4f4f4;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  width: 400px; /* 모달의 너비를 조정 */
-  height: 280px;
-  margin: 10px; /* 모달 간격을 조정 */
-  box-sizing: border-box;
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
 }
-.modal-container {
-  display: flex;
-  flex-wrap: wrap;
+
+.withme-post-container {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 400px; /* 모달의 너비를 조정 */
+    height: 280px;
+    margin: 10px; /* 모달 간격을 조정 */
+}
+
+/* 게시글 타이틀 스타일 */
+.withme-post-title {
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* 게시글 내용 스타일 */
+.withme-post-content {
+    text-align: left;
+    flex: 1; /* 남은 공간을 내용이 차지하도록 설정 */
+    margin-bottom: 10px;
+}
+
+.withme-post-joininfo {
+    display: flex;
+    align-items: center; /* 요소들을 세로 가운데 정렬 */
+    justify-content: space-between; /* 요소들 사이에 공간을 균등하게 배분 */
+}
+
+/* 게시글 성별 스타일 */
+.withme-post-gender {
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+/* 게시글 사람인원 스타일 */
+.withme-post-pnum {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* 게시글 날짜 스타일 */
+.withme-post-date {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* 썸네일 이미지 스타일 */
+.withme-post-thumbnail {
+    width: 399px;
+    height: 200px;
+    overflow: hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+/* 썸네일 이미지 내용 스타일 */
+.withme-post-thumbnail img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* 이미지가 썸네일 크기에 맞게 조절될 수 있도록 설정 */
 }
