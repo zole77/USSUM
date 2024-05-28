@@ -5,11 +5,15 @@ import com.mycom.ussum.vo.WithMeVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,5 +71,13 @@ public class WithMeController {
     public void updateWithMe(@RequestPart(value = "post") WithMeVO withMeVO,
                              @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
         service.updateWithMe(withMeVO, image);
+    }
+
+    @GetMapping("/image/{image}")
+    @Operation(summary = "이미지 불러오기")
+    public ResponseEntity<?> returnImage(@PathVariable String image) {
+        String fullFilePath = Paths.get("C:", "withmeimage", image).toFile().getAbsolutePath();
+        Resource resource = new FileSystemResource(fullFilePath);
+        return new ResponseEntity<>(resource, HttpStatus.OK) ;
     }
 }

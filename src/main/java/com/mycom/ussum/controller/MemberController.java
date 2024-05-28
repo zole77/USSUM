@@ -7,10 +7,21 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -52,5 +63,27 @@ public class MemberController {
             log.error("오류가 발생하였습니다.",e);
             return ResponseEntity.status(500).body("회원 탈퇴 중 오류가 발생했습니다. 상세 오류: " + e.getMessage());
         }
+    }
+
+//    @GetMapping(value = "/loadImage/{imageName}", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+//    public byte[] loadImage(@PathVariable String imageName){
+//        String fullFilePath = Paths.get("C:", "profileimage", imageName).toFile().getAbsolutePath();
+//        File uploadedFile = new File(fullFilePath);
+//        if (!uploadedFile.exists()) {
+//            throw new RuntimeException();
+//        }
+//
+//        try {
+//            return Files.readAllBytes(uploadedFile.toPath());
+//        } catch (IOException e) {
+//            throw new RuntimeException();
+//        }
+//    }
+
+    @GetMapping("/image/{image}")
+    public ResponseEntity<?> returnImage(@PathVariable String image) {
+        String fullFilePath = Paths.get("C:", "profileimage", image).toFile().getAbsolutePath();
+        Resource resource = new FileSystemResource(fullFilePath);
+        return new ResponseEntity<>(resource, HttpStatus.OK) ;
     }
 }

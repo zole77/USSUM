@@ -1,12 +1,15 @@
 import React, { useRef, useState } from "react";
 import { Editor, Viewer } from "@toast-ui/react-editor";
 import "@toast-ui/editor/toastui-editor.css";
+import "../../styles/BoardReadModal.css";
+import "../../styles/BoardStyle.css";
 import { IoIosClose } from "react-icons/io";
-import "../../App.css";
 import axios from "axios";
 
 function Boardupdate(props) {
+    console.log(props.selectedPost);
     let find = props.boardList.find((x) => x.post_no === props.postId);
+
     const modalBackground = useRef();
     const editorRef = useRef(null);
     const [title, setTitle] = useState(find.post_title);
@@ -52,7 +55,7 @@ function Boardupdate(props) {
         <div>
             {props.updatemodalOpen ? (
                 <div
-                    className="modal-container"
+                    className="board-modal-container"
                     ref={modalBackground}
                     onClick={(e) => {
                         if (e.target === modalBackground.current) {
@@ -70,7 +73,7 @@ function Boardupdate(props) {
                         }
                     }}
                 >
-                    <div className="modal-content" style={{ backgroundColor: "#fff" }}>
+                    <div className="board-modal-content" style={{ backgroundColor: "#fff" }}>
                         <p className="modal-header">
                             USSUM 여행 커뮤니티
                             <IoIosClose

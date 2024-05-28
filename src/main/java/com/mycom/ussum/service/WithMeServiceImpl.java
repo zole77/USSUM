@@ -3,6 +3,7 @@ package com.mycom.ussum.service;
 import com.mycom.ussum.repository.WithMeRepository;
 import com.mycom.ussum.vo.WithMeVO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class WithMeServiceImpl implements WithMeService {
 
     private final WithMeRepository repo;
@@ -25,8 +27,8 @@ public class WithMeServiceImpl implements WithMeService {
         if(image == null){
             repo.createWithMe(withMeVO);
         } else {
-            String fullFilePath = saveImage(image);
-            withMeVO.setWithMe_thumbnail(fullFilePath);
+            String imageName = saveImage(image);
+            withMeVO.setWithMe_thumbnail(imageName);
             repo.createWithMe(withMeVO);
         }
     }
@@ -48,16 +50,20 @@ public class WithMeServiceImpl implements WithMeService {
 
     @Override
     public void updateWithMe(WithMeVO withMeVO, MultipartFile image) throws IOException {
+        boolean isSuccess;
         if(image == null){
             File deleteFile = new File(repo.getWithMe(Integer.parseInt(withMeVO.getWithMe_id())).getWithMe_thumbnail());
-            boolean deleted = deleteFile.delete();
+            isSuccess = deleteFile.delete();
         } else {
-            String fullFilePath = saveImage(image);
-            withMeVO.setWithMe_thumbnail(fullFilePath);
+            String imageName = saveImage(image);
+            withMeVO.setWithMe_thumbnail(imageName);
             File deleteFile = new File(repo.getWithMe(Integer.parseInt(withMeVO.getWithMe_id())).getWithMe_thumbnail());
-            boolean isSuccess = deleteFile.delete();
-
+            isSuccess = deleteFile.delete();
         }
+        if(isSuccess){
+            log.info("파일 삭제 완료");
+        }
+//        repo.updateWithMe(withMeVO);
     }
 
     private String saveImage(MultipartFile image) throws IOException {
@@ -69,15 +75,19 @@ public class WithMeServiceImpl implements WithMeService {
 
         File dir = new File(uploadDir);
         if(!dir.exists()){
-            dir.mkdirs();
+            boolean isSuccess = dir.mkdirs();
+            if(isSuccess){
+                log.info("폴더 생성 완료");
+            }
         }
 
         try {
             File uploadFile = new File(fullFilePath);
             image.transferTo(uploadFile);
-        } catch (Exception e){
+        } catch (IOException e){
+            log.error("이미지 저장 중 오류 발생", e);
             throw new IOException(e);
         }
-        return fullFilePath;
+        return imageName;
     }
 }
