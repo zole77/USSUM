@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Modal from "./Modal";
+import WithMePost from "./WithMePost";
 import { Link } from "react-router-dom";
 import WriteModal from "./WriteModal"; // WriteModal 컴포넌트 import
+import ReadModal from "./ReadModal";
 import "../../styles/Withme.css";
 import axios from "axios";
 
@@ -11,10 +12,14 @@ function Withme() {
     const [selectedCity, setSelectedCity] = useState(""); // 선택된 광역시 상태를 관리하는 상태
     const [withMePost, setWithMePost] = useState();
 
+    const [readModalOpen, setReadModalOpen] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(false);
+    const [postUser, setPostUser] = useState(null);
+    const [postThumbnail, setPostThumbnail] = useState();
+
     const fetchWithMePost = async () => {
         try {
             const response = await axios.get("withme/getall");
-            console.log(response.data); // 서버로부터 받은 데이터
             setWithMePost(response.data);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -81,23 +86,29 @@ function Withme() {
                     </div>
                 </div>
                 <h3>당신 근처의 같이가요!</h3>
-                {/* currentPosts.map((post) => (
-              <div className="list" key={post.id}>
-                  <CommuPost
-                      boardList={post}
-                      setReadModalOpen={setReadModalOpen}
-                      setSelectedPost={setSelectedPost}
-                  />
-              </div>
-              )) */}
                 <div className="withme-modal-container">
                     {withMePost.map((post) => (
                         <div className="modal-wrapper" key={post.withMe_id}>
-                            <Modal post={post} />
+                            <WithMePost
+                                post={post}
+                                setSelectedPost={setSelectedPost}
+                                setReadModalOpen={setReadModalOpen}
+                                setPostUser={setPostUser}
+                                setPostThumbnail={setPostThumbnail}
+                            />
                         </div>
                     ))}
                 </div>
             </section>
+            {readModalOpen && selectedPost && (
+                <ReadModal
+                    selectedPost={selectedPost}
+                    postThumbnail={postThumbnail}
+                    setReadModalOpen={setReadModalOpen}
+                    postUser={postUser}
+                />
+            )}
+
             <div className="divider"></div>
             <section className="right-section">
                 <div className="location-text">
