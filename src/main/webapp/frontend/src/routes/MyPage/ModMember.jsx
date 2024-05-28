@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../styles/ModMember.css";
-import Profile from "./Profile";
 import { clearUser } from "../Login/loginSlice"; // clearUser 액션 가져오기
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // 아이콘 추가
+import defaultProfile from "../../img/defaultProfile.png";
 
 const ModMember = () => {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const ModMember = () => {
     mem_nickname: "",
     mem_type: "",
     mem_gender: "",
+    mem_image: "",
   });
 
   const [originalData, setOriginalData] = useState({});
@@ -30,6 +31,8 @@ const ModMember = () => {
   const [showPwd, setShowPwd] = useState(false); // 비밀번호 가시성 상태 추가
   const [showConfirmPwd, setShowConfirmPwd] = useState(false); // 확인 비밀번호 가시성 상태 추가
   const [isSaveDisabled, setIsSaveDisabled] = useState(false); // 저장 버튼 비활성화 상태 추가
+  const [profileImage, setProfileImage] = useState(defaultProfile);
+  const [imageFile, setImageFile] = useState(null);
 
   const travelPreferences = [
     "즉흥적",
@@ -64,10 +67,15 @@ const ModMember = () => {
       mem_birth: formatDate(loginInfo.mem_birth),
       mem_gender: loginInfo.mem_gender || "",
       mem_type: loginInfo.mem_type || "",
+      mem_image: loginInfo.mem_image ? loginInfo.mem_image : defaultProfile,
     };
     setFormData(initialData);
     setOriginalData(initialData);
-    console.log("Initial loginInfo:", initialData);
+    setProfileImage(initialData.mem_image);
+
+    // 비밀번호를 제외한 데이터를 로그로 출력
+    const { mem_pwd, ...logData } = initialData;
+    console.log("Initial loginInfo:", logData);
   }, [loginInfo]);
 
   useEffect(() => {
@@ -153,7 +161,6 @@ const ModMember = () => {
 
     const updatedData = Object.keys(formData).reduce((acc, key) => {
       if (formData[key]) {
-        // Only include fields that have a value
         acc[key] = formData[key];
       }
       return acc;
@@ -168,26 +175,77 @@ const ModMember = () => {
       return;
     }
 
-    console.log("전송 데이터:", updatedData); // 변경된 데이터를 출력합니다
+    // 비밀번호를 제외한 데이터를 로그로 출력
+    const { mem_pwd, ...logData } = updatedData;
+    console.log("전송 데이터:", logData);
+
+    const formDataToSend = new FormData();
+    formDataToSend.append(
+      "data",
+      new Blob([JSON.stringify(updatedData)], { type: "application/json" }),
+    );
+    if (imageFile) {
+      formDataToSend.append("image", imageFile);
+    }
 
     try {
-      const response = await axios.post("/member/modify", updatedData);
+      const response = await axios.post("/member/modify", formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.mem_image) {
+        setProfileImage(
+          `http://localhost:3000/profileimage/${response.data.mem_image}`,
+        );
+      }
 
       console.log(response.data);
       alert("회원 정보가 수정되었습니다. 다시 로그인해주세요.");
       dispatch(clearUser()); // 로그아웃 처리
       localStorage.removeItem("token"); // 토큰 제거
-      navigate("/"); // "/" 페이지로 리디렉션
+      navigate("/");
     } catch (error) {
       console.error("사용자 정보 수정 중 오류 발생:", error);
-      alert("정보 수정 중 오류 발생");
+      alert("모든 정보를 입력하세요");
     }
+  };
+
+  const handleFileChange = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setProfileImage(event.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const handleImageClick = () => {
+    document.getElementById("fileInput").click();
   };
 
   return (
     <div className="profile-edit-container">
       <form className="profile-edit-form" onSubmit={handleSubmit}>
-        <Profile />
+        <div className="profile-header-content">
+          <img
+            src={profileImage}
+            alt="Profile"
+            className="profile-image"
+            onClick={handleImageClick}
+            style={{ cursor: "pointer" }}
+          />
+          <input
+            type="file"
+            id="fileInput"
+            style={{ display: "none" }}
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+        </div>
         <table className="profile-edit-table">
           <thead>
             <tr>
@@ -216,7 +274,7 @@ const ModMember = () => {
               <td className="input-cell">
                 <div className="input-wrapper">
                   <input
-                    type={showPwd ? "text" : "password"} // 비밀번호 가시성 상태에 따라 타입 변경
+                    type={showPwd ? "text" : "password"}
                     id="mem_pwd"
                     name="mem_pwd"
                     value={formData.mem_pwd || ""}
@@ -226,7 +284,7 @@ const ModMember = () => {
                   <button
                     type="button"
                     className="toggle-visibility"
-                    onClick={() => setShowPwd(!showPwd)} // 아이콘 클릭 시 가시성 상태 토글
+                    onClick={() => setShowPwd(!showPwd)}
                   >
                     {showPwd ? <FaEyeSlash /> : <FaEye />}
                   </button>
@@ -248,17 +306,17 @@ const ModMember = () => {
                 <td className="input-cell">
                   <div className="input-wrapper">
                     <input
-                      type={showConfirmPwd ? "text" : "password"} // 확인 비밀번호 가시성 상태에 따라 타입 변경
+                      type={showConfirmPwd ? "text" : "password"}
                       id="confirm_mem_pwd"
                       name="confirm_mem_pwd"
                       value={confirmPwd}
                       onChange={handleConfirmPwdChange}
-                      placeholder="※문자, 숫자, 특수문자 중 2가지 포함 8글자 이상" // placeholder 추가
+                      placeholder="※문자, 숫자, 특수문자 중 2가지 포함 8글자 이상"
                     />
                     <button
                       type="button"
                       className="toggle-visibility"
-                      onClick={() => setShowConfirmPwd(!showConfirmPwd)} // 아이콘 클릭 시 가시성 상태 토글
+                      onClick={() => setShowConfirmPwd(!showConfirmPwd)}
                     >
                       {showConfirmPwd ? <FaEyeSlash /> : <FaEye />}
                     </button>
@@ -390,7 +448,7 @@ const ModMember = () => {
           <button
             type="submit"
             className="btn-hover color"
-            disabled={isSaveDisabled} // 저장 버튼 비활성화
+            disabled={isSaveDisabled}
           >
             저장
           </button>
