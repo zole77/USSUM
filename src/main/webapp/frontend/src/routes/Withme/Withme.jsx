@@ -133,7 +133,9 @@ function Withme() {
                 </div>
             </section>
             {/* WriteModal이 열려있는 경우에만 렌더링 */}
-            {isWriteModalOpen && <WriteModal onClose={handleCloseWriteModal} />}
+            {isWriteModalOpen && (
+                <WriteModal onClose={handleCloseWriteModal} fetchWithMePost={fetchWithMePost} />
+            )}
         </div>
     );
 }
