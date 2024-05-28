@@ -27,8 +27,8 @@ public class WithMeServiceImpl implements WithMeService {
         if(image == null){
             repo.createWithMe(withMeVO);
         } else {
-            String fullFilePath = saveImage(image);
-            withMeVO.setWithMe_thumbnail(fullFilePath);
+            String imageName = saveImage(image);
+            withMeVO.setWithMe_thumbnail(imageName);
             repo.createWithMe(withMeVO);
         }
     }
@@ -55,8 +55,8 @@ public class WithMeServiceImpl implements WithMeService {
             File deleteFile = new File(repo.getWithMe(Integer.parseInt(withMeVO.getWithMe_id())).getWithMe_thumbnail());
             isSuccess = deleteFile.delete();
         } else {
-            String fullFilePath = saveImage(image);
-            withMeVO.setWithMe_thumbnail(fullFilePath);
+            String imageName = saveImage(image);
+            withMeVO.setWithMe_thumbnail(imageName);
             File deleteFile = new File(repo.getWithMe(Integer.parseInt(withMeVO.getWithMe_id())).getWithMe_thumbnail());
             isSuccess = deleteFile.delete();
         }
@@ -88,6 +88,6 @@ public class WithMeServiceImpl implements WithMeService {
             log.error("이미지 저장 중 오류 발생", e);
             throw new IOException(e);
         }
-        return fullFilePath;
+        return imageName;
     }
 }
