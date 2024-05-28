@@ -18,5 +18,6 @@ public class LoginVO {
     private String mem_hot;
     private String mem_nickname;
     private String mem_gender;
+    private String mem_image;
 
 }

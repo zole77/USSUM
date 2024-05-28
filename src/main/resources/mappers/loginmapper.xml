@@ -4,7 +4,7 @@
 <mapper namespace="com.mycom.ussum.login.dao.LoginDAO">
     <select id="findByIdAndPassword" resultType="com.mycom.ussum.login.vo.LoginVO">
         SELECT MEM_ID, MEM_PWD, MEM_PHONE,MEM_GENDER, MEM_BIRTH, MEM_ADDRESS,
-               MEM_REGDATE, MEM_TYPE, MEM_HOT, MEM_NICKNAME
+               MEM_REGDATE, MEM_TYPE, MEM_HOT, MEM_NICKNAME, MEM_IMAGE
         FROM member_table
         WHERE MEM_ID = #{mem_id} AND MEM_PWD = #{mem_pwd}
     </select>
