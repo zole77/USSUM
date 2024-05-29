@@ -12,7 +12,7 @@ function Withme() {
     const [selectedCity, setSelectedCity] = useState(""); // 선택된 광역시 상태를 관리하는 상태
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [withMePost, setWithMePost] = useState();
-
+    const [clickedCoords, setClickedCoords] = useState(null);
     const fetchWithMePost = async () => {
         try {
             const response = await axios.get("withme/getall");
@@ -28,8 +28,8 @@ function Withme() {
     }, []);
 
     const dropdownOptions = {
-        서울광역시: ["종로구", "용산구", "성동구", "강북구", "서대문구", "마포구"],
-        부산광역시: ["해운대구", "사하구", "수정구", "사상구", "금정구"],
+        서울특별시: ["종로구", "용산구", "성동구", "강북구", "서대문구", "마포구"],
+        부산광역시: ["해운대구", "사하구", "수정구", "사상구", "금정구","남구"],
         대구광역시: ["수성구", "동구", "서구", "북구", "달서구"],
         인천광역시: ["중구", "동구", "미추홀구", "연수구", "남동구"],
         대전광역시: ["동구", "서구", "중구", "유성구", "대덕구"],
@@ -55,6 +55,11 @@ function Withme() {
         setSelectedDistrict(selectedDistrict);
         console.log("Selected District: ", selectedDistrict);
     };
+
+    const handleMapClick = (coords) =>{
+        setClickedCoords(coords);
+        console.log("Clicked Coords: ", coords);
+    }
 
     // WriteModal을 닫는 함수
     const handleCloseWriteModal = () => {
@@ -110,12 +115,12 @@ function Withme() {
             <section className="right-section">
                 <div className="location-text">
                     같이 갈 위치 : {selectedCity} {selectedDistrict}
-                    <button className="write-button" onClick={handleButtonClick}>
+                    <button className="write-button" onClick={handleButtonClick} disabled={!clickedCoords}>
                         글쓰기
                     </button>
                 </div>
                 <div className="map-container">
-                    <KakaoMap selectedCity={selectedCity} selectedDistrict={selectedDistrict} />
+                    <KakaoMap selectedCity={selectedCity} selectedDistrict={selectedDistrict} onMapClick={handleMapClick}/>
                 </div>
             </section>
             {/* WriteModal이 열려있는 경우에만 렌더링 */}

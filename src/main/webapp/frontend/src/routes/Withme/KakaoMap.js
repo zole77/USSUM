@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 
-const KakaoMap = ({selectedCity, selectedDistrict}) => {
+const KakaoMap = ({selectedCity, selectedDistrict, onMapClick}) => {
     useEffect(() => {
         const kakaoMapScript = document.createElement('script')
         kakaoMapScript.async = false
@@ -22,30 +22,48 @@ const KakaoMap = ({selectedCity, selectedDistrict}) => {
 
                 const geocoder = new window.kakao.maps.services.Geocoder();
 
-                if(selectedCity && selectedDistrict){
-                    const address = '${selectedCity} ${selectedDistrict}';
+
+                if (selectedCity && selectedDistrict) {
+                    const address = selectedCity + " " + selectedDistrict;
                     console.log("address: ", address)
-                geocoder.addressSearch(address, function (result, status) {
-                    if (status === window.kakao.maps.services.Status.OK) {
-                        const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-                        console.log(" coords: ", coords);
-                        const marker = new window.kakao.maps.Marker({
-                            map: map,
-                            position: coords,
-                        });
-                        const infowindow = new window.kakao.maps.InfoWindow({
-                            content: '<div style="width:150px;text-align:center;padding:6px 0;"></div>',
-                        });
-                        infowindow.open(map, marker);
-                        map.setCenter(coords);
-                    } else {
-                        console.error("Address search failed: ", status);
-                    }
+                    geocoder.addressSearch(address, function (result, status) {
+                        if (status === window.kakao.maps.services.Status.OK) {
+                            const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+                            // const marker = new window.kakao.maps.Marker({
+                            //     map: map,
+                            //     position: coords,
+                            // });
+                            // const infowindow = new window.kakao.maps.InfoWindow({
+                            //     content: '<div style="width:150px;text-align:center;padding:6px 0;"></div>',
+                            // });
+                            //infowindow.open(map, marker);
+                            map.setCenter(coords);
+                        } else {
+                            console.error("Address search failed: ", status);
+                        }
 
+                    });
+                }
+
+                const marker = new window.kakao.maps.Marker({
+                    map:map,
+                    position: map.getCenter()
                 });
-            }
-            });
+                marker.setMap(map);
 
+                window.kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+                    const latlng = mouseEvent.latLng;
+                    // const marker = new window.kakao.maps.Marker({
+                    //     map: map,
+                    //     position: latlng,
+                    // });
+                    marker.setPosition(latlng);
+                    console.log("Clicked Coordinates: ", latlng); // 클릭된 좌표 확인
+                    if (onMapClick) {
+                        onMapClick(latlng);
+                    }
+                });
+            });
         };
 
         kakaoMapScript.addEventListener('load', onLoadKakaoAPI);
