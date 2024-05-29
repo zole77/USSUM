@@ -59,17 +59,14 @@ function Withme() {
         const selectedCity = event.target.value;
         setSelectedCity(selectedCity);
         setSelectedDistrict(""); // 시 변경될 때 구 초기화
-        console.log("Selected City: ", selectedCity);
     };
 
     const handleDistrictSelect = (event) => {
         const selectedDistrict = event.target.value;
         setSelectedDistrict(selectedDistrict);
-        console.log("Selected District: ", selectedDistrict);
     };
     const handleMapClick = (coords) => {
         setClickedCoords(coords);
-        console.log("Clicked Coords: ", coords);
     };
 
     // WriteModal을 닫는 함수
@@ -132,86 +129,107 @@ function Withme() {
             )}
 
             <div className="divider"></div>
-            <section className="right-section">
-                <div className="location-text">
-                    같이 갈 위치 : {selectedCity} {selectedDistrict}
-                </div>
-                <div className="map-container">
-                    <KakaoMap
-                        selectedCity={selectedCity}
-                        selectedDistrict={selectedDistrict}
-                        onMapClick={handleMapClick}
-                        setWithMe_x={setWithMe_x}
-                        setWithMe_y={setWithMe_y}
-                    />
-                </div>
-                <div className="writeBtn-container">
-                    <button
-                        className="write-button"
-                        onClick={handleButtonClick}
-                        disabled={!clickedCoords}
-                    >
-                        여기, 같이 가요!
-                    </button>
-                </div>
-                <div className="withme-location-text">같이 갈만한 명소!</div>
-                <div>
-                    <div className="withme-location-container">
-                        <div className="modal-wrapper">
-                            <div className="withme-location-post">
-                                <div className="withme-post-thumbnail">
-                                    <img src={haewoondae} alt="해운대"></img>
-                                </div>
-                                <div className="withme-postinfo">
-                                    <div className="withme-post-title">해운대</div>
-                                    <div className="withme-post-joininfo">
-                                        <div className="withme-post-gender">부산하면 가장 먼저 떠오르는 것, 바다! 그중에서도 부산 바다의 정석</div>
+            {Array.isArray(withMePost) && withMePost.length > 0 && (
+                <section className="right-section">
+                    <div className="location-text">
+                        같이 갈 위치 : {selectedCity} {selectedDistrict}
+                    </div>
+                    <div className="map-container">
+                        <KakaoMap
+                            withMePost={withMePost}
+                            selectedCity={selectedCity}
+                            selectedDistrict={selectedDistrict}
+                            onMapClick={handleMapClick}
+                            setWithMe_x={setWithMe_x}
+                            setWithMe_y={setWithMe_y}
+                            setReadModalOpen={setReadModalOpen}
+                            setSelectedPost={setSelectedPost}
+                            setPostUser={setPostUser}
+                            setPostThumbnail={setPostThumbnail}
+                        />
+                    </div>
+                    <div className="writeBtn-container">
+                        <button
+                            className="write-button"
+                            onClick={handleButtonClick}
+                            disabled={!clickedCoords}
+                        >
+                            여기, 같이 가요!
+                        </button>
+                    </div>
+                    <div className="withme-location-text">같이 갈만한 명소!</div>
+                    <div>
+                        <div className="withme-location-container">
+                            <div className="modal-wrapper">
+                                <div className="withme-location-post">
+                                    <div className="withme-post-thumbnail">
+                                        <img src={haewoondae} alt="해운대"></img>
+                                    </div>
+                                    <div className="withme-postinfo">
+                                        <div className="withme-post-title">해운대</div>
+                                        <div className="withme-post-joininfo">
+                                            <div className="withme-post-gender">
+                                                부산하면 가장 먼저 떠오르는 것, 바다! 그중에서도
+                                                부산 바다의 정석
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="modal-wrapper">
-                            <div className="withme-location-post">
-                                <div className="withme-post-thumbnail">
-                                    <img src={gwang} alt="광안리"></img>
-                                </div>
-                                <div className="withme-postinfo">
-                                    <div className="withme-post-title">광안리</div>
-                                    <div className="withme-post-joininfo">
-                                        <div className="withme-post-gender">광안대교라는 랜드마크와 함께 부산을 대표하는 해수욕장 중 하나</div>
+                            <div className="modal-wrapper">
+                                <div className="withme-location-post">
+                                    <div className="withme-post-thumbnail">
+                                        <img src={gwang} alt="광안리"></img>
+                                    </div>
+                                    <div className="withme-postinfo">
+                                        <div className="withme-post-title">광안리</div>
+                                        <div className="withme-post-joininfo">
+                                            <div className="withme-post-gender">
+                                                광안대교라는 랜드마크와 함께 부산을 대표하는
+                                                해수욕장 중 하나
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="modal-wrapper">
-                            <div className="withme-location-post">
-                                <div className="withme-post-thumbnail">
-                                    <img src={gamcheon} alt="감천문화마을"></img>
-                                </div>
-                                <div className="withme-postinfo">
-                                    <div className="withme-post-title">감천문화마을</div>
-                                    <div className="withme-post-joininfo">
-                                        <div className="withme-post-gender">하늘에 금방이라도 닿을 것만 같은 형형색색의 지붕, 마을 전체를 덮고 있는 따뜻한 분위기. 질서정연하게 늘어선 계단식 마을이 독특한 아름다움</div>
+                            <div className="modal-wrapper">
+                                <div className="withme-location-post">
+                                    <div className="withme-post-thumbnail">
+                                        <img src={gamcheon} alt="감천문화마을"></img>
+                                    </div>
+                                    <div className="withme-postinfo">
+                                        <div className="withme-post-title">감천문화마을</div>
+                                        <div className="withme-post-joininfo">
+                                            <div className="withme-post-gender">
+                                                하늘에 금방이라도 닿을 것만 같은 형형색색의 지붕,
+                                                마을 전체를 덮고 있는 따뜻한 분위기. 질서정연하게
+                                                늘어선 계단식 마을이 독특한 아름다움
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="modal-wrapper">
-                            <div className="withme-location-post">
-                                <div className="withme-post-thumbnail">
-                                    <img src={taejong} alt="태종대"></img>
-                                </div>
-                                <div className="withme-postinfo">
-                                    <div className="withme-post-title">태종대</div>
-                                    <div className="withme-post-joininfo">
-                                        <div className="withme-post-gender">초록으로 우거진 싱그러운 숲길을 거닐며 푸른 바다를 한눈에 바라볼 수 있는 곳</div>
+                            <div className="modal-wrapper">
+                                <div className="withme-location-post">
+                                    <div className="withme-post-thumbnail">
+                                        <img src={taejong} alt="태종대"></img>
+                                    </div>
+                                    <div className="withme-postinfo">
+                                        <div className="withme-post-title">태종대</div>
+                                        <div className="withme-post-joininfo">
+                                            <div className="withme-post-gender">
+                                                초록으로 우거진 싱그러운 숲길을 거닐며 푸른 바다를
+                                                한눈에 바라볼 수 있는 곳
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
+
             {/* WriteModal이 열려있는 경우에만 렌더링 */}
             {isWriteModalOpen && (
                 <WriteModal

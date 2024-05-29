@@ -27,6 +27,8 @@ function ReadModal(props) {
             },
         });
         if (!response.data) {
+            console.log(roomId);
+            console.log("방에 입장함");
             // 유저가 그 방에 없으면 DB에 추가
             socket.current.send(
                 JSON.stringify({
@@ -43,7 +45,9 @@ function ReadModal(props) {
         // WebSocket 연결
         socket.current = new WebSocket(`ws://localhost:8080/ws/chat`);
 
-        socket.current.onopen = (event) => {};
+        socket.current.onopen = (event) => {
+            console.log("연결됨");
+        };
 
         // WebSocket 닫혔을 때
         socket.current.onclose = (event) => {
@@ -67,8 +71,6 @@ function ReadModal(props) {
         kakaoMapScript.async = true;
         kakaoMapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=876d8abc7de6bcc08cb2aea4cf294117&libraries=services&autoload=false`;
         document.head.appendChild(kakaoMapScript);
-
-        console.log(props.selectedPost.withMe_x);
 
         const onLoadKakaoAPI = () => {
             const kakao = window.kakao;
@@ -189,8 +191,8 @@ function ReadModal(props) {
                     </div>
                     <div
                         className="room-enter"
-                        onClick={() => {
-                            enterRoom(props.selectedPost.room_id);
+                        onClick={async () => {
+                            await enterRoom(props.selectedPost.room_id);
                             navigate("/chat", { state: { roomId: props.selectedPost.room_id } });
                         }}
                     >
