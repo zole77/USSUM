@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import WriteModal from "./WriteModal"; // WriteModal 컴포넌트 import
 import ReadModal from "./ReadModal";
 import "../../styles/Withme.css";
+import "../../styles/WithmePost.css";
 import axios from "axios";
 import KakaoMap from "./KakaoMap";
 
@@ -18,6 +19,8 @@ function Withme() {
     const [selectedPost, setSelectedPost] = useState(false);
     const [postUser, setPostUser] = useState(null);
     const [postThumbnail, setPostThumbnail] = useState();
+    const [withMe_x, setWithMe_x] = useState();
+    const [withMe_y, setWithMe_y] = useState();
 
     const fetchWithMePost = async () => {
         try {
@@ -33,8 +36,8 @@ function Withme() {
     }, []);
 
     const dropdownOptions = {
-        서울광역시: ["종로구", "용산구", "성동구", "강북구", "서대문구", "마포구"],
-        부산광역시: ["해운대구", "사하구", "수정구", "사상구", "금정구","남구"],
+        서울특별시: ["종로구", "용산구", "성동구", "강북구", "서대문구", "마포구"],
+        부산광역시: ["해운대구", "사하구", "수정구", "사상구", "금정구", "남구"],
         대구광역시: ["수성구", "동구", "서구", "북구", "달서구"],
         인천광역시: ["중구", "동구", "미추홀구", "연수구", "남동구"],
         대전광역시: ["동구", "서구", "중구", "유성구", "대덕구"],
@@ -60,10 +63,10 @@ function Withme() {
         setSelectedDistrict(selectedDistrict);
         console.log("Selected District: ", selectedDistrict);
     };
-    const handleMapClick = (coords) =>{
+    const handleMapClick = (coords) => {
         setClickedCoords(coords);
         console.log("Clicked Coords: ", coords);
-    }
+    };
 
     // WriteModal을 닫는 함수
     const handleCloseWriteModal = () => {
@@ -128,17 +131,83 @@ function Withme() {
             <section className="right-section">
                 <div className="location-text">
                     같이 갈 위치 : {selectedCity} {selectedDistrict}
-                    <button className="write-button" onClick={handleButtonClick} disabled={!clickedCoords}>
-                        글쓰기
-                    </button>
                 </div>
                 <div className="map-container">
-                    <KakaoMap selectedCity={selectedCity} selectedDistrict={selectedDistrict} />
+                    <KakaoMap
+                        selectedCity={selectedCity}
+                        selectedDistrict={selectedDistrict}
+                        onMapClick={handleMapClick}
+                        setWithMe_x={setWithMe_x}
+                        setWithMe_y={setWithMe_y}
+                    />
+                </div>
+                <div className="writeBtn-container">
+                    <button
+                        className="write-button"
+                        onClick={handleButtonClick}
+                        disabled={!clickedCoords}
+                    >
+                        여기, 같이 가요!
+                    </button>
+                </div>
+                <div className="withme-location-text">같이 갈만한 명소!</div>
+                <div>
+                    <div className="withme-location-container">
+                        <div className="modal-wrapper">
+                            <div className="withme-location-post">
+                                <div className="withme-post-thumbnail"></div>
+                                <div className="withme-postinfo">
+                                    <div className="withme-post-title">제목</div>
+                                    <div className="withme-post-joininfo">
+                                        <div className="withme-post-gender">안뇽</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-wrapper">
+                            <div className="withme-location-post">
+                                <div className="withme-post-thumbnail"></div>
+                                <div className="withme-postinfo">
+                                    <div className="withme-post-title">제목</div>
+                                    <div className="withme-post-joininfo">
+                                        <div className="withme-post-gender">안뇽</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-wrapper">
+                            <div className="withme-location-post">
+                                <div className="withme-post-thumbnail"></div>
+                                <div className="withme-postinfo">
+                                    <div className="withme-post-title">제목</div>
+                                    <div className="withme-post-joininfo">
+                                        <div className="withme-post-gender">안뇽</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-wrapper">
+                            <div className="withme-location-post">
+                                <div className="withme-post-thumbnail"></div>
+                                <div className="withme-postinfo">
+                                    <div className="withme-post-title">제목</div>
+                                    <div className="withme-post-joininfo">
+                                        <div className="withme-post-gender">안뇽</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
             {/* WriteModal이 열려있는 경우에만 렌더링 */}
             {isWriteModalOpen && (
-                <WriteModal onClose={handleCloseWriteModal} fetchWithMePost={fetchWithMePost} />
+                <WriteModal
+                    onClose={handleCloseWriteModal}
+                    fetchWithMePost={fetchWithMePost}
+                    withMe_x={withMe_x}
+                    withMe_y={withMe_y}
+                />
             )}
         </div>
     );
