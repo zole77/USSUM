@@ -186,6 +186,7 @@ function Board(props) {
             )}
             {updatemodalOpen && selectedPost && (
                 <Boardupdate
+                    userNickName={userNickName}
                     fetchPosts={fetchPosts}
                     boardList={boardList}
                     updatemodalOpen={updatemodalOpen}

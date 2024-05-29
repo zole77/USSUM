@@ -4,6 +4,7 @@ import "@toast-ui/editor/toastui-editor.css";
 import { IoIosClose } from "react-icons/io";
 import "../../styles/BoardReadModal.css";
 import "../../styles/BoardStyle.css";
+import { IoWarningOutline } from "react-icons/io5";
 import axios from "axios";
 
 function Boardwrite(props) {
@@ -84,6 +85,12 @@ function Boardwrite(props) {
                                 }}
                             />
                         </p>
+                        <div className="board-write-warn">
+                            <div className="board-write-warn-content">
+                                <IoWarningOutline style={{ marginRight: "5px" }} />
+                                작성 도중 이탈 시 내용이 소실됩니다!
+                            </div>
+                        </div>
                         <p style={{ textAlign: "left" }}>
                             제목
                             <input
@@ -117,14 +124,16 @@ function Boardwrite(props) {
                                 initialEditType="markdown"
                             />
                         </div>
-                        <button
-                            className="modal-close-btn"
-                            onClick={() => {
-                                onSubmitBtnClick();
-                            }}
-                        >
-                            등록하기
-                        </button>
+                        <div className="board-writeBtn-container">
+                            <button
+                                className="board-write-button"
+                                onClick={() => {
+                                    onSubmitBtnClick();
+                                }}
+                            >
+                                등록하기
+                            </button>
+                        </div>
                     </div>
                 </div>
             ) : (

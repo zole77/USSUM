@@ -18,7 +18,9 @@ function Boardread(props) {
     const [comments, setComments] = useState([]);
     //totalClap을 업데이트하면서 재렌더링
     const [totalClap, setTotalClap] = useState(find.total_clap);
-    const [deltemodalOpen, setDeleteModalOpen] = useState(false);
+    const [deletemodalOpen, setDeleteModalOpen] = useState(false);
+    const [postUserInfo, setPostUserInfo] = useState(null);
+    const [postUserPimage, setPostUserPimage] = useState(null);
 
     const handleCommentSubmit = (newComment) => {
         setComments([...comments, newComment]);
@@ -49,6 +51,29 @@ function Boardread(props) {
             setIsBold(true);
         }, 1);
     };
+
+    const loadPostUserInfo = async () => {
+        try {
+            const response = await axios.get(
+                `http://localhost:3000/member/one?mem_id=${find.mem_id}`
+            );
+            loadpostUserPimage(response.data.mem_image);
+        } catch (error) {
+            console.error("게시물 유저 정보 로드 중 오류 발생:", error);
+        }
+    };
+
+    const loadpostUserPimage = async (image) => {
+        try {
+            await setPostUserPimage(`http://localhost:3000/member/image/${image}`);
+        } catch (error) {
+            console.error("프로필 이미지 로드 중 오류 발생:", error);
+        }
+    };
+
+    useEffect(() => {
+        loadPostUserInfo();
+    }, []);
 
     const deletePost = async () => {
         try {
@@ -98,7 +123,12 @@ function Boardread(props) {
                         />
                     </p>
                     <div className="author-created">
-                        <p>{find.mem_id}</p>
+                        <div className="author-info">
+                            <div className="board-post-userPimage">
+                                <img src={postUserPimage}></img>
+                            </div>
+                            <div>{find.mem_nickname}</div>
+                        </div>
                         <p style={{ marginLeft: "auto" }}>{find.post_date}</p>
                     </div>
                     <p style={{ margin: "20px 0", fontSize: "2rem", color: "#007bff" }}>
@@ -176,7 +206,7 @@ function Boardread(props) {
                     <BoardDelete
                         postNo={postNo}
                         deletePost={deletePost}
-                        deltemodalOpen={deltemodalOpen}
+                        deletemodalOpen={deletemodalOpen}
                         setDeleteModalOpen={setDeleteModalOpen}
                     />
                     <CommentForm handleCommentSubmit={handleCommentSubmit} />
@@ -193,7 +223,7 @@ function Boardread(props) {
 
 function BoardDelete(props) {
     const modalBackground = useRef();
-    if (props.deltemodalOpen) {
+    if (props.deletemodalOpen) {
         return (
             <div
                 className="delete-modal-container"

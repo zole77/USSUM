@@ -4,6 +4,7 @@ import "@toast-ui/editor/toastui-editor.css";
 import "../../styles/BoardReadModal.css";
 import "../../styles/BoardStyle.css";
 import { IoIosClose } from "react-icons/io";
+import { IoWarningOutline } from "react-icons/io5";
 import axios from "axios";
 
 function Boardupdate(props) {
@@ -88,8 +89,14 @@ function Boardupdate(props) {
                             />
                         </p>
                         <div className="author-created">
-                            <p>{find.mem_id}</p>
+                            <p>{find.mem_nickname}</p>
                             <p style={{ marginLeft: "auto" }}>{find.post_date}</p>
+                        </div>
+                        <div className="board-write-warn">
+                            <div className="board-write-warn-content">
+                                <IoWarningOutline style={{ marginRight: "5px" }} />
+                                작성 도중 이탈 시 내용이 소실됩니다!
+                            </div>
                         </div>
                         <p style={{ textAlign: "left" }}>
                             제목
@@ -109,13 +116,16 @@ function Boardupdate(props) {
                                 onChange={(e) => setTitle(e.target.value)}
                             ></input>
                         </p>
-                        <Editor
-                            language="ko-KR"
-                            ref={editorRef}
-                            height="300px"
-                            initialValue={find.post_content || " "}
-                            initialEditType="wysiwyg"
-                        />
+                        <div style={{ textAlign: "left" }}>
+                            <Editor
+                                language="ko-KR"
+                                ref={editorRef}
+                                height="300px"
+                                initialValue={find.post_content || " "}
+                                initialEditType="markdown"
+                            />
+                        </div>
+
                         <button
                             className="modal-close-btn"
                             onClick={() => {
