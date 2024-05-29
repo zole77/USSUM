@@ -20,8 +20,7 @@ function Step3({ user, onNext, onClose }) {
     return (
         <div className="Step3">
             <h2>
-                {memNickname ? `${memNickname}님!` : "User님!"} 님! 매칭을 원하는 성별을
-                선택해주세요.
+                {memNickname ? `${memNickname}님!` : "User님!"} 매칭을 원하는 성별을 선택해주세요.
             </h2>
             <div className="radio-container">
                 <input
