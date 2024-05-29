@@ -5,6 +5,7 @@ import axios from "axios";
 
 function FriendProfile(props) {
     const [friendInfo, setFriendInfo] = useState(null);
+    const [frinedPimage, setFriendPimage] = useState();
 
     const loadFriendInfo = async () => {
         console.log(props.otherUserId);
@@ -12,6 +13,7 @@ function FriendProfile(props) {
             `http://localhost:3000/member/one?mem_id=${props.otherUserId}`
         );
         setFriendInfo(response.data);
+        setFriendPimage(`http://localhost:3000/member/image/${response.data.mem_image}`);
         console.log(friendInfo);
         return response.data;
     };
@@ -56,9 +58,14 @@ function FriendProfile(props) {
                 >
                     <div className="profileimg-container">
                         <img
-                            src={defaultProfile}
+                            src={frinedPimage}
                             alt="profile"
-                            style={{ marginTop: "30px", width: "80px", height: "80px" }}
+                            style={{
+                                marginTop: "30px",
+                                width: "80px",
+                                height: "80px",
+                                borderRadius: "50%",
+                            }}
                         ></img>
                     </div>
                     <div className="friend-info">
