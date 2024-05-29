@@ -74,6 +74,7 @@
     width: 100%;
     min-height: 100%;
     object-fit: cover; /* 이미지가 썸네일 크기에 맞게 조절될 수 있도록 설정 */
+    object-position: 0px -20px;
 }
 
 .withme-post-userinfo {
