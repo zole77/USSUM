@@ -62,6 +62,40 @@ function ReadModal(props) {
         };
     }, []);
 
+    useEffect(() => {
+        const kakaoMapScript = document.createElement("script");
+        kakaoMapScript.async = true;
+        kakaoMapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=876d8abc7de6bcc08cb2aea4cf294117&libraries=services&autoload=false`;
+        document.head.appendChild(kakaoMapScript);
+
+        console.log(props.selectedPost.withMe_x);
+
+        const onLoadKakaoAPI = () => {
+            const kakao = window.kakao;
+            const container = document.getElementById("map");
+            const options = {
+                center: new kakao.maps.LatLng(
+                    props.selectedPost.withMe_y,
+                    props.selectedPost.withMe_x
+                ),
+                level: 3,
+            };
+
+            const map = new kakao.maps.Map(container, options);
+
+            const marker = new kakao.maps.Marker({
+                map: map,
+                position: map.getCenter(),
+            });
+            marker.setMap(map);
+        };
+
+        kakaoMapScript.addEventListener("load", onLoadKakaoAPI);
+        return () => {
+            document.head.removeChild(kakaoMapScript);
+        };
+    }, []);
+
     return (
         <div className="board-modal-overlay">
             <div
@@ -116,6 +150,15 @@ function ReadModal(props) {
                     <div className="post-thumbnail">
                         <img src={props.postThumbnail} alt="썸네일" style={{ width: "100%" }} />
                     </div>
+                    <div
+                        className="read-modal-map-container"
+                        style={{
+                            width: "100%",
+                            height: "400px",
+                        }}
+                    >
+                        <div id="map" style={{ width: "100%", height: "90%" }}></div>
+                    </div>
                     <div className="withme-condition">
                         <div className="withme-condition-schedule">
                             <MdAccessTime style={{ marginRight: "5px" }} /> 일정:{" "}
@@ -151,7 +194,7 @@ function ReadModal(props) {
                             navigate("/chat", { state: { roomId: props.selectedPost.room_id } });
                         }}
                     >
-                        같이 가요!
+                        같이 갈래요!
                     </div>
                 </div>
             </div>
