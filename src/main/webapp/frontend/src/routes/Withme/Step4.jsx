@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../../styles/Step4.css";
 
 function Step4({ onSubmit, onClose }) {
     const [title, setTitle] = useState(""); // 글 제목 상태
