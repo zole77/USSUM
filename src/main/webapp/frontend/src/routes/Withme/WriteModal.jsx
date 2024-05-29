@@ -7,7 +7,7 @@ import "../../styles/WriteModal.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function WriteModal({ onClose, fetchWithMePost }) {
+function WriteModal({ onClose, fetchWithMePost, withMe_x, withMe_y }) {
     const user = useSelector((state) => state.user);
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({});
@@ -59,8 +59,8 @@ function WriteModal({ onClose, fetchWithMePost }) {
         const data = {
             withMe_pnum: formData.withMe_pnum,
             mem_id: userId,
-            withMe_x: 31,
-            withMe_y: 32,
+            withMe_x: withMe_x,
+            withMe_y: withMe_y,
             withMe_gender: formData.withMe_gender,
             withMe_sdate: formData.withMe_sdate,
             withMe_edate: formData.withMe_edate,
