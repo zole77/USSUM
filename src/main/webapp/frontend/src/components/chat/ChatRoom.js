@@ -9,51 +9,50 @@ function ChatRoom({ roomId, username, socket, userId, userNickName, setOtherUser
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
+    const [userProfileImages, setUserProfileImages] = useState({});
+
     const chatContainerRef = useRef(null);
     const inputRef = useRef(null);
 
     const fetchInitialMessages = async () => {
         try {
             const response = await axios.get(`/chat/getMessages/${roomId}`);
-            setMessages(response.data);
+            const messages = response.data;
+            setMessages(messages);
+            await loadProfileImages(messages);
             setIsLoading(false);
         } catch (error) {
             console.error("getMessages 오류: ", error);
         }
     };
 
+    const loadProfileImages = async (messages) => {
+        const uniqueUserIds = [...new Set(messages.map((msg) => msg.mem_id))];
+        const profileImages = {};
+
+        for (const userId of uniqueUserIds) {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/member/one?mem_id=${userId}`
+                );
+                profileImages[
+                    userId
+                ] = `http://localhost:3000/member/image/${response.data.mem_image}`;
+            } catch (error) {
+                console.error("프로필 이미지 로드 중 오류 발생:", error);
+                profileImages[userId] = defaultProfile; // fallback to default image on error
+            }
+        }
+
+        setUserProfileImages(profileImages);
+    };
+
     useEffect(() => {
         fetchInitialMessages();
-        // // socket.onmessage = (event) => {
-        // //     console.log("방금 도착한 메세지:", message);
-        // //     fetchInitialMessages();
-        // // };
-
-        // if (socket) {
-        //     socket.close();
-        // }
-
-        // // WebSocket을 엽니다.
-        // socket = new WebSocket(`ws://localhost:8080/ws/chat`);
-        // console.log("useEffect 실행");
-
-        // // 웹소켓 이벤트 핸들러 설정
-        // socket.onopen = () => {
-        //     socket.send(
-        //         JSON.stringify({
-        //             type: "TALK",
-        //             roomId: roomId,
-        //             mem_id: userId,
-        //             sender: userNickName,
-        //             message: "으아아아아아아악!!!!!!!!!",
-        //         })
-        //     );
-        // };
     }, [roomId]);
 
     useEffect(() => {
         socket.onmessage = (event) => {
-            // 서버에서 메시지를 수신하면 동작함
             fetchInitialMessages();
         };
 
@@ -101,7 +100,10 @@ function ChatRoom({ roomId, username, socket, userId, userNickName, setOtherUser
                                         setOtherUserId(msg.mem_id);
                                     }}
                                 >
-                                    <img src={defaultProfile} alt="profile" />
+                                    <img
+                                        src={userProfileImages[msg.mem_id] || defaultProfile}
+                                        alt="profile"
+                                    />
                                 </div>
 
                                 <div className="other-message-container">
