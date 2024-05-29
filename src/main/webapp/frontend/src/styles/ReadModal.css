@@ -1,7 +1,18 @@
 @charset "UTF-8";
 
 .post-thumbnail {
+    width: 100%;
+    max-height: 500px;
     overflow-x: hidden;
+    overflow-y: hidden;
+    margin-bottom: 30px;
+}
+
+.post-thumbnail img {
+    width: 100%;
+    min-height: 100%;
+    object-fit: cover; /* 이미지가 썸네일 크기에 맞게 조절될 수 있도록 설정 */
+    object-position: 0px -20px;
 }
 
 .withme-content {
