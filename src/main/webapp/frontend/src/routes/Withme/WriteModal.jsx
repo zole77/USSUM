@@ -151,11 +151,12 @@ function WriteModal({ onClose, fetchWithMePost, withMe_x, withMe_y }) {
         fetchWithMePost();
     };
 
-    const renderStep = () => {
+    const renderStep = (onClose) => {
         switch (step) {
             case 1:
                 return (
                     <Step1
+                        onClose={onClose}
                         onNext={(startDate, endDate) =>
                             nextStep({ withMe_sdate: startDate, withMe_edate: endDate })
                         }
@@ -163,17 +164,22 @@ function WriteModal({ onClose, fetchWithMePost, withMe_x, withMe_y }) {
                 );
             case 2:
                 return (
-                    <Step2 onNext={(selectedPeople) => nextStep({ withMe_pnum: selectedPeople })} />
+                    <Step2
+                        onClose={onClose}
+                        onNext={(selectedPeople) => nextStep({ withMe_pnum: selectedPeople })}
+                    />
                 );
             case 3:
                 return (
                     <Step3
+                        onClose={onClose}
                         onNext={(selectedGender) => nextStep({ withMe_gender: selectedGender })}
                     />
                 );
             case 4:
                 return (
                     <Step4
+                        onClose={onClose}
                         onSubmit={(post) =>
                             sendDataToBackend({
                                 post,
@@ -189,7 +195,7 @@ function WriteModal({ onClose, fetchWithMePost, withMe_x, withMe_y }) {
     return (
         <div className="modal-background" onClick={onClose}>
             <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-                {renderStep()}
+                {renderStep(onClose)}
                 {/* <input type="file" onChange={handleFileChange} /> */}
             </div>
         </div>
