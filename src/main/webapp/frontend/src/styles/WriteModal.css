@@ -14,11 +14,15 @@
 }
 
 .modal-container {
+    width: 900px;
     background-color: #fff;
     padding: 40px;
     border-radius: 8px;
-    position: relative; /* 부모 요소로부터 상대 위치 설정 */
+    position: relative; 
+    max-height: 80vh; 
+    overflow-y: auto; 
 }
+
 
 .modal-container h2 {
     margin-bottom: 15px;
