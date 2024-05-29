@@ -172,6 +172,7 @@ function Board(props) {
             )}
             {readmodalOpen && selectedPost && (
                 <Boardread
+                    userId={userId}
                     userNickName={userNickName}
                     fetchPosts={fetchPosts}
                     boardList={boardList}

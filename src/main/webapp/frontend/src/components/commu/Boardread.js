@@ -140,25 +140,38 @@ function Boardread(props) {
                         )}
                         <span>{totalClap}</span>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "right", alignItems: "center" }}>
-                        <button
-                            onClick={() => {
-                                props.setReadModalOpen(false);
-                                props.setPostId(postNo);
-                                console.log(props.postId);
-                                props.setUpdateModalOpen(true);
+                    {props.userId === find.mem_id ? (
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "right",
+                                alignItems: "center",
                             }}
                         >
-                            글 수정
-                        </button>
-                        <button
-                            onClick={() => {
-                                setDeleteModalOpen(true);
-                            }}
-                        >
-                            글 삭제
-                        </button>
-                    </div>
+                            <div
+                                style={{ color: "#aaa", fontWeight: "100", cursor: "pointer" }}
+                                onClick={() => {
+                                    props.setReadModalOpen(false);
+                                    props.setPostId(postNo);
+                                    console.log(props.postId);
+                                    props.setUpdateModalOpen(true);
+                                }}
+                            >
+                                글 수정
+                            </div>
+                            <div style={{ color: "#aaa", fontWeight: "100" }}>ㅤ|ㅤ</div>
+                            <div
+                                style={{ color: "#aaa", fontWeight: "100", cursor: "pointer" }}
+                                onClick={() => {
+                                    setDeleteModalOpen(true);
+                                }}
+                            >
+                                글 삭제
+                            </div>
+                        </div>
+                    ) : (
+                        " "
+                    )}
 
                     <BoardDelete
                         postNo={postNo}
@@ -183,7 +196,7 @@ function BoardDelete(props) {
     if (props.deltemodalOpen) {
         return (
             <div
-                className="modal-container"
+                className="delete-modal-container"
                 ref={modalBackground}
                 onClick={(e) => {
                     if (e.target === modalBackground.current) {
@@ -191,33 +204,29 @@ function BoardDelete(props) {
                     }
                 }}
             >
-                <div
-                    style={{
-                        backgroundColor: "#fff",
-                        width: "350px",
-                        height: "150px",
-                        borderRadius: "10px",
-                        marginLeft: "50px",
-                        marginRight: "50px",
-                        padding: "15px",
-                    }}
-                >
-                    진짜 삭제하실?
-                    <button
-                        onClick={() => {
-                            props.setDeleteModalOpen(false);
-                        }}
-                    >
-                        아니
-                    </button>
-                    <button
-                        onClick={() => {
-                            props.deletePost();
-                            props.setDeleteModalOpen(false);
-                        }}
-                    >
-                        응
-                    </button>
+                <div className="delete-modal-content">
+                    <div>
+                        게시글을 삭제할까요?
+                        <div className="delete-btn-container">
+                            <button
+                                className="delete-btn-warn"
+                                onClick={() => {
+                                    props.setDeleteModalOpen(false);
+                                    props.deletePost();
+                                }}
+                            >
+                                예
+                            </button>
+                            <button
+                                className="btn-common"
+                                onClick={() => {
+                                    props.setDeleteModalOpen(false);
+                                }}
+                            >
+                                아니오
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

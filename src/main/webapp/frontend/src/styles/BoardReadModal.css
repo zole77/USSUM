@@ -45,15 +45,24 @@
 }
 
 .commentBtn {
+    background-color: #5ac7c7;
+    color: #fff;
     flex: 1;
     font-family: "LINESeedKR-Bd";
     border: none;
     padding: 10px 10px;
     border-radius: 5px;
+    border-color: #5ac7c7;
     box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
     text-decoration: none;
     font-weight: 600;
     transition: 0.25s;
+}
+
+.commentBtn:hover {
+    background-color: #fff;
+    border-color: #5ac7c7;
+    color: #5ac7c7;
 }
 
 .modal-header {
@@ -85,4 +94,58 @@
     margin-top: 5px;
     margin-left: 10px;
     text-align: left;
+}
+
+.delete-modal-container {
+    font-family: "LINESeedKR-Bd";
+    position: fixed;
+    width: 100%; /* 뷰포트 전체 너비를 차지하도록 설정 */
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.5); /* 투명도를 0.1로 설정 */
+    z-index: 1000;
+}
+
+.delete-modal-content {
+    border-radius: 10px;
+    padding: 15px;
+    width: 20%; /* modal-container의 너비에 상대적으로 설정 */
+    max-width: 800px; /* modal-content의 최대 너비를 800px로 제한 */
+    height: 10%;
+    background-color: #ffffff; /* 모달 창 배경색 */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* 그림자 추가 */
+    overflow: hidden;
+}
+
+.delete-modal-container h2 {
+    margin-bottom: 15px;
+}
+
+.delete-modal-container textarea {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.delete-btn-warn {
+    cursor: pointer;
+    padding: 5px;
+    border-color: #fff;
+    background-color: #ccc;
+    color: #242424;
+}
+
+.btn-common {
+    cursor: pointer;
+    padding: 5px;
+    color: #242424;
+    border-color: #fff;
+    background-color: #ccc;
 }
