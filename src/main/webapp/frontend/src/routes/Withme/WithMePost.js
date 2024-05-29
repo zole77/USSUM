@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/Modal.css";
+import "../../styles/WithmePost.css";
 import defaultProfile from "../../img/defaultProfile.png";
 import male from "../../img/male.png";
 import female from "../../img/female.png";
