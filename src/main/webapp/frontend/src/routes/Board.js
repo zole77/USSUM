@@ -24,6 +24,7 @@ function Board(props) {
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(user.mem_id);
     const [userNickName, setUserNickName] = useState(user.mem_nickname);
+    const [userPimage, setUserPimage] = useState();
 
     const postsPerPage = 10;
     console.log(boardList);
@@ -39,8 +40,17 @@ function Board(props) {
         }
     };
 
+    const loadpostUserPimage = async (image) => {
+        try {
+            setUserPimage(`http://localhost:3000/member/image/${image}`);
+        } catch (error) {
+            console.error("프로필 이미지 로드 중 오류 발생:", error);
+        }
+    };
+
     useEffect(() => {
         fetchPosts();
+        loadpostUserPimage(user.mem_image);
     }, []);
 
     useEffect(() => {
@@ -162,6 +172,7 @@ function Board(props) {
             )}
             {readmodalOpen && selectedPost && (
                 <Boardread
+                    userNickName={userNickName}
                     fetchPosts={fetchPosts}
                     boardList={boardList}
                     readmodalOpen={readmodalOpen}
@@ -169,6 +180,7 @@ function Board(props) {
                     setUpdateModalOpen={setUpdateModalOpen}
                     postId={selectedPost.post_no}
                     setPostId={setPostId}
+                    userPimage={userPimage}
                 />
             )}
             {updatemodalOpen && selectedPost && (

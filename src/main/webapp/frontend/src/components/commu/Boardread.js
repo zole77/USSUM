@@ -167,7 +167,11 @@ function Boardread(props) {
                         setDeleteModalOpen={setDeleteModalOpen}
                     />
                     <CommentForm handleCommentSubmit={handleCommentSubmit} />
-                    <CommentBox comments={comments} />
+                    <CommentBox
+                        userPimage={props.userPimage}
+                        userNickName={props.userNickName}
+                        comments={comments}
+                    />
                 </div>
             </div>
         </div>
@@ -228,13 +232,13 @@ function CommentBox(props) {
                 <div className="user-commnet" key={index}>
                     <div className="img-container" style={{ width: "100px", height: "100px" }}>
                         <img
-                            src={defaultProfile}
+                            src={props.userPimage}
                             alt="profile"
                             style={{ marginTop: "10px", width: "75px", height: "75px" }}
                         ></img>
                     </div>
                     <div className="commentDiv">
-                        <p>댓글 작성자 ID</p>
+                        <p>{props.userNickName}</p>
                         <p>{comment}</p>
                     </div>
                 </div>
