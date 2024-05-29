@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Modal from "./Modal";
+import WithMePost from "./WithMePost";
 import { Link } from "react-router-dom";
 import WriteModal from "./WriteModal"; // WriteModal 컴포넌트 import
+import ReadModal from "./ReadModal";
 import "../../styles/Withme.css";
 import axios from "axios";
-import KakaoMap from './KakaoMap';
+import KakaoMap from "./KakaoMap";
 
 function Withme() {
     const [selectedModal, setSelectedModal] = useState(null);
@@ -13,11 +14,15 @@ function Withme() {
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [withMePost, setWithMePost] = useState();
     const [clickedCoords, setClickedCoords] = useState(null);
+    const [readModalOpen, setReadModalOpen] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(false);
+    const [postUser, setPostUser] = useState(null);
+    const [postThumbnail, setPostThumbnail] = useState();
+
     const fetchWithMePost = async () => {
         try {
             const response = await axios.get("withme/getall");
-            console.log(response.data); // 서버로부터 받은 데이터
-            setWithMePost(response.data);
+            setWithMePost(response.data.slice().sort((a, b) => b.withMe_id - a.withMe_id));
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -28,7 +33,7 @@ function Withme() {
     }, []);
 
     const dropdownOptions = {
-        서울특별시: ["종로구", "용산구", "성동구", "강북구", "서대문구", "마포구"],
+        서울광역시: ["종로구", "용산구", "성동구", "강북구", "서대문구", "마포구"],
         부산광역시: ["해운대구", "사하구", "수정구", "사상구", "금정구","남구"],
         대구광역시: ["수성구", "동구", "서구", "북구", "달서구"],
         인천광역시: ["중구", "동구", "미추홀구", "연수구", "남동구"],
@@ -55,7 +60,6 @@ function Withme() {
         setSelectedDistrict(selectedDistrict);
         console.log("Selected District: ", selectedDistrict);
     };
-
     const handleMapClick = (coords) =>{
         setClickedCoords(coords);
         console.log("Clicked Coords: ", coords);
@@ -87,30 +91,39 @@ function Withme() {
                     <div className={`dropdown-container ${selectedCity ? "active" : ""}`}>
                         <select onChange={handleDistrictSelect} disabled={!selectedCity}>
                             <option value="">구 선택</option>
-                            {selectedCity && dropdownOptions[selectedCity].map((option, index) => (
-                                <option key={index} value={option}>{option}</option>
-                            ))}
+                            {selectedCity &&
+                                dropdownOptions[selectedCity].map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
                         </select>
                     </div>
                 </div>
                 <h3>당신 근처의 같이가요!</h3>
-                {/* currentPosts.map((post) => (
-              <div className="list" key={post.id}>
-                  <CommuPost
-                      boardList={post}
-                      setReadModalOpen={setReadModalOpen}
-                      setSelectedPost={setSelectedPost}
-                  />
-              </div>
-              )) */}
                 <div className="withme-modal-container">
                     {withMePost.map((post) => (
                         <div className="modal-wrapper" key={post.withMe_id}>
-                            <Modal post={post} />
+                            <WithMePost
+                                post={post}
+                                setSelectedPost={setSelectedPost}
+                                setReadModalOpen={setReadModalOpen}
+                                setPostUser={setPostUser}
+                                setPostThumbnail={setPostThumbnail}
+                            />
                         </div>
                     ))}
                 </div>
             </section>
+            {readModalOpen && selectedPost && (
+                <ReadModal
+                    selectedPost={selectedPost}
+                    postThumbnail={postThumbnail}
+                    setReadModalOpen={setReadModalOpen}
+                    postUser={postUser}
+                />
+            )}
+
             <div className="divider"></div>
             <section className="right-section">
                 <div className="location-text">
@@ -120,11 +133,13 @@ function Withme() {
                     </button>
                 </div>
                 <div className="map-container">
-                    <KakaoMap selectedCity={selectedCity} selectedDistrict={selectedDistrict} onMapClick={handleMapClick}/>
+                    <KakaoMap selectedCity={selectedCity} selectedDistrict={selectedDistrict} />
                 </div>
             </section>
             {/* WriteModal이 열려있는 경우에만 렌더링 */}
-            {isWriteModalOpen && <WriteModal onClose={handleCloseWriteModal} />}
+            {isWriteModalOpen && (
+                <WriteModal onClose={handleCloseWriteModal} fetchWithMePost={fetchWithMePost} />
+            )}
         </div>
     );
 }

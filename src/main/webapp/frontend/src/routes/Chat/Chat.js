@@ -4,6 +4,7 @@ import ChatRoom from "../../components/chat/ChatRoom";
 import FriendProfile from "../../components/chat/FriendProfile";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { GiConsoleController } from "react-icons/gi";
 import "../../styles/Chat.css";
 
@@ -16,8 +17,9 @@ function Chat(props) {
 
     const [userId, setUserId] = useState(user.mem_id);
     const [userNickName, setUserNickName] = useState(user.mem_nickname);
-
     const [otherUserId, setOtherUserId] = useState(null);
+
+    const location = useLocation();
 
     const socket = useRef(); // useRef로 socket을 생성
 
@@ -151,6 +153,13 @@ function Chat(props) {
             socket.current.close();
         };
     }, [selectedRoom]);
+
+    useEffect(() => {
+        if (location.state?.roomId) {
+            console.log(location.state?.roomId);
+            setSelectedRoom(location.state?.roomId);
+        }
+    }, []);
 
     return (
         <div className="chat-layout">

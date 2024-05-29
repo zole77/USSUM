@@ -7,7 +7,7 @@ import "../../styles/WriteModal.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function WriteModal({ onClose }) {
+function WriteModal({ onClose, fetchWithMePost }) {
     const user = useSelector((state) => state.user);
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({});
@@ -147,6 +147,8 @@ function WriteModal({ onClose }) {
             console.error("Error sending data to backend:", error);
             console.error("Error details:", error.response?.data);
         }
+
+        fetchWithMePost();
     };
 
     const renderStep = () => {

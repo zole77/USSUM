@@ -6,12 +6,17 @@
 }
 
 .withme-post-container {
-    background-color: #f4f4f4;
+    background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 400px; /* 모달의 너비를 조정 */
     height: 280px;
     margin: 10px; /* 모달 간격을 조정 */
+    cursor: pointer;
+}
+
+.withme-postinfo {
+    padding: 10px;
 }
 
 /* 게시글 타이틀 스타일 */
@@ -19,7 +24,7 @@
     text-align: left;
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 /* 게시글 내용 스타일 */
@@ -39,6 +44,7 @@
 .withme-post-gender {
     font-style: italic;
     margin-bottom: 5px;
+    color: #45c4b1;
 }
 
 /* 게시글 사람인원 스타일 */
@@ -49,14 +55,14 @@
 
 /* 게시글 날짜 스타일 */
 .withme-post-date {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 10px;
 }
 
 /* 썸네일 이미지 스타일 */
 .withme-post-thumbnail {
     width: 399px;
-    height: 200px;
+    height: 180px;
     overflow: hidden;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -65,6 +71,29 @@
 /* 썸네일 이미지 내용 스타일 */
 .withme-post-thumbnail img {
     width: 100%;
-    height: auto;
+    min-height: 180px;
     object-fit: cover; /* 이미지가 썸네일 크기에 맞게 조절될 수 있도록 설정 */
+}
+
+.withme-post-userinfo {
+    display: flex;
+    justify-content: right;
+}
+
+.withme-post-userPimage {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block; /* 또는 display: block; */
+}
+
+.withme-post-userPimage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.withme-post-user {
+    margin-left: 5px;
 }
