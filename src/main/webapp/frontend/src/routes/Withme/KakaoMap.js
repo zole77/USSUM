@@ -119,7 +119,7 @@ const KakaoMap = ({
         return () => {
             document.head.removeChild(kakaoMapScript);
         };
-    }, []);
+    }, [selectedCity, selectedDistrict]);
 
     useEffect(() => {
         // Add markers to the map
