@@ -88,6 +88,9 @@
     text-align: left;
     border-top-left-radius: 0;
     border-radius: 10px;
+    word-break: break-all; /* 필요할 경우 단어 내에서 줄 바꿈 */
+    width: fit-content; /* 박스가 내용에 맞게 크기를 조절 */
+    max-width: 30ch; /* 최대 너비를 10글자로 설정 */
 }
 
 .other-message-content::after {
