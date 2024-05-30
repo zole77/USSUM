@@ -23,16 +23,21 @@
 .button-container button {
   margin: 0 10px; /* 버튼 사이의 간격 설정 */
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #5ac7c7;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s, transform 0.3s;
   margin-top: 50px;
 }
 
 .button-container button:hover {
-  background-color: #0056b3;
+  background-color: #469d9d;
+  transform: translateY(-2px);
 }
 
+.button-container button:active {
+  background-color: #347373;
+  transform: translateY(0);
+}

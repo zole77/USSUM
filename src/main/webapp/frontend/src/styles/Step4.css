@@ -60,7 +60,7 @@
   .Step4 .button-container button {
     padding: 10px 20px;
     margin: 0 5px;
-    background-color: #007bff;
+    background-color: #5ac7c7;
     color: white;
     border: none;
     border-radius: 4px;
@@ -69,6 +69,6 @@
   }
   
   .Step4 .button-container button:hover {
-    background-color: #0056b3;
+    background-color: #5ac7c7;
   }
   

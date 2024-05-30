@@ -18,18 +18,50 @@ function Step2({ onNext, onClose }) {
         <div className="Step2">
             <h2>몇 명이서 가시나요?</h2>
             {/* 1명에서 9명까지의 버튼 */}
-            <div className="button-container">
-                {[...Array(9)].map((_, index) => (
-                    <button key={index} onClick={() => setSelectedPeople(index + 1)}>
-                        {index + 1}명
+            <div className="human-button-container">
+                <div className="row">
+                    {[...Array(3)].map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setSelectedPeople(index + 1)}
+                            className={selectedPeople === index + 1 ? "selected" : ""}
+                        >
+                            {index + 1}명
+                        </button>
+                    ))}
+                </div>
+                <div className="row">
+                    {[...Array(3)].map((_, index) => (
+                        <button
+                            key={index + 3}
+                            onClick={() => setSelectedPeople(index + 4)}
+                            className={selectedPeople === index + 4 ? "selected" : ""}
+                        >
+                            {index + 4}명
+                        </button>
+                    ))}
+                </div>
+                <div className="row">
+                    {[...Array(3)].map((_, index) => (
+                        <button
+                            key={index + 6}
+                            onClick={() => setSelectedPeople(index + 7)}
+                            className={selectedPeople === index + 7 ? "selected" : ""}
+                        >
+                            {index + 7}명
+                        </button>
+                    ))}
+                </div>
+                <div className="row">
+                    <button
+                        onClick={() => setSelectedPeople(10)}
+                        className={selectedPeople === 10 ? "selected" : ""}
+                    >
+                        10명 이상
                     </button>
-                ))}
+                </div>
             </div>
-            {/* 10명 이상 버튼 */}
-            <div className="button-container">
-                <button onClick={() => setSelectedPeople(10)}>10명 이상</button>
-            </div>
-            {/* 다음 버튼 */}
+            {/* 다음 버튼 및 닫기 버튼 */}
             <div className="button-container">
                 <button onClick={onClose}>닫기</button>
                 <button onClick={handleNext}>다음</button>
