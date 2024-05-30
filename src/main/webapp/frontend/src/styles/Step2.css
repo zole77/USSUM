@@ -24,7 +24,7 @@
 }
 
 .Step2 .human-button-container button {
-  padding: 20px 30px; /* 버튼의 패딩을 키워서 크기를 키웁니다 */
+  padding: 15px 30px; /* 버튼의 패딩을 키워서 크기를 키웁니다 */
   font-size: 18px; /* 폰트 크기를 키워서 버튼 텍스트를 키웁니다 */
   background-color: #f0f0f0;
   border: 1px solid #ccc;
